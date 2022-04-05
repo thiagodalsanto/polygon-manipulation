@@ -1,8 +1,8 @@
 ![logo_polygon-manipulation](https://i.ibb.co/YN1z671/hour.png)
 
-## Descrição do Projeto
+## Descrição
 <p align="justify">
-Um programa feito para manipulação de poligonos de diversas formas.
+Um programa feito para manipulação e transformação de poligonos construidos através do próprio programa.
 <p/>
  
 ## Funcionalidades
@@ -23,4 +23,3 @@ O projeto será baseado em C++ puro e utilização da plataforma de desenvolvime
 
 ## Licença
 O Projeto segue a licença `MIT`
-
