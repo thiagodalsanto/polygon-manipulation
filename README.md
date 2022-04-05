@@ -13,7 +13,7 @@ A programa conta com:
 - Atualização do tamanho do plano cartesiano
 - Transformações de Escalonamento, Translação e Rotação
 
-![video_funcionamento_polygon-manipulation](https://i.imgur.com/greOgMQ.mp4)
+![video_funcionamento_polygon-manipulation](https://media1.giphy.com/media/WKLDLeT8VQkLjNJGpS/giphy.gif)
 
 ## Técnologias Utilizadas
 O projeto será baseado em C++ puro e utilização da plataforma de desenvolvimento do [C++ Builder 10.4](https://www.embarcadero.com/br/products/cbuilder) feito pela [Embarcadero](https://www.embarcadero.com/br/).
