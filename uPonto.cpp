@@ -37,7 +37,7 @@ void Ponto::escalonar(float sx, float sy) {
     y *= sy;
 }
 
-void Ponto::rotacao2D(double angulo) {
+void Ponto::rotacao(double angulo) {
 	double coseno = cos(angulo * 3.14 / 180);
 	double seno = sin(angulo * 3.14 / 180);
 	double nx = x * coseno - y * seno;

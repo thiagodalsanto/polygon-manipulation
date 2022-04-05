@@ -28,7 +28,7 @@ object Form1: TForm1
   end
   object lbMundo: TLabel
     Left = 7
-    Top = 510
+    Top = 509
     Width = 24
     Height = 13
     Margins.Left = 2
@@ -291,8 +291,8 @@ object Form1: TForm1
     TabOrder = 15
     OnClick = rgTipoRetaClick
   end
-  object btnRotation: TButton
-    Left = 752
+  object btRotacionar: TButton
+    Left = 750
     Top = 197
     Width = 72
     Height = 21
@@ -302,7 +302,7 @@ object Form1: TForm1
     Margins.Bottom = 2
     Caption = 'Rotacionar'
     TabOrder = 16
-    OnClick = btnRotationClick
+    OnClick = btRotacionarClick
   end
   object edtAngulo: TEdit
     Left = 650
@@ -354,7 +354,7 @@ object Form1: TForm1
     OnClick = btTransladarClick
   end
   object btEscalonar: TButton
-    Left = 752
+    Left = 750
     Top = 170
     Width = 72
     Height = 23

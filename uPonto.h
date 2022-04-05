@@ -20,7 +20,7 @@ class Ponto {
 
         void escalonar(float sx, float sy);
         void transladar(float dx, float dy);
-		void rotacao2D(double);
+		void rotacao(double angulo);
 	};
 
 #endif

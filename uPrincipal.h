@@ -32,7 +32,7 @@ __published:	// IDE-managed Components
 	TButton *btnZoomMais;
 	TButton *btnZoomMenos;
 	TRadioGroup *rgTipoReta;
-	TButton *btnRotation;
+	TButton *btRotacionar;
 	TEdit *edtAngulo;
 	TEdit *edTransladarX;
 	TEdit *edTransladarY;
@@ -65,7 +65,7 @@ __published:	// IDE-managed Components
 	void __fastcall btnLeftClick(TObject *Sender);
 	void __fastcall btnRigthClick(TObject *Sender);
 	void __fastcall rgTipoRetaClick(TObject *Sender);
-	void __fastcall btnRotationClick(TObject *Sender);
+	void __fastcall btRotacionarClick(TObject *Sender);
 	void __fastcall btTransladarClick(TObject *Sender);
 	void __fastcall btEscalonarClick(TObject *Sender);
 

@@ -34,9 +34,9 @@ class Poligono {
 		void desenhaCirculo(TCanvas*canvas, Janela mundo, Janela vp, int linha);
 		void desenhaPonto(Ponto ponto, TCanvas*canvas, Janela mundo, Janela vp, int tipoReta, int linha);
 
-        void escalonar(float sx, float sy);
-        void transladar(float dx, float dy);
-		void rotacao2D(double angulo);
+		void transladar(float dx, float dy);
+		void escalonar(float sx, float sy);
+		void rotacao(double angulo);
 };
 
 #endif

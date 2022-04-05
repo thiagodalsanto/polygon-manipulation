@@ -206,8 +206,8 @@ void __fastcall TForm1::rgTipoRetaClick(TObject*Sender){
 }
 // ---------------------------------------------------------------------------
 
-void __fastcall TForm1::btnRotationClick(TObject*Sender){
-	display.poligonos[lbPoligonos->ItemIndex].rotacao2D
+void __fastcall TForm1::btRotacionarClick(TObject*Sender){
+	display.poligonos[lbPoligonos->ItemIndex].rotacao
 		((double)(StrToFloat(edtAngulo->Text)));
 	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
 }
@@ -223,9 +223,6 @@ void __fastcall TForm1::btTransladarClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-
-
-
 void __fastcall TForm1::btEscalonarClick(TObject *Sender)
 {
 	float sx, sy;
@@ -236,4 +233,5 @@ void __fastcall TForm1::btEscalonarClick(TObject *Sender)
 	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
 }
 //---------------------------------------------------------------------------
+
 
