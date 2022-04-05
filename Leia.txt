@@ -1,0 +1,9 @@
+- viewport
+
+- translacao, rotacao, escalonamento, reflexao, ponto central (normal e - homogeneas)
+
+- desenho de linhas DDA e Bresenham
+
+- circunferencia de Bresenham
+
+- clipping (cohen e criacaoexibicao de novos poligonos)

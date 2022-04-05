@@ -1,0 +1,172 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 's'
+  ClientHeight = 565
+  ClientWidth = 1014
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PrintScale = poNone
+  PixelsPerInch = 96
+  TextHeight = 13
+  object lbVp: TLabel
+    Left = 25
+    Top = 539
+    Width = 20
+    Height = 13
+    Caption = 'lbVp'
+  end
+  object lbMundo: TLabel
+    Left = 485
+    Top = 539
+    Width = 40
+    Height = 13
+    Caption = 'lbMundo'
+  end
+  object Label1: TLabel
+    Left = 557
+    Top = 29
+    Width = 33
+    Height = 13
+    Caption = 'Pontos'
+  end
+  object Label2: TLabel
+    Left = 557
+    Top = 157
+    Width = 45
+    Height = 13
+    Caption = 'Poligonos'
+  end
+  object label49: TLabel
+    Left = 557
+    Top = 306
+    Width = 22
+    Height = 13
+    Caption = 'xMin'
+  end
+  object Label4: TLabel
+    Left = 736
+    Top = 306
+    Width = 26
+    Height = 13
+    Caption = 'xMax'
+  end
+  object Label5: TLabel
+    Left = 736
+    Top = 392
+    Width = 26
+    Height = 13
+    Caption = 'yMax'
+  end
+  object Label6: TLabel
+    Left = 555
+    Top = 392
+    Width = 22
+    Height = 13
+    Caption = 'yMin'
+  end
+  object btInicio: TButton
+    Left = 800
+    Top = 48
+    Width = 75
+    Height = 25
+    Caption = 'Inicio'
+    TabOrder = 0
+    OnClick = btInicioClick
+  end
+  object Panel1: TPanel
+    Left = 24
+    Top = 8
+    Width = 502
+    Height = 502
+    TabOrder = 1
+    object Image1: TImage
+      Left = 1
+      Top = 1
+      Width = 500
+      Height = 500
+      Align = alClient
+      OnMouseDown = Image1MouseDown
+      OnMouseMove = Image1MouseMove
+      ExplicitLeft = 25
+      ExplicitTop = 0
+    end
+  end
+  object lbPontos: TListBox
+    Left = 557
+    Top = 48
+    Width = 121
+    Height = 97
+    ItemHeight = 13
+    TabOrder = 2
+  end
+  object lbPoligonos: TListBox
+    Left = 557
+    Top = 176
+    Width = 121
+    Height = 97
+    ItemHeight = 13
+    TabOrder = 3
+    OnClick = lbPoligonosClick
+  end
+  object edxMin: TEdit
+    Left = 556
+    Top = 325
+    Width = 121
+    Height = 21
+    TabOrder = 4
+    Text = '-250'
+  end
+  object edxMax: TEdit
+    Left = 736
+    Top = 325
+    Width = 121
+    Height = 21
+    TabOrder = 5
+    Text = '250'
+  end
+  object edyMin: TEdit
+    Left = 556
+    Top = 408
+    Width = 121
+    Height = 21
+    TabOrder = 6
+    Text = '-250'
+  end
+  object edyMax: TEdit
+    Left = 736
+    Top = 408
+    Width = 121
+    Height = 21
+    TabOrder = 7
+    Text = '250'
+  end
+  object Button1: TButton
+    Left = 664
+    Top = 361
+    Width = 81
+    Height = 25
+    Caption = 'Atualiza Mundo'
+    TabOrder = 8
+    OnClick = Button1Click
+  end
+  object rgTipoReta: TRadioGroup
+    Left = 690
+    Top = 96
+    Width = 185
+    Height = 105
+    Caption = 'Tipo de Reta:'
+    ItemIndex = 0
+    Items.Strings = (
+      'MoveTo/LineTo'
+      'DDA'
+      'Bresenham')
+    TabOrder = 9
+    OnClick = rgTipoRetaClick
+  end
+end

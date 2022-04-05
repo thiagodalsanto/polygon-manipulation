@@ -1,0 +1,357 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Projeto CG'
+  ClientHeight = 563
+  ClientWidth = 878
+  Color = clHighlight
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesigned
+  Scaled = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object lbVp: TLabel
+    Left = 464
+    Top = 531
+    Width = 24
+    Height = 13
+    Caption = '(0,0)'
+  end
+  object lbMundo: TLabel
+    Left = 8
+    Top = 531
+    Width = 24
+    Height = 13
+    Caption = '(0,0)'
+  end
+  object Label3: TLabel
+    Left = 516
+    Top = 295
+    Width = 3
+    Height = 13
+  end
+  object GroupBox5: TGroupBox
+    Left = 516
+    Top = 24
+    Width = 354
+    Height = 105
+    Caption = 'Criar Poligono'
+    Color = clMenuHighlight
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 28
+    object Pontos: TLabel
+      Left = 12
+      Top = 12
+      Width = 33
+      Height = 13
+      Caption = 'Pontos'
+    end
+    object Poligonos: TLabel
+      Left = 122
+      Top = 12
+      Width = 45
+      Height = 13
+      Caption = 'Poligonos'
+    end
+  end
+  object GroupBox4: TGroupBox
+    Left = 669
+    Top = 135
+    Width = 201
+    Height = 105
+    Caption = 'Estados de Poligono'
+    Color = clMenuHighlight
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 27
+  end
+  object GroupBox3: TGroupBox
+    Left = 515
+    Top = 278
+    Width = 148
+    Height = 166
+    Caption = 'Mudar Mundo'
+    Color = clMenuHighlight
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 26
+    object Label1: TLabel
+      Left = 89
+      Top = 24
+      Width = 32
+      Height = 13
+      Caption = 'xWMin'
+    end
+    object Label2: TLabel
+      Left = 17
+      Top = 24
+      Width = 32
+      Height = 13
+      Caption = 'yWMin'
+    end
+    object Label5: TLabel
+      Left = 88
+      Top = 70
+      Width = 36
+      Height = 13
+      Caption = 'xWMax'
+    end
+    object Label4: TLabel
+      Left = 17
+      Top = 70
+      Width = 36
+      Height = 13
+      Caption = 'xWMax'
+    end
+  end
+  object btnCreatePolygon: TButton
+    Left = 765
+    Top = 75
+    Width = 82
+    Height = 25
+    Caption = 'Novo Poligono'
+    TabOrder = 0
+    OnClick = btnCreatePolygonClick
+  end
+  object Panel1: TPanel
+    Left = 8
+    Top = 24
+    Width = 502
+    Height = 502
+    TabOrder = 1
+    object Image1: TImage
+      Left = 1
+      Top = 1
+      Width = 500
+      Height = 500
+      Align = alClient
+      OnMouseDown = Image1MouseDown
+      OnMouseMove = Image1MouseMove
+      ExplicitLeft = 2
+    end
+  end
+  object lbPontos: TListBox
+    Left = 524
+    Top = 52
+    Width = 100
+    Height = 68
+    ItemHeight = 13
+    TabOrder = 2
+  end
+  object lbPoligonos: TListBox
+    Left = 633
+    Top = 52
+    Width = 100
+    Height = 68
+    ItemHeight = 13
+    TabOrder = 3
+    OnMouseDown = lbPoligonosMouseDown
+  end
+  object edXWMin: TEdit
+    Left = 603
+    Top = 321
+    Width = 35
+    Height = 21
+    TabOrder = 4
+    Text = '-250'
+  end
+  object edXWMax: TEdit
+    Left = 532
+    Top = 321
+    Width = 35
+    Height = 21
+    TabOrder = 6
+    Text = '250'
+  end
+  object edYWMax: TEdit
+    Left = 533
+    Top = 367
+    Width = 35
+    Height = 21
+    TabOrder = 7
+    Text = '250'
+  end
+  object btnUpdate: TButton
+    Left = 537
+    Top = 405
+    Width = 99
+    Height = 25
+    Caption = 'Atualizar Mundo'
+    TabOrder = 8
+    OnClick = btnUpdateClick
+  end
+  object rgTipoReta: TRadioGroup
+    Left = 515
+    Top = 135
+    Width = 147
+    Height = 137
+    Caption = 'Tipos de Reta'
+    Color = clMenuHighlight
+    ItemIndex = 0
+    Items.Strings = (
+      'Move To/ Line To'
+      'DDA'
+      'Bresenham')
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 15
+    OnClick = rgTipoRetaClick
+  end
+  object btnRotation: TButton
+    Left = 784
+    Top = 205
+    Width = 75
+    Height = 23
+    Caption = 'Rotacionar'
+    TabOrder = 16
+    OnClick = btnRotationClick
+  end
+  object edtAngulo: TEdit
+    Left = 678
+    Top = 207
+    Width = 100
+    Height = 21
+    TabOrder = 17
+    Text = '0'
+  end
+  object edTransladarX: TEdit
+    Left = 678
+    Top = 154
+    Width = 47
+    Height = 21
+    TabOrder = 18
+    Text = '0'
+  end
+  object edTransladarY: TEdit
+    Left = 731
+    Top = 154
+    Width = 47
+    Height = 21
+    TabOrder = 19
+    Text = '0'
+  end
+  object btTransladar: TButton
+    Left = 784
+    Top = 153
+    Width = 75
+    Height = 23
+    Caption = 'Transladar'
+    TabOrder = 20
+    OnClick = btTransladarClick
+  end
+  object btEscalonar: TButton
+    Left = 784
+    Top = 178
+    Width = 75
+    Height = 23
+    Caption = 'Escalonar'
+    TabOrder = 21
+    OnClick = btEscalonarClick
+  end
+  object edEscalonarY: TEdit
+    Left = 731
+    Top = 180
+    Width = 47
+    Height = 21
+    TabOrder = 22
+    Text = '1'
+  end
+  object edEscalonarX: TEdit
+    Left = 678
+    Top = 180
+    Width = 47
+    Height = 21
+    TabOrder = 23
+    Text = '1'
+  end
+  object GroupBox1: TGroupBox
+    Left = 669
+    Top = 246
+    Width = 201
+    Height = 115
+    Caption = 'Comandos'
+    Color = clMenuHighlight
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 24
+  end
+  object btnLeft: TButton
+    Left = 688
+    Top = 290
+    Width = 45
+    Height = 25
+    Caption = 'Left'
+    TabOrder = 10
+    OnClick = btnLeftClick
+  end
+  object btnUp: TButton
+    Left = 745
+    Top = 263
+    Width = 45
+    Height = 25
+    Caption = 'Up'
+    TabOrder = 9
+    OnClick = btnUpClick
+  end
+  object btnDown: TButton
+    Left = 745
+    Top = 317
+    Width = 45
+    Height = 25
+    Caption = 'Down'
+    TabOrder = 12
+    OnClick = btnDownClick
+  end
+  object btnRigth: TButton
+    Left = 802
+    Top = 290
+    Width = 45
+    Height = 25
+    Caption = 'Rigth'
+    TabOrder = 11
+    OnClick = btnRigthClick
+  end
+  object GroupBox2: TGroupBox
+    Left = 669
+    Top = 367
+    Width = 201
+    Height = 77
+    Caption = 'Zoom'
+    Color = clMenuHighlight
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 25
+  end
+  object btnZoomMais: TButton
+    Left = 695
+    Top = 388
+    Width = 61
+    Height = 39
+    Caption = '+ Zoom'
+    TabOrder = 13
+    OnClick = btnZoomMaisClick
+  end
+  object btnZoomMenos: TButton
+    Left = 784
+    Top = 388
+    Width = 61
+    Height = 39
+    Caption = '- Zoom'
+    TabOrder = 14
+    OnClick = btnZoomMenosClick
+  end
+  object edYWMin: TEdit
+    Left = 601
+    Top = 367
+    Width = 35
+    Height = 21
+    TabOrder = 5
+    Text = '-250'
+  end
+end
