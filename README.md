@@ -7,7 +7,7 @@ Um programa feito para manipulação e transformação de poligonos construidos 
  
 ## Funcionalidades
 A programa conta com:
-- Sistemas de Retas Convencionais, DDA e Bressenham
+- Sistemas de Retas Convencionais, DDA e Bresenham
 - Zoom In e Zoom Out
 - Controles de direção do plano cartesiano
 - Atualização do tamanho do plano cartesiano
