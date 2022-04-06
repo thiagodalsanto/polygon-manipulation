@@ -32,9 +32,9 @@ void Ponto::transladar(float dx, float dy) {
 	y += dy;
 }
 
-void Ponto::escalonar(float sx, float sy) {
-	x *= sx;
-    y *= sy;
+void Ponto::escalonar(double dx, double dy) {
+	x *= dx;
+    y *= dy;
 }
 
 void Ponto::rotacao(double angulo) {
@@ -45,4 +45,3 @@ void Ponto::rotacao(double angulo) {
 	x = nx;
 	y = ny;
 }
-

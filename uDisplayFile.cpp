@@ -10,15 +10,11 @@ void DisplayFile::toString(TListBox*local) {
 		local->Items->Clear();
 		for (int x = 0; x < poligonos.size(); x++) {
 				local->Items->Add(poligonos[x].toString());
-				/*
-				 local->Items->Add((IntToStr(poligonos[x].id) + " - " +
-				 poligonos[x].tipo)); */
 			}
 	}
 
 void DisplayFile::desenha(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta)
 	{
-		// Limpa area de desenho
 		canvas->Brush->Color = clWhite;
 		canvas->FillRect(Rect(0, 0, 500, 500));
 

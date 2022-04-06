@@ -179,9 +179,9 @@ void Poligono::transladar(float dx, float dy) {
 	}
 }
 
-void Poligono::escalonar(float sx, float sy) {
+void Poligono::escalonar(double dx, double dy) {
 	for (int x = 0; x < pontos.size(); x++) {
-		pontos[x].escalonar(sx, sy);
+		pontos[x].escalonar(dx, dy);
 	}
 }
 

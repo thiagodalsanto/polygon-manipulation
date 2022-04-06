@@ -18,7 +18,7 @@ class Ponto {
 		int xW2Vp(Janela mundo, Janela vp);
 		int yW2Vp(Janela mundo, Janela vp);
 
-        void escalonar(float sx, float sy);
+        void escalonar(double dx, double dy);
         void transladar(float dx, float dy);
 		void rotacao(double angulo);
 	};

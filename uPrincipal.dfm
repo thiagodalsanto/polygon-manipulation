@@ -2,8 +2,8 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Projeto CG'
-  ClientHeight = 540
-  ClientWidth = 842
+  ClientHeight = 582
+  ClientWidth = 878
   Color = clHighlight
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -48,9 +48,9 @@ object Form1: TForm1
     Margins.Bottom = 2
   end
   object GroupBox5: TGroupBox
-    Left = 496
-    Top = 23
-    Width = 339
+    Left = 494
+    Top = 25
+    Width = 309
     Height = 101
     Margins.Left = 2
     Margins.Top = 2
@@ -85,37 +85,37 @@ object Form1: TForm1
     end
   end
   object GroupBox4: TGroupBox
-    Left = 642
+    Left = 621
     Top = 130
-    Width = 193
+    Width = 182
     Height = 100
     Margins.Left = 2
     Margins.Top = 2
     Margins.Right = 2
     Margins.Bottom = 2
-    Caption = 'Estados de Poligono'
+    Caption = 'Transformar'
     Color = clMenuHighlight
     ParentBackground = False
     ParentColor = False
     TabOrder = 27
   end
   object GroupBox3: TGroupBox
-    Left = 494
-    Top = 266
-    Width = 142
-    Height = 160
+    Left = 496
+    Top = 234
+    Width = 103
+    Height = 135
     Margins.Left = 2
     Margins.Top = 2
     Margins.Right = 2
     Margins.Bottom = 2
-    Caption = 'Mudar Mundo'
+    Caption = 'Coordenadas'
     Color = clMenuHighlight
     ParentBackground = False
     ParentColor = False
     TabOrder = 26
     object Label1: TLabel
-      Left = 85
-      Top = 23
+      Left = 61
+      Top = 17
       Width = 32
       Height = 13
       Margins.Left = 2
@@ -125,8 +125,19 @@ object Form1: TForm1
       Caption = 'xWMin'
     end
     object Label2: TLabel
-      Left = 17
-      Top = 23
+      Left = 9
+      Top = 17
+      Width = 36
+      Height = 13
+      Margins.Left = 2
+      Margins.Top = 2
+      Margins.Right = 2
+      Margins.Bottom = 2
+      Caption = 'xWMax'
+    end
+    object Label5: TLabel
+      Left = 60
+      Top = 59
       Width = 32
       Height = 13
       Margins.Left = 2
@@ -135,32 +146,21 @@ object Form1: TForm1
       Margins.Bottom = 2
       Caption = 'yWMin'
     end
-    object Label5: TLabel
-      Left = 84
-      Top = 67
-      Width = 36
-      Height = 13
-      Margins.Left = 2
-      Margins.Top = 2
-      Margins.Right = 2
-      Margins.Bottom = 2
-      Caption = 'xWMax'
-    end
     object Label4: TLabel
-      Left = 17
-      Top = 67
+      Left = 7
+      Top = 59
       Width = 36
       Height = 13
       Margins.Left = 2
       Margins.Top = 2
       Margins.Right = 2
       Margins.Bottom = 2
-      Caption = 'xWMax'
+      Caption = 'yWMax'
     end
   end
   object btnCreatePolygon: TButton
-    Left = 734
-    Top = 72
+    Left = 715
+    Top = 50
     Width = 80
     Height = 24
     Margins.Left = 2
@@ -193,7 +193,8 @@ object Form1: TForm1
       Align = alClient
       OnMouseDown = Image1MouseDown
       OnMouseMove = Image1MouseMove
-      ExplicitWidth = 480
+      ExplicitLeft = 2
+      ExplicitTop = -15
     end
   end
   object lbPontos: TListBox
@@ -222,8 +223,8 @@ object Form1: TForm1
     OnMouseDown = lbPoligonosMouseDown
   end
   object edXWMin: TEdit
-    Left = 578
-    Top = 308
+    Left = 556
+    Top = 268
     Width = 34
     Height = 21
     Margins.Left = 2
@@ -234,8 +235,8 @@ object Form1: TForm1
     Text = '-250'
   end
   object edXWMax: TEdit
-    Left = 511
-    Top = 308
+    Left = 506
+    Top = 268
     Width = 34
     Height = 21
     Margins.Left = 2
@@ -246,8 +247,8 @@ object Form1: TForm1
     Text = '250'
   end
   object edYWMax: TEdit
-    Left = 511
-    Top = 353
+    Left = 505
+    Top = 310
     Width = 34
     Height = 21
     Margins.Left = 2
@@ -258,9 +259,9 @@ object Form1: TForm1
     Text = '250'
   end
   object btnUpdate: TButton
-    Left = 516
-    Top = 389
-    Width = 95
+    Left = 506
+    Top = 335
+    Width = 85
     Height = 24
     Margins.Left = 2
     Margins.Top = 2
@@ -273,8 +274,8 @@ object Form1: TForm1
   object rgTipoReta: TRadioGroup
     Left = 494
     Top = 130
-    Width = 142
-    Height = 132
+    Width = 123
+    Height = 100
     Margins.Left = 2
     Margins.Top = 2
     Margins.Right = 2
@@ -292,9 +293,9 @@ object Form1: TForm1
     OnClick = rgTipoRetaClick
   end
   object btRotacionar: TButton
-    Left = 750
-    Top = 197
-    Width = 72
+    Left = 729
+    Top = 198
+    Width = 66
     Height = 21
     Margins.Left = 2
     Margins.Top = 2
@@ -305,7 +306,7 @@ object Form1: TForm1
     OnClick = btRotacionarClick
   end
   object edtAngulo: TEdit
-    Left = 650
+    Left = 629
     Top = 199
     Width = 96
     Height = 21
@@ -317,7 +318,7 @@ object Form1: TForm1
     Text = '0'
   end
   object edTransladarX: TEdit
-    Left = 650
+    Left = 629
     Top = 148
     Width = 46
     Height = 21
@@ -329,7 +330,7 @@ object Form1: TForm1
     Text = '0'
   end
   object edTransladarY: TEdit
-    Left = 702
+    Left = 681
     Top = 148
     Width = 44
     Height = 21
@@ -341,9 +342,9 @@ object Form1: TForm1
     Text = '0'
   end
   object btTransladar: TButton
-    Left = 752
+    Left = 729
     Top = 146
-    Width = 72
+    Width = 66
     Height = 23
     Margins.Left = 2
     Margins.Top = 2
@@ -354,9 +355,9 @@ object Form1: TForm1
     OnClick = btTransladarClick
   end
   object btEscalonar: TButton
-    Left = 750
-    Top = 170
-    Width = 72
+    Left = 729
+    Top = 171
+    Width = 66
     Height = 23
     Margins.Left = 2
     Margins.Top = 2
@@ -367,7 +368,7 @@ object Form1: TForm1
     OnClick = btEscalonarClick
   end
   object edEscalonarY: TEdit
-    Left = 702
+    Left = 681
     Top = 173
     Width = 44
     Height = 21
@@ -379,7 +380,7 @@ object Form1: TForm1
     Text = '1'
   end
   object edEscalonarX: TEdit
-    Left = 650
+    Left = 629
     Top = 173
     Width = 46
     Height = 21
@@ -391,24 +392,24 @@ object Form1: TForm1
     Text = '1'
   end
   object GroupBox1: TGroupBox
-    Left = 642
-    Top = 236
-    Width = 193
-    Height = 111
+    Left = 668
+    Top = 234
+    Width = 135
+    Height = 80
     Margins.Left = 2
     Margins.Top = 2
     Margins.Right = 2
     Margins.Bottom = 2
-    Caption = 'Comandos'
+    Caption = 'Mover'
     Color = clMenuHighlight
     ParentBackground = False
     ParentColor = False
     TabOrder = 24
   end
   object btnLeft: TButton
-    Left = 660
-    Top = 278
-    Width = 43
+    Left = 676
+    Top = 265
+    Width = 40
     Height = 24
     Margins.Left = 2
     Margins.Top = 2
@@ -420,8 +421,8 @@ object Form1: TForm1
   end
   object btnUp: TButton
     Left = 715
-    Top = 252
-    Width = 43
+    Top = 256
+    Width = 40
     Height = 24
     Margins.Left = 2
     Margins.Top = 2
@@ -433,8 +434,8 @@ object Form1: TForm1
   end
   object btnDown: TButton
     Left = 715
-    Top = 305
-    Width = 43
+    Top = 278
+    Width = 40
     Height = 24
     Margins.Left = 2
     Margins.Top = 2
@@ -445,9 +446,9 @@ object Form1: TForm1
     OnClick = btnDownClick
   end
   object btnRigth: TButton
-    Left = 770
-    Top = 278
-    Width = 44
+    Left = 755
+    Top = 265
+    Width = 40
     Height = 24
     Margins.Left = 2
     Margins.Top = 2
@@ -458,10 +459,10 @@ object Form1: TForm1
     OnClick = btnRigthClick
   end
   object GroupBox2: TGroupBox
-    Left = 642
-    Top = 353
-    Width = 193
-    Height = 73
+    Left = 603
+    Top = 234
+    Width = 61
+    Height = 80
     Margins.Left = 2
     Margins.Top = 2
     Margins.Right = 2
@@ -473,10 +474,10 @@ object Form1: TForm1
     TabOrder = 25
   end
   object btnZoomMais: TButton
-    Left = 667
-    Top = 372
-    Width = 59
-    Height = 38
+    Left = 612
+    Top = 251
+    Width = 43
+    Height = 24
     Margins.Left = 2
     Margins.Top = 2
     Margins.Right = 2
@@ -486,10 +487,10 @@ object Form1: TForm1
     OnClick = btnZoomMaisClick
   end
   object btnZoomMenos: TButton
-    Left = 752
-    Top = 372
-    Width = 59
-    Height = 38
+    Left = 612
+    Top = 279
+    Width = 43
+    Height = 23
     Margins.Left = 2
     Margins.Top = 2
     Margins.Right = 2
@@ -499,8 +500,8 @@ object Form1: TForm1
     OnClick = btnZoomMenosClick
   end
   object edYWMin: TEdit
-    Left = 577
-    Top = 353
+    Left = 556
+    Top = 310
     Width = 34
     Height = 21
     Margins.Left = 2
