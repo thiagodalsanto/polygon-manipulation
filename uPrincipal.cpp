@@ -232,6 +232,17 @@ void __fastcall TForm1::btEscalonarClick(TObject *Sender){
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TForm1::btnRefleteHClick(TObject *Sender)
+{
+	display.poligonos[lbPoligonos->ItemIndex].escalonar(-1, 1);
+	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
+}
+//---------------------------------------------------------------------------
 
-
+void __fastcall TForm1::btnRefleteVClick(TObject *Sender)
+{
+   	display.poligonos[lbPoligonos->ItemIndex].escalonar(1, -1);
+	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
+}
+//---------------------------------------------------------------------------
 

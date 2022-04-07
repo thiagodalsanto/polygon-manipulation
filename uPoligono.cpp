@@ -190,3 +190,9 @@ void Poligono::rotacao(double angulo) {
 		pontos[x].rotacao(angulo);
 	}
 }
+
+void Poligono::reflexao(double dx, double dy) {
+		for (int x = 0; x < pontos.size(); x++) {
+			pontos[x].transladar(dx, dy);
+		}
+}

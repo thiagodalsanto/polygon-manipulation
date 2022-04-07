@@ -47,6 +47,17 @@ object Form1: TForm1
     Margins.Right = 2
     Margins.Bottom = 2
   end
+  object GroupBox6: TGroupBox
+    Left = 602
+    Top = 235
+    Width = 135
+    Height = 78
+    Caption = 'Reflex'#227'o'
+    Color = clMenuHighlight
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 31
+  end
   object GroupBox5: TGroupBox
     Left = 494
     Top = 25
@@ -88,7 +99,7 @@ object Form1: TForm1
     Left = 621
     Top = 130
     Width = 182
-    Height = 100
+    Height = 99
     Margins.Left = 2
     Margins.Top = 2
     Margins.Right = 2
@@ -392,8 +403,8 @@ object Form1: TForm1
     Text = '1'
   end
   object GroupBox1: TGroupBox
-    Left = 668
-    Top = 234
+    Left = 603
+    Top = 318
     Width = 135
     Height = 80
     Margins.Left = 2
@@ -407,8 +418,8 @@ object Form1: TForm1
     TabOrder = 24
   end
   object btnLeft: TButton
-    Left = 676
-    Top = 265
+    Left = 611
+    Top = 349
     Width = 40
     Height = 24
     Margins.Left = 2
@@ -420,8 +431,8 @@ object Form1: TForm1
     OnClick = btnLeftClick
   end
   object btnUp: TButton
-    Left = 715
-    Top = 256
+    Left = 650
+    Top = 340
     Width = 40
     Height = 24
     Margins.Left = 2
@@ -433,8 +444,8 @@ object Form1: TForm1
     OnClick = btnUpClick
   end
   object btnDown: TButton
-    Left = 715
-    Top = 278
+    Left = 650
+    Top = 362
     Width = 40
     Height = 24
     Margins.Left = 2
@@ -446,8 +457,8 @@ object Form1: TForm1
     OnClick = btnDownClick
   end
   object btnRigth: TButton
-    Left = 755
-    Top = 265
+    Left = 690
+    Top = 349
     Width = 40
     Height = 24
     Margins.Left = 2
@@ -459,8 +470,8 @@ object Form1: TForm1
     OnClick = btnRigthClick
   end
   object GroupBox2: TGroupBox
-    Left = 603
-    Top = 234
+    Left = 742
+    Top = 233
     Width = 61
     Height = 80
     Margins.Left = 2
@@ -474,8 +485,8 @@ object Form1: TForm1
     TabOrder = 25
   end
   object btnZoomMais: TButton
-    Left = 612
-    Top = 251
+    Left = 751
+    Top = 250
     Width = 43
     Height = 24
     Margins.Left = 2
@@ -487,8 +498,8 @@ object Form1: TForm1
     OnClick = btnZoomMaisClick
   end
   object btnZoomMenos: TButton
-    Left = 612
-    Top = 279
+    Left = 751
+    Top = 278
     Width = 43
     Height = 23
     Margins.Left = 2
@@ -510,5 +521,23 @@ object Form1: TForm1
     Margins.Bottom = 2
     TabOrder = 5
     Text = '-250'
+  end
+  object btnRefleteV: TButton
+    Left = 610
+    Top = 250
+    Width = 115
+    Height = 25
+    Caption = 'Reflex'#227'o Vertical'
+    TabOrder = 29
+    OnClick = btnRefleteVClick
+  end
+  object btnRefleteH: TButton
+    Left = 610
+    Top = 280
+    Width = 115
+    Height = 25
+    Caption = 'Reflex'#227'o Horizontal'
+    TabOrder = 30
+    OnClick = btnRefleteHClick
   end
 end

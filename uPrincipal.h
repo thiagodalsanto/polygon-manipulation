@@ -51,6 +51,9 @@ __published:	// IDE-managed Components
 	TGroupBox *GroupBox5;
 	TLabel *Pontos;
 	TLabel *Poligonos;
+	TButton *btnRefleteV;
+	TButton *btnRefleteH;
+	TGroupBox *GroupBox6;
 	void __fastcall btnCreatePolygonClick(TObject *Sender);
 	void __fastcall Image1MouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
 	void __fastcall Image1MouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
@@ -68,6 +71,8 @@ __published:	// IDE-managed Components
 	void __fastcall btRotacionarClick(TObject *Sender);
 	void __fastcall btTransladarClick(TObject *Sender);
 	void __fastcall btEscalonarClick(TObject *Sender);
+	void __fastcall btnRefleteHClick(TObject *Sender);
+	void __fastcall btnRefleteVClick(TObject *Sender);
 
 
 private:	// User declarations

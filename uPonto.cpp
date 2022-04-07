@@ -34,7 +34,7 @@ void Ponto::transladar(float dx, float dy) {
 
 void Ponto::escalonar(double dx, double dy) {
 	x *= dx;
-    y *= dy;
+	y *= dy;
 }
 
 void Ponto::rotacao(double angulo) {
@@ -45,3 +45,22 @@ void Ponto::rotacao(double angulo) {
 	x = nx;
 	y = ny;
 }
+
+void Ponto::reflexao(double dx, double dy) {
+		if (dx < 0)
+			x *= dx;
+		if (dy < 0)
+			y *= dy;
+		if (dx < 0 && dy < 0) {
+			x *= dx;
+			y *= dy;
+		}
+}
+
+/*
+void __fastcall TForm1::btnRefleteVClick(TObject *Sender)
+{
+	display.poligonos[lbPoligonos->ItemIndex].escalonar(1, -1);
+	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
+}
+*/
