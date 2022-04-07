@@ -173,6 +173,27 @@ void Poligono::bresenham(TCanvas*canvas, Janela mundo, Janela vp, int linha) {
 	}
 }
 
+void Poligono::circunferencia(double xc, double yc, double raio) {
+	int x, y, p;
+	x = 0;
+	y = raio;
+	inserePontoCircunferencia(xc, yc, x, y);
+	p = 1 - raio;
+	while (x < y) {
+		if (p < 0)
+			x++;
+		else {
+			x++;
+			y--;
+		}
+		if (p < 0)
+			p += 2 * x + 1;
+		else
+			p += 2*(x - y) + 1;
+		inserePontoCircunferencia(xc, yc, x, y);
+	}
+}
+
 void Poligono::transladar(float dx, float dy) {
 	for (int x = 0; x < pontos.size(); x++) {
 		pontos[x].transladar(dx, dy);
@@ -189,4 +210,10 @@ void Poligono::rotacao(double angulo) {
 	for (int x = 0; x < pontos.size(); x++) {
 		pontos[x].rotacao(angulo);
 	}
+}
+
+void Poligono::reflexao(double dx, double dy) {
+		for (int x = 0; x < pontos.size(); x++) {
+			pontos[x].transladar(dx, dy);
+		}
 }

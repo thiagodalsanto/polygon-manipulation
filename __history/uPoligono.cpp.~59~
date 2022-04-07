@@ -192,7 +192,7 @@ void Poligono::rotacao(double angulo) {
 }
 
 void Poligono::reflexao(double dx, double dy) {
-	for (int x = 0; x < pontos.size(); x++) {
-		pontos[x].translada(dx, dy);
-	}
+		for (int x = 0; x < pontos.size(); x++) {
+			pontos[x].transladar(dx, dy);
+		}
 }

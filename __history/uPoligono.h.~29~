@@ -31,12 +31,15 @@ class Poligono {
 		void DDA(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta);
 		void bresenham(TCanvas*canvas, Janela mundo, Janela vp, int linha);
 
+        void circunferencia(double xc, double yc, double raio);
+
 		void desenhaCirculo(TCanvas*canvas, Janela mundo, Janela vp, int linha);
 		void desenhaPonto(Ponto ponto, TCanvas*canvas, Janela mundo, Janela vp, int tipoReta, int linha);
 
-        void escalonar(float sx, float sy);
-        void transladar(float dx, float dy);
-		void rotacao2D(double angulo);
+        void reflexao(double dx, double dy);
+		void transladar(float dx, float dy);
+		void escalonar(double dx, double dy);
+		void rotacao(double angulo);
 };
 
 #endif

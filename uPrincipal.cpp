@@ -22,7 +22,7 @@ Janela mundo(-250, -250, 250, 250);
 Poligono pol;
 DisplayFile display;
 
-bool incluir = false;
+bool incluir = false, circulo = false;
 int contaId = 0;
 // ---------------------------------------------------------------------------
 

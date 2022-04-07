@@ -56,7 +56,7 @@ void Poligono::lineTo(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) {
 
 		else {
 				canvas->Pen->Color = clBlue;
-				canvas->Pen->Width = 1;
+				canvas->Pen->Width = 5;
 		}
 
 		if (i == 0) {
@@ -179,9 +179,9 @@ void Poligono::transladar(float dx, float dy) {
 	}
 }
 
-void Poligono::escalonar(float sx, float sy) {
+void Poligono::escalonar(double dx, double dy) {
 	for (int x = 0; x < pontos.size(); x++) {
-		pontos[x].escalonar(sx, sy);
+		pontos[x].escalonar(dx, dy);
 	}
 }
 
@@ -189,4 +189,10 @@ void Poligono::rotacao(double angulo) {
 	for (int x = 0; x < pontos.size(); x++) {
 		pontos[x].rotacao(angulo);
 	}
+}
+
+void Poligono::reflexao(double dx, double dy) {
+		for (int x = 0; x < pontos.size(); x++) {
+			pontos[x].transladar(dx, dy);
+		}
 }

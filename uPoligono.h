@@ -25,13 +25,11 @@ class Poligono {
 		UnicodeString toString();
 
 		void desenha(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta);
-		Poligono circunferencia(double xc, double yc, int radio);
 
 		void lineTo(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta);
 		void DDA(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta);
 		void bresenham(TCanvas*canvas, Janela mundo, Janela vp, int linha);
 
-		void desenhaCirculo(TCanvas*canvas, Janela mundo, Janela vp, int linha);
 		void desenhaPonto(Ponto ponto, TCanvas*canvas, Janela mundo, Janela vp, int tipoReta, int linha);
 
         void reflexao(double dx, double dy);
