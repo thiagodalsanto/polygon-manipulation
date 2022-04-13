@@ -5,6 +5,7 @@
 
 #include <vector>
 #include "uPoligono.h"
+#include "uJanela.h"
 #include <Vcl.StdCtrls.hpp>
 //---------------------------------------------------------------------------
 class DisplayFile{
@@ -12,7 +13,7 @@ class DisplayFile{
 	std::vector<Poligono> poligonos;
 
 	void toString(TListBox *local);
-    void desenha(TCanvas *canvas, Janela mundo, Janela vp, int tipoReta);
+	void desenha(TCanvas *canvas, Janela mundo, Janela vp, int tipoReta);
 };
 
 #endif

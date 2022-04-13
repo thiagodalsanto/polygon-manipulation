@@ -1,8 +1,8 @@
 // ---------------------------------------------------------------------------
-
 #pragma hdrstop
 
 #include "uPoligono.h"
+#include <math.h>
 // ---------------------------------------------------------------------------
 #pragma package(smart_init)
 
@@ -195,4 +195,78 @@ void Poligono::reflexao(double dx, double dy) {
 		for (int x = 0; x < pontos.size(); x++) {
 			pontos[x].transladar(dx, dy);
 		}
+}
+
+void Poligono::rotacaoHomogenea(double angulo) {
+		double radiano = angulo * M_PI / 180;
+		double deslocamentoX, deslocamentoY;
+		double xAnterior;
+		double matrizRotacao[3][3] =
+			{
+					{cos(radiano), sin(radiano), 0},
+					{-sin(radiano), cos(radiano), 0},
+					{0, 0, 1}
+			};
+
+		Ponto centroPoligono = centro();
+		deslocamentoX = centroPoligono.x;
+		deslocamentoY = centroPoligono.y;
+
+		double matrizTranslacao[3][3] =
+			{
+					{1, 0, 0},
+					{0, 1, 0},
+					{deslocamentoX, deslocamentoY, 1}
+			};
+
+		double matrizTranslacaoNegativa[3][3] =
+			{
+					{1, 0, 0},
+					{0, 1, 0},
+					{-deslocamentoX, -deslocamentoY, 1}
+			};
+
+		double matrizXY[1][3] = {0, 0, 1};
+		double matrizAuxiliar[1][3] = {0, 0, 1};
+
+		multiplicacaoMatriz(matrizAuxiliar, matrizXY, matrizTranslacaoNegativa);
+		multiplicacaoMatriz(matrizAuxiliar, matrizXY, matrizRotacao);
+		multiplicacaoMatriz(matrizAuxiliar, matrizXY, matrizTranslacao);
+	}
+
+void Poligono::multiplicacaoMatriz(double matrizAuxiliar[1][3],
+	double matrizUm[1][3], double matrizDois[3][3]) {
+
+		for (int i = 0; i < pontos.size(); i++) {
+				matrizUm[0][0] = pontos[i].x;
+				matrizUm[0][1] = pontos[i].y;
+
+				for (int l = 0; l < 1; l++) {
+						for (int c = 0; c < 3; c++) {
+								matrizAuxiliar[l][c] = 0;
+								for (int w = 0; w < 3; w++) {
+										matrizAuxiliar[l][c] =
+										matrizAuxiliar[l][c] + matrizUm[l][w]
+										* matrizDois[w][c];
+								}
+						}
+				}
+				pontos[i].x = matrizAuxiliar[0][0];
+				pontos[i].y = matrizAuxiliar[0][1];
+		}
+}
+
+Ponto Poligono::centro() {
+		double somaX = 0;
+		double somaY = 0;
+
+		for (int i = 0; i < pontos.size(); i++) {
+				somaX += pontos[i].x;
+				somaY += pontos[i].y;
+			}
+
+		somaX = somaX / pontos.size();
+		somaY = somaY / pontos.size();
+
+		return Ponto(somaX, somaY);
 }

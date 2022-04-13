@@ -57,10 +57,3 @@ void Ponto::reflexao(double dx, double dy) {
 		}
 }
 
-/*
-void __fastcall TForm1::btnRefleteVClick(TObject *Sender)
-{
-	display.poligonos[lbPoligonos->ItemIndex].escalonar(1, -1);
-	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
-}
-*/

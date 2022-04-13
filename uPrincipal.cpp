@@ -4,26 +4,26 @@
 #pragma hdrstop
 
 #include "uPrincipal.h"
-#include "uPonto.h"
 #include "uJanela.h"
-#include "uPoligono.h"
+#include "uPonto.h"
 #include "uDisplayFile.h"
-#include "uDDA.h"
-
+#include "uPoligono.h"
+#include <vector>
 // ---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 
-TForm1*Form1;
+TedtHomogenea*edtHomogenea;
+
+Poligono pol;
+DisplayFile display;
+
+int contaId = 0;
+bool incluir = false;
 
 Ponto aux;
 Janela vp(0, 0, 500, 500);
 Janela mundo(-250, -250, 250, 250);
-Poligono pol;
-DisplayFile display;
-
-bool incluir = false, circulo = false;
-int contaId = 0;
 // ---------------------------------------------------------------------------
 
 double xVp2W(int x, Janela mundo, Janela vp) {
@@ -36,7 +36,7 @@ double yVp2W(int y, Janela mundo, Janela vp) {
 		(mundo.ymax - mundo.ymin) + mundo.ymin;
 }
 
-__fastcall TForm1::TForm1(TComponent*Owner)
+__fastcall TedtHomogenea::TedtHomogenea(TComponent*Owner)
 	:TForm(Owner){
 	Image1->Canvas->Brush->Color = clWhite;
 	Image1->Canvas->FillRect(Rect(0, 0, 500, 500));
@@ -67,12 +67,12 @@ __fastcall TForm1::TForm1(TComponent*Owner)
 }
 
 // ---------------------------------------------------------------------------
-void __fastcall TForm1::btnCreatePolygonClick(TObject*Sender){
+void __fastcall TedtHomogenea::btnCreatePolygonClick(TObject*Sender){
 	incluir = true;
 }
 
 // ---------------------------------------------------------------------------
-void __fastcall TForm1::Image1MouseMove(TObject *Sender, TShiftState Shift, int X,
+void __fastcall TedtHomogenea::Image1MouseMove(TObject *Sender, TShiftState Shift, int X,
 		  int Y)
 {
    double nx, ny;
@@ -88,7 +88,7 @@ void __fastcall TForm1::Image1MouseMove(TObject *Sender, TShiftState Shift, int 
 }
 // ---------------------------------------------------------------------------
 
-void __fastcall TForm1::Image1MouseDown(TObject*Sender, TMouseButton Button,
+void __fastcall TedtHomogenea::Image1MouseDown(TObject*Sender, TMouseButton Button,
 	TShiftState Shift,
 	int X, int Y){
 
@@ -118,17 +118,18 @@ void __fastcall TForm1::Image1MouseDown(TObject*Sender, TMouseButton Button,
 					pol.pontos.clear();
 				}
 		}
+
 }
 // ---------------------------------------------------------------------------
 
 
-void __fastcall TForm1::lbPoligonosMouseDown(TObject*Sender, TMouseButton Button,
+void __fastcall TedtHomogenea::lbPoligonosMouseDown(TObject*Sender, TMouseButton Button,
 	TShiftState Shift, int X, int Y){
 	display.poligonos[lbPoligonos->ItemIndex].toString(lbPontos);
 }
 // ---------------------------------------------------------------------------
 
-void __fastcall TForm1::btnUpdateClick(TObject*Sender){
+void __fastcall TedtHomogenea::btnUpdateClick(TObject*Sender){
 	mundo.xmin = StrToFloat(edXWMin->Text);
 	mundo.ymin = StrToFloat(edYWMin->Text);
 	mundo.xmax = StrToFloat(edXWMax->Text);
@@ -138,7 +139,7 @@ void __fastcall TForm1::btnUpdateClick(TObject*Sender){
 }
 // ---------------------------------------------------------------------------
 
-void TForm1::AtualizaMundo() {
+void TedtHomogenea::AtualizaMundo() {
 	edXWMin->Text = FloatToStr(mundo.ymin);
 	edXWMax->Text = FloatToStr(mundo.ymax);
 
@@ -155,35 +156,35 @@ void TForm1::AtualizaMundo() {
 }
 
 // ---------------------------------------------------------------------------
-void __fastcall TForm1::btnUpClick(TObject*Sender){
+void __fastcall TedtHomogenea::btnUpClick(TObject*Sender){
 	mundo.ymin += 10;
 	mundo.ymax += 10;
 	AtualizaMundo();
 }
 
 // ---------------------------------------------------------------------------
-void __fastcall TForm1::btnDownClick(TObject*Sender){
+void __fastcall TedtHomogenea::btnDownClick(TObject*Sender){
 	mundo.ymin -= 10;
 	mundo.ymax -= 10;
 	AtualizaMundo();
 }
 
 // ---------------------------------------------------------------------------
-void __fastcall TForm1::btnLeftClick(TObject*Sender){
+void __fastcall TedtHomogenea::btnLeftClick(TObject*Sender){
 	mundo.xmin -= 10;
 	mundo.xmax -= 10;
 	AtualizaMundo();
 }
 // ---------------------------------------------------------------------------
 
-void __fastcall TForm1::btnRigthClick(TObject*Sender){
+void __fastcall TedtHomogenea::btnRigthClick(TObject*Sender){
 	mundo.xmin += 10;
 	mundo.xmax += 10;
 	AtualizaMundo();
 }
 
 // ---------------------------------------------------------------------------
-void __fastcall TForm1::btnZoomMaisClick(TObject*Sender){
+void __fastcall TedtHomogenea::btnZoomMaisClick(TObject*Sender){
 	mundo.xmin += 10;
 	mundo.xmax -= 10;
 	mundo.ymin += 10;
@@ -192,7 +193,7 @@ void __fastcall TForm1::btnZoomMaisClick(TObject*Sender){
 }
 
 // ---------------------------------------------------------------------------
-void __fastcall TForm1::btnZoomMenosClick(TObject*Sender){
+void __fastcall TedtHomogenea::btnZoomMenosClick(TObject*Sender){
 	mundo.xmin -= 10;
 	mundo.xmax += 10;
 	mundo.ymin -= 10;
@@ -201,18 +202,18 @@ void __fastcall TForm1::btnZoomMenosClick(TObject*Sender){
 }
 
 // ---------------------------------------------------------------------------
-void __fastcall TForm1::rgTipoRetaClick(TObject*Sender){
+void __fastcall TedtHomogenea::rgTipoRetaClick(TObject*Sender){
 	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
 }
 // ---------------------------------------------------------------------------
 
-void __fastcall TForm1::btRotacionarClick(TObject*Sender){
+void __fastcall TedtHomogenea::btRotacionarClick(TObject*Sender){
 	display.poligonos[lbPoligonos->ItemIndex].rotacao
 		((double)(StrToFloat(edtAngulo->Text)));
 	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
 }
 // ---------------------------------------------------------------------------
-void __fastcall TForm1::btTransladarClick(TObject *Sender){
+void __fastcall TedtHomogenea::btTransladarClick(TObject *Sender){
 	float dx, dy;
 
 	dx = StrToFloat(edTransladarX->Text);
@@ -222,7 +223,7 @@ void __fastcall TForm1::btTransladarClick(TObject *Sender){
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TForm1::btEscalonarClick(TObject *Sender){
+void __fastcall TedtHomogenea::btEscalonarClick(TObject *Sender){
 	double dx, dy;
 
 	dx = StrToFloat(edEscalonarX->Text);
@@ -232,17 +233,25 @@ void __fastcall TForm1::btEscalonarClick(TObject *Sender){
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TForm1::btnRefleteHClick(TObject *Sender)
+void __fastcall TedtHomogenea::btnRefleteHClick(TObject *Sender)
 {
 	display.poligonos[lbPoligonos->ItemIndex].escalonar(-1, 1);
 	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TForm1::btnRefleteVClick(TObject *Sender)
+void __fastcall TedtHomogenea::btnRefleteVClick(TObject *Sender)
 {
    	display.poligonos[lbPoligonos->ItemIndex].escalonar(1, -1);
 	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TedtHomogenea::btnRotacionarClick(TObject *Sender)
+{
+	if (lbPoligonos->ItemIndex > -1) {
+		display.poligonos[lbPoligonos->ItemIndex].rotacaoHomogenea(StrToFloat(edtHomogenea->Text));
+		display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
+	}
+}
+//---------------------------------------------------------------------------
