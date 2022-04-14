@@ -1,4 +1,4 @@
-![logo_polygon-manipulation](https://i.ibb.co/YN1z671/hour.png)
+# Poligon Manipulation
 
 ## Descrição
 <p align="justify">
