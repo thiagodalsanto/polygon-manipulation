@@ -56,6 +56,8 @@ __published:	// IDE-managed Components
 	TGroupBox *GroupBox6;
 	TButton *btnRotacionar;
 	TEdit *edtHomogenea;
+	TRadioGroup *rgCurvas;
+	TButton *btnCriarCurvas;
 	void __fastcall btnCreatePolygonClick(TObject *Sender);
 	void __fastcall Image1MouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
 	void __fastcall Image1MouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
@@ -76,6 +78,7 @@ __published:	// IDE-managed Components
 	void __fastcall btnRefleteHClick(TObject *Sender);
 	void __fastcall btnRefleteVClick(TObject *Sender);
 	void __fastcall btnRotacionarClick(TObject *Sender);
+	void __fastcall btnCriarCurvasClick(TObject *Sender);
 
 
 private:	// User declarations

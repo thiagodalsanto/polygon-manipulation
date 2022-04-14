@@ -18,12 +18,12 @@ TedtHomogenea*edtHomogenea;
 Poligono pol;
 DisplayFile display;
 
-int contaId = 0;
-bool incluir = false;
-
 Ponto aux;
 Janela vp(0, 0, 500, 500);
 Janela mundo(-250, -250, 250, 250);
+
+int contaId = 0;
+bool incluir = false, novo = false;
 // ---------------------------------------------------------------------------
 
 double xVp2W(int x, Janela mundo, Janela vp) {
@@ -253,5 +253,66 @@ void __fastcall TedtHomogenea::btnRotacionarClick(TObject *Sender)
 		display.poligonos[lbPoligonos->ItemIndex].rotacaoHomogenea(StrToFloat(edtHomogenea->Text));
 		display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
 	}
+}
+//---------------------------------------------------------------------------
+void __fastcall TedtHomogenea::btnCriarCurvasClick(TObject *Sender)
+{
+	if (lbPoligonos->ItemIndex > 2)
+		switch (rgCurvas->ItemIndex) {
+		case 0:
+			display.poligonos[lbPoligonos->ItemIndex].casteljau(&pol);
+			pol.id = contaId++;
+			pol.tipo = 'P';
+
+			display.poligonos.push_back(pol);
+			pol.pontos.clear();
+			display.toString(lbPoligonos);
+			display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
+			break;
+
+		case 1:
+			display.poligonos[lbPoligonos->ItemIndex].bezier(&pol);
+			pol.id = contaId++;
+			pol.tipo = 'P';
+
+			display.poligonos.push_back(pol);
+			pol.pontos.clear();
+			display.toString(lbPoligonos);
+			display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
+			break;
+
+		case 2:
+			display.poligonos[lbPoligonos->ItemIndex].hermite(&pol);
+			pol.id = contaId++;
+			pol.tipo = 'P';
+
+			display.poligonos.push_back(pol);
+			pol.pontos.clear();
+			display.toString(lbPoligonos);
+			display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
+			break;
+
+		case 3:
+			display.poligonos[lbPoligonos->ItemIndex].Bspline(&pol);
+			pol.id = contaId++;
+			pol.tipo = 'P';
+
+			display.poligonos.push_back(pol);
+			pol.pontos.clear();
+			display.toString(lbPoligonos);
+			display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
+			break;
+
+		case 4:
+			display.poligonos[lbPoligonos->ItemIndex].forward(&pol);
+			pol.id = contaId++;
+			pol.tipo = 'P';
+
+			display.poligonos.push_back(pol);
+			pol.pontos.clear();
+			display.toString(lbPoligonos);
+			display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
+			break;
+		}
 }
 //---------------------------------------------------------------------------

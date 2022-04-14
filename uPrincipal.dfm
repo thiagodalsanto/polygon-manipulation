@@ -283,7 +283,7 @@ object edtHomogenea: TedtHomogenea
     OnClick = btnUpdateClick
   end
   object rgTipoReta: TRadioGroup
-    Left = 494
+    Left = 493
     Top = 130
     Width = 123
     Height = 100
@@ -556,5 +556,31 @@ object edtHomogenea: TedtHomogenea
     Height = 21
     TabOrder = 33
     Text = '0'
+  end
+  object rgCurvas: TRadioGroup
+    Left = 495
+    Top = 431
+    Width = 185
+    Height = 105
+    Caption = 'Curvas'
+    Color = clMenuHighlight
+    Items.Strings = (
+      'Castejau'
+      'Bezier'
+      'Hermite'
+      'B-Spline'
+      'Forward')
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 34
+  end
+  object btnCriarCurvas: TButton
+    Left = 590
+    Top = 479
+    Width = 75
+    Height = 25
+    Caption = 'Criar Curvas'
+    TabOrder = 35
+    OnClick = btnCriarCurvasClick
   end
 end

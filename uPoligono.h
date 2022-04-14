@@ -30,18 +30,22 @@ class Poligono {
 		void DDA(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta);
 		void bresenham(TCanvas*canvas, Janela mundo, Janela vp, int linha);
 
-		void desenhaPonto(Ponto ponto, TCanvas*canvas, Janela mundo, Janela vp, int tipoReta, int linha);
-
-		void reflexao(double dx, double dy);
 		void transladar(float dx, float dy);
 		void escalonar(double dx, double dy);
 		void rotacao(double angulo);
+		void reflexao(double dx, double dy);
 
 		void rotacaoHomogenea(double angulo);
-		void multiplicacaoMatriz(double matrizAuxiliar[1][3],
-			double matrizUm[1][3], double matrizDois[3][3]);
+		void multiplicacaoMatriz(double matrizAuxiliar[1][3], double matrizUm[1][3], double matrizDois[3][3]);
 		Ponto centro();
 
+		void casteljau(Poligono *pol);
+		void casteljau3p(Ponto p0, Ponto p1, Ponto p2);
+		double calculaDistancia(double x1, double y1, double x2, double y2);
+		void hermite(Poligono *pol);
+		void bezier(Poligono *pol);
+		void Bspline(Poligono *pol);
+		void forward(Poligono *pol);
 };
 
 #endif
