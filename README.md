@@ -12,6 +12,8 @@ A programa conta com:
 - Controles de direção do plano cartesiano
 - Atualização do tamanho do plano cartesiano
 - Transformações de Escalonamento, Translação e Rotação
+- Duas formas de Rotação: No Mesmo Eixo e No Eixo do Plano Cartesiano
+- Reflexão Vertical e Horizontal 
 
 ![video_funcionamento_polygon-manipulation](https://media1.giphy.com/media/WKLDLeT8VQkLjNJGpS/giphy.gif)
 
