@@ -15,6 +15,7 @@ A programa conta com:
 - Duas formas de Rotação: No Mesmo Eixo e No Eixo do Plano Cartesiano
 - Reflexão Vertical e Horizontal 
 - Curvas de Casteujal, Hermite, Bezier, B-Spline e Forward
+- Clipping
 
 ![video_funcionamento_polygon-manipulation](https://media1.giphy.com/media/WKLDLeT8VQkLjNJGpS/giphy.gif)
 
