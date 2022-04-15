@@ -1,4 +1,4 @@
-![logo_polygon-manipulation](https://i.ibb.co/YN1z671/hour.png)
+# Poligon Manipulation
 
 ## Descrição
 <p align="justify">
@@ -14,6 +14,7 @@ A programa conta com:
 - Transformações de Escalonamento, Translação e Rotação
 - Duas formas de Rotação: No Mesmo Eixo e No Eixo do Plano Cartesiano
 - Reflexão Vertical e Horizontal 
+- Curvas de Casteujal, Hermite, Bezier, B-Spline e Forward
 
 ![video_funcionamento_polygon-manipulation](https://media1.giphy.com/media/WKLDLeT8VQkLjNJGpS/giphy.gif)
 
