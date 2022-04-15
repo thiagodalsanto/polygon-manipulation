@@ -14,6 +14,7 @@ class DisplayFile{
 
 	void toString(TListBox *local);
 	void desenha(TCanvas *canvas, Janela mundo, Janela vp, int tipoReta);
+
 };
 
 #endif

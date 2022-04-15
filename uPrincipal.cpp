@@ -7,7 +7,6 @@
 #include "uJanela.h"
 #include "uPonto.h"
 #include "uDisplayFile.h"
-#include "uPoligono.h"
 #include <vector>
 // ---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -15,15 +14,17 @@
 
 TedtHomogenea*edtHomogenea;
 
-Poligono pol;
+Poligono pol, clip1, clip2;
 DisplayFile display;
 
 Ponto aux;
 Janela vp(0, 0, 500, 500);
 Janela mundo(-250, -250, 250, 250);
+Janela clipping(-100, -100, 100, 100);
 
 int contaId = 0;
-bool incluir = false, novo = false;
+bool incluir = false;
+#include "uPoligono.h"
 // ---------------------------------------------------------------------------
 
 double xVp2W(int x, Janela mundo, Janela vp) {
@@ -38,32 +39,38 @@ double yVp2W(int y, Janela mundo, Janela vp) {
 
 __fastcall TedtHomogenea::TedtHomogenea(TComponent*Owner)
 	:TForm(Owner){
-	Image1->Canvas->Brush->Color = clWhite;
-	Image1->Canvas->FillRect(Rect(0, 0, 500, 500));
 
-	Image1->Canvas->Pen->Color = clBlack;
-	Image1->Canvas->Pen->Width = 1;
-
+	// Eixo Vertical
+	pol.id = contaId++;
+	pol.tipo = 'E';
 	pol.pontos.push_back(Ponto(0, mundo.ymax));
 	pol.pontos.push_back(Ponto(0, mundo.ymin));
 
-	pol.id = contaId++;
-	pol.tipo = 'E';
 	display.poligonos.push_back(pol);
 	pol.pontos.clear();
 
+	// Eixo Horizontal
+	pol.id = contaId++;
+	pol.tipo = 'E';
 	pol.pontos.push_back(Ponto(mundo.xmin, 0));
 	pol.pontos.push_back(Ponto(mundo.xmax, 0));
 
-	pol.id = contaId++;
-	pol.tipo = 'E';
 	display.poligonos.push_back(pol);
 	pol.pontos.clear();
-	pol.tipo = 'N';
+
+    // Clipping
+	pol.pontos.push_back(Ponto(clipping.xmin, clipping.ymin));
+	pol.pontos.push_back(Ponto(clipping.xmin, clipping.ymax));
+	pol.pontos.push_back(Ponto(clipping.xmax, clipping.ymax));
+	pol.pontos.push_back(Ponto(clipping.xmax, clipping.ymin));
+	pol.pontos.push_back(Ponto(clipping.xmin, clipping.ymin));
+	pol.id = contaId++;
+	pol.tipo = 'C';
+	display.poligonos.push_back(pol);
+	pol.pontos.clear();
 
 	display.toString(lbPoligonos);
 	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
-
 }
 
 // ---------------------------------------------------------------------------
@@ -246,15 +253,6 @@ void __fastcall TedtHomogenea::btnRefleteVClick(TObject *Sender)
 	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
 }
 //---------------------------------------------------------------------------
-
-void __fastcall TedtHomogenea::btnRotacionarClick(TObject *Sender)
-{
-	if (lbPoligonos->ItemIndex > -1) {
-		display.poligonos[lbPoligonos->ItemIndex].rotacaoHomogenea(StrToFloat(edtHomogenea->Text));
-		display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
-	}
-}
-//---------------------------------------------------------------------------
 void __fastcall TedtHomogenea::btnCriarCurvasClick(TObject *Sender)
 {
 	if (lbPoligonos->ItemIndex > 2)
@@ -316,3 +314,81 @@ void __fastcall TedtHomogenea::btnCriarCurvasClick(TObject *Sender)
 		}
 }
 //---------------------------------------------------------------------------
+
+void __fastcall TedtHomogenea::btnTransladarHomoClick(TObject *Sender)
+{
+	float dx, dy;
+	if(display.poligonos[lbPoligonos->ItemIndex].tipo != 'E'){
+
+		dx = StrToFloat(edTransladarX->Text);
+		dy = StrToFloat(edTransladarY->Text);
+		display.poligonos[lbPoligonos->ItemIndex].ComHomo(dx, dy, 0,0,0,0);
+		display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
+    }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TedtHomogenea::btnEscalonarHomoClick(TObject *Sender)
+{
+	float sx, sy;
+	sx = StrToFloat(edEscalonarX->Text);
+	sy = StrToFloat(edEscalonarY->Text);
+	if((sx != 0 || sy != 0 )&& display.poligonos[lbPoligonos->ItemIndex].tipo != 'E'){
+
+		display.poligonos[lbPoligonos->ItemIndex].ComHomo(0, 0, sx,sy,0,1);
+		display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
+	}
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TedtHomogenea::btnRotacionarHomoClick(TObject *Sender)
+{
+	float angulo, mediox = 0,medioy = 0;
+	int tam;
+	angulo = StrToFloat(edtAngulo->Text);
+	tam =  display.poligonos[lbPoligonos->ItemIndex].pontos.size();
+	if(tam != NULL && display.poligonos[lbPoligonos->ItemIndex].tipo != 'E'){
+
+		for(int cont=0; cont <= tam;cont++){
+			mediox += display.poligonos[lbPoligonos->ItemIndex].pontos[cont].x;
+			medioy += display.poligonos[lbPoligonos->ItemIndex].pontos[cont].y;
+		}
+
+		mediox = mediox / tam;
+		medioy = medioy / tam;
+
+		if(angulo != 0){
+
+			angulo = (angulo * 3.14) / 180;
+
+			display.poligonos[lbPoligonos->ItemIndex].ComHomo(- mediox, - medioy, 0,0,0,0);
+			display.poligonos[lbPoligonos->ItemIndex].ComHomo(0, 0, 0,0,angulo,2);
+			display.poligonos[lbPoligonos->ItemIndex].ComHomo(mediox, medioy, 0,0,0,0);
+
+			display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
+
+		}
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TedtHomogenea::btnClippingClick(TObject *Sender)
+{
+    if (lbPoligonos->ItemIndex > 1) {
+		clip1 = display.poligonos[lbPoligonos->ItemIndex];
+		clip2 = display.poligonos[lbPoligonos->ItemIndex].Clip(clipping, clip1);
+		if (clip2.pontos.size() > 0) {
+				clip2.id = contaId++;
+				clip2.tipo = 'R';
+				display.poligonos.push_back(clip2);
+				display.toString(lbPoligonos);
+				clip2.pontos.clear();
+				display.desenha(Image1->Canvas, mundo, vp,rgTipoReta->ItemIndex);
+				clip2.toString(lbPontos);
+			}
+
+	}
+}
+//---------------------------------------------------------------------------
+

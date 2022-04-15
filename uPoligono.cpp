@@ -44,20 +44,16 @@ void Poligono::desenha(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) {
 		}
 }
 
+
 void Poligono::lineTo(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) {
 	int xVp, yVp;
+
 	for (int i = 0; i < pontos.size(); i++) {
 		xVp = pontos[i].xW2Vp(mundo, vp);
 		yVp = pontos[i].yW2Vp(mundo, vp);
 
-		if (tipoReta == 'E') {
-				canvas->Pen->Color = clBlack;
-		}
-
-		else {
-				canvas->Pen->Color = clBlue;
-				canvas->Pen->Width = 1;
-		}
+        canvas->Pen->Color = clBlue;
+		canvas->Pen->Width = 1;
 
 		if (i == 0) {
 				canvas->MoveTo(xVp, yVp);
@@ -69,7 +65,10 @@ void Poligono::lineTo(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) {
 	}
 }
 
-void Poligono::DDA(TCanvas*canvas, Janela mundo, Janela vp, int linha) {
+
+
+
+void Poligono::DDA(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) {
 	double length, deltax, deltay, x, y, k, x1, x2, y1, y2;
 
 	for (int k = 0; k < pontos.size() - 1; k++) {
@@ -88,16 +87,16 @@ void Poligono::DDA(TCanvas*canvas, Janela mundo, Janela vp, int linha) {
 
 		x = x1 + 0.5 + SIGN(deltax);
 		y = y1 + 0.5 + SIGN(deltay);
-		canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlack;
+		canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlue;
 		for (int i = 0; i < length; i++) {
-			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlack;
+			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlue;
 			x += deltax;
 			y += deltay;
 		}
 	}
 }
 
-void Poligono::bresenham(TCanvas*canvas, Janela mundo, Janela vp, int linha) {
+void Poligono::bresenham(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) {
 	float x, y, y1, y2, x1, x2, deltax, deltay, erro, signalx, signaly, tmp;
 	int interchange;
 
@@ -132,7 +131,7 @@ void Poligono::bresenham(TCanvas*canvas, Janela mundo, Janela vp, int linha) {
 		erro = 2 * deltay - deltax;
 
 		for (int i = 0; i < deltax; i++) {
-			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlack;
+			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlue;
 			while (erro >= 0.0) {
 				if (interchange)
 					x += signalx;
@@ -173,78 +172,168 @@ void Poligono::reflexao(double dx, double dy) {
 		}
 }
 
-void Poligono::rotacaoHomogenea(double angulo) {
-		double radiano = angulo * M_PI / 180;
-		double deslocamentoX, deslocamentoY;
-		double xAnterior;
-		double matrizRotacao[3][3] =
-			{
-					{cos(radiano), sin(radiano), 0},
-					{-sin(radiano), cos(radiano), 0},
-					{0, 0, 1}
-			};
+void Poligono::ComHomo(float dx, float dy,float sx, float sy,double angulo,int tipo)
+{
+	float matrix[3][3]={0,0,0,0,0,0,0,0,0};
+    float aux[1][3] = {0,0,0};
+	float px,py;
+	float poli[1][3] = {1,1 , 1};
 
-		Ponto centroPoligono = centro();
-		deslocamentoX = centroPoligono.x;
-		deslocamentoY = centroPoligono.y;
+	switch (tipo){
 
-		double matrizTranslacao[3][3] =
-			{
-					{1, 0, 0},
-					{0, 1, 0},
-					{deslocamentoX, deslocamentoY, 1}
-			};
 
-		double matrizTranslacaoNegativa[3][3] =
-			{
-					{1, 0, 0},
-					{0, 1, 0},
-					{-deslocamentoX, -deslocamentoY, 1}
-			};
+	case 0:
+		matrix[0][0] = 1; matrix[1][1] = 1; matrix[2][2] = 1;
+		matrix[2][0]=dx;matrix[2][1]=dy;
+		break;
 
-		double matrizXY[1][3] = {0, 0, 1};
-		double matrizAuxiliar[1][3] = {0, 0, 1};
+	case 1:
+		matrix[0][0] = sx; matrix[1][1] = sy; matrix[2][2] = 1;
+		break;
 
-		multiplicacaoMatriz(matrizAuxiliar, matrizXY, matrizTranslacaoNegativa);
-		multiplicacaoMatriz(matrizAuxiliar, matrizXY, matrizRotacao);
-		multiplicacaoMatriz(matrizAuxiliar, matrizXY, matrizTranslacao);
+	case 2:
+        matrix[0][0] = (cos(angulo));matrix[0][1] = (sin(angulo));
+		matrix[1][1] = (cos(angulo));matrix[2][2] = 1;matrix[1][0] = -sin(angulo);
+		break;
+
+	case 3:
+		matrix[0][0] = 1; matrix[1][1] = -1; matrix[2][2] = 1;
+		break;
+
+	case 4:
+		matrix[0][0] = -1;matrix[1][1] = 1; matrix[2][2] = 1;
+		break;
+	case 5:
+		matrix[0][0] = -1;matrix[1][1] = -1; matrix[2][2] = 1;
+		break;
+
 	}
 
-void Poligono::multiplicacaoMatriz(double matrizAuxiliar[1][3],
-	double matrizUm[1][3], double matrizDois[3][3]) {
 
-		for (int i = 0; i < pontos.size(); i++) {
-				matrizUm[0][0] = pontos[i].x;
-				matrizUm[0][1] = pontos[i].y;
+	for(int x=0; x<pontos.size(); x++ ){
 
-				for (int l = 0; l < 1; l++) {
-						for (int c = 0; c < 3; c++) {
-								matrizAuxiliar[l][c] = 0;
-								for (int w = 0; w < 3; w++) {
-										matrizAuxiliar[l][c] =
-										matrizAuxiliar[l][c] + matrizUm[l][w]
-										* matrizDois[w][c];
-								}
-						}
+		px=pontos[x].x;
+		py=pontos[x].y;
+		poli[0][0] = px;
+		poli[0][1] = py;
+
+		for(int i = 0 ; i < 1 ; i++){
+			for(int j=0; j<3 ; j++){
+
+				aux[i][j] = 0;
+
+				for(int k = 0; k<3 ; k++){
+
+					aux[i][j] = aux[i][j] + poli[i][k] * matrix[k][j] ;
+
 				}
-				pontos[i].x = matrizAuxiliar[0][0];
-				pontos[i].y = matrizAuxiliar[0][1];
-		}
-}
 
-Ponto Poligono::centro() {
-		double somaX = 0;
-		double somaY = 0;
-
-		for (int i = 0; i < pontos.size(); i++) {
-				somaX += pontos[i].x;
-				somaY += pontos[i].y;
 			}
 
-		somaX = somaX / pontos.size();
-		somaY = somaY / pontos.size();
+		}
 
-		return Ponto(somaX, somaY);
+		 pontos[x].x = aux[0][0];
+		 pontos[x].y = aux[0][1];
+	}
+
+
+}
+
+int Poligono::Cohen(Janela clipping, double x, double y) {
+	int cohem = 0;
+
+	cohem |= (x < clipping.xmin) ?  1 : 0 ;
+
+	cohem |= (x > clipping.xmax) ?  2 : 0;
+
+	cohem |= (y < clipping.ymin) ?  4 : 0;
+
+	cohem |= (y > clipping.ymax) ? 8 : 0;
+
+	return cohem;
+}
+
+Poligono Poligono::Clip(Janela clipping, Poligono pol)
+{
+	Poligono aux;
+	Ponto p1, p2;
+	int code1, code2, code_out; ;
+	for (int i = 1; i < pol.pontos.size(); i++) {
+			p1 = pol.pontos[i - 1];
+			p2 = pol.pontos[i];
+			code1 = Cohen(clipping, p1.x, p1.y);
+			code2 = Cohen(clipping, p2.x, p2.y);
+
+			bool accept = false;
+
+
+
+
+			while (accept == false) {
+				if ((code1 == 0) && (code2 == 0)) {
+							accept = true;
+
+				}
+				else
+				if (code1 & code2) {
+					break;
+				}
+				else {
+
+						int code_out;
+						double x, y;
+
+						code_out = (code1 != 0) ? code1 : code2;
+
+						if (code_out & 8) {
+
+								x = p1.x + (p2.x - p1.x) *
+								(clipping.ymax - p1.y) /
+								(p2.y - p1.y);
+								y = clipping.ymax;
+							}
+						else if (code_out & 4) {
+								x = p1.x + (p2.x - p1.x) *
+								(clipping.ymin - p1.y) /
+								(p2.y - p1.y);
+								y = clipping.ymin;
+							}
+						else if (code_out & 2) {
+								y = p1.y + (p2.y - p1.y) *
+								(clipping.xmax - p1.x) /
+								(p2.x - p1.x);
+								x = clipping.xmax;
+							}
+						else if (code_out & 1) {
+								y = p1.y + (p2.y - p1.y) *
+								(clipping.xmin - p1.x) /
+								(p2.x - p1.x);
+								x = clipping.xmin;
+							}
+						if (code_out == code1) {
+								p1.x = x;
+								p1.y = y;
+								code1 = Cohen(clipping,
+								p1.x, p1.y);
+							}
+						else {
+								p2.x = x;
+								p2.y = y;
+								code2 = Cohen(clipping,
+								p2.x, p2.y);
+							}
+					}
+			}
+
+			if(accept){
+				aux.pontos.push_back(p1);
+				aux.pontos.push_back(p2);
+			}
+
+
+		}
+	return aux;
+
 }
 
 void Poligono::casteljau(Poligono *pol) {

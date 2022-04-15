@@ -43,10 +43,6 @@ __published:	// IDE-managed Components
 	TGroupBox *GroupBox1;
 	TGroupBox *GroupBox2;
 	TGroupBox *GroupBox3;
-	TLabel *Label1;
-	TLabel *Label2;
-	TLabel *Label5;
-	TLabel *Label4;
 	TGroupBox *GroupBox4;
 	TGroupBox *GroupBox5;
 	TLabel *Pontos;
@@ -54,10 +50,18 @@ __published:	// IDE-managed Components
 	TButton *btnRefleteV;
 	TButton *btnRefleteH;
 	TGroupBox *GroupBox6;
-	TButton *btnRotacionar;
-	TEdit *edtHomogenea;
+	TButton *btnRotacionarHomo;
 	TRadioGroup *rgCurvas;
 	TButton *btnCriarCurvas;
+	TButton *btnTransladarHomo;
+	TButton *btnEscalonarHomo;
+	TGroupBox *GroupBox7;
+	TLabel *Label4;
+	TLabel *Label5;
+	TGroupBox *GroupBox8;
+	TLabel *Max;
+	TLabel *Min;
+	TButton *btnClipping;
 	void __fastcall btnCreatePolygonClick(TObject *Sender);
 	void __fastcall Image1MouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
 	void __fastcall Image1MouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
@@ -77,8 +81,11 @@ __published:	// IDE-managed Components
 	void __fastcall btEscalonarClick(TObject *Sender);
 	void __fastcall btnRefleteHClick(TObject *Sender);
 	void __fastcall btnRefleteVClick(TObject *Sender);
-	void __fastcall btnRotacionarClick(TObject *Sender);
 	void __fastcall btnCriarCurvasClick(TObject *Sender);
+	void __fastcall btnTransladarHomoClick(TObject *Sender);
+	void __fastcall btnEscalonarHomoClick(TObject *Sender);
+	void __fastcall btnRotacionarHomoClick(TObject *Sender);
+	void __fastcall btnClippingClick(TObject *Sender);
 
 
 private:	// User declarations
