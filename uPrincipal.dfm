@@ -102,10 +102,10 @@ object edtHomogenea: TedtHomogenea
       Caption = 'Max'
     end
     object Label5: TLabel
-      Left = 19
+      Left = 20
       Top = 68
-      Width = 17
-      Height = 17
+      Width = 16
+      Height = 13
       BiDiMode = bdRightToLeft
       Caption = 'Min'
       ParentBiDiMode = False
@@ -219,7 +219,7 @@ object edtHomogenea: TedtHomogenea
       OnMouseDown = Image1MouseDown
       OnMouseMove = Image1MouseMove
       ExplicitLeft = 2
-      ExplicitTop = -15
+      ExplicitTop = 2
     end
   end
   object lbPontos: TListBox
@@ -559,7 +559,7 @@ object edtHomogenea: TedtHomogenea
     Top = 198
     Width = 66
     Height = 21
-    Caption = 'Rot. Homo'
+    Caption = 'Rot Homo'
     TabOrder = 32
     OnClick = btnRotacionarHomoClick
   end
