@@ -88,10 +88,8 @@ void Poligono::DDA(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) {
 		x = x1 + 0.5 + SIGN(deltax);
 		y = y1 + 0.5 + SIGN(deltay);
 		canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlue;
-		canvas->Pen->Width = 2;
 		for (int i = 0; i < length; i++) {
 			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlue;
-            canvas->Pen->Width = 2;
 			x += deltax;
 			y += deltay;
 		}
@@ -174,8 +172,7 @@ void Poligono::reflexao(double dx, double dy) {
 		}
 }
 
-void Poligono::ComHomo(float dx, float dy,float sx, float sy,double angulo,int tipo)
-{
+void Poligono::ComHomo(float dx, float dy,float sx, float sy,double angulo,int tipo){
 	float matrix[3][3]={0,0,0,0,0,0,0,0,0};
     float aux[1][3] = {0,0,0};
 	float px,py;
@@ -212,7 +209,7 @@ void Poligono::ComHomo(float dx, float dy,float sx, float sy,double angulo,int t
 	}
 
 
-	for(int x=0; x<pontos.size(); x++ ){
+	for(int x = 0; x < pontos.size(); x++){
 
 		px=pontos[x].x;
 		py=pontos[x].y;
@@ -220,7 +217,7 @@ void Poligono::ComHomo(float dx, float dy,float sx, float sy,double angulo,int t
 		poli[0][1] = py;
 
 		for(int i = 0 ; i < 1 ; i++){
-			for(int j=0; j<3 ; j++){
+			for(int j = 0; j < 3 ; j++){
 
 				aux[i][j] = 0;
 

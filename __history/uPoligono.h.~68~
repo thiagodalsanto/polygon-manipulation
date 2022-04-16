@@ -28,16 +28,13 @@ class Poligono {
 
 		void lineTo(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta);
 		void DDA(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta);
-		void bresenham(TCanvas*canvas, Janela mundo, Janela vp, int linha);
+		void bresenham(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta);
 
 		void transladar(float dx, float dy);
 		void escalonar(double dx, double dy);
 		void rotacao(double angulo);
 		void reflexao(double dx, double dy);
-
-		void rotacaoHomogenea(double angulo);
-		void multiplicacaoMatriz(double matrizAuxiliar[1][3], double matrizUm[1][3], double matrizDois[3][3]);
-		Ponto centro();
+        void ComHomo(float dx, float dy,float sx, float sy,double angulo,int tipo);
 
         int Cohen(Janela clipping, double x, double y);
 	  	Poligono Clip(Janela clipping, Poligono pol);

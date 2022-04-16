@@ -40,7 +40,7 @@ class Poligono {
 	  	Poligono Clip(Janela clipping, Poligono pol);
 
 		void casteljau(Poligono *pol);
-		void casteljau3p(Ponto p0, Ponto p1, Ponto p2);
+		void pontosCasteljau(Ponto p0, Ponto p1, Ponto p2);
 		double calculaDistancia(double x1, double y1, double x2, double y2);
 		void hermite(Poligono *pol);
 		void bezier(Poligono *pol);

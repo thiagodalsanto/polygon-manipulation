@@ -333,6 +333,7 @@ void __fastcall TedtHomogenea::btnEscalonarHomoClick(TObject *Sender)
 	float sx, sy;
 	sx = StrToFloat(edEscalonarX->Text);
 	sy = StrToFloat(edEscalonarY->Text);
+
 	if((sx != 0 || sy != 0 )&& display.poligonos[lbPoligonos->ItemIndex].tipo != 'E'){
 
 		display.poligonos[lbPoligonos->ItemIndex].ComHomo(0, 0, sx,sy,0,1);
@@ -344,13 +345,14 @@ void __fastcall TedtHomogenea::btnEscalonarHomoClick(TObject *Sender)
 
 void __fastcall TedtHomogenea::btnRotacionarHomoClick(TObject *Sender)
 {
-	float angulo, mediox = 0,medioy = 0;
+	float angulo, mediox = 0, medioy = 0;
 	int tam;
 	angulo = StrToFloat(edtAngulo->Text);
 	tam =  display.poligonos[lbPoligonos->ItemIndex].pontos.size();
+
 	if(tam != NULL && display.poligonos[lbPoligonos->ItemIndex].tipo != 'E'){
 
-		for(int cont=0; cont <= tam;cont++){
+		for(int cont = 0; cont <= tam; cont++){
 			mediox += display.poligonos[lbPoligonos->ItemIndex].pontos[cont].x;
 			medioy += display.poligonos[lbPoligonos->ItemIndex].pontos[cont].y;
 		}
@@ -378,12 +380,14 @@ void __fastcall TedtHomogenea::btnClippingClick(TObject *Sender)
     if (lbPoligonos->ItemIndex > 1) {
 		clip1 = display.poligonos[lbPoligonos->ItemIndex];
 		clip2 = display.poligonos[lbPoligonos->ItemIndex].Clip(clipping, clip1);
+
 		if (clip2.pontos.size() > 0) {
 				clip2.id = contaId++;
 				clip2.tipo = 'R';
 				display.poligonos.push_back(clip2);
 				display.toString(lbPoligonos);
 				clip2.pontos.clear();
+
 				display.desenha(Image1->Canvas, mundo, vp,rgTipoReta->ItemIndex);
 				clip2.toString(lbPontos);
 			}

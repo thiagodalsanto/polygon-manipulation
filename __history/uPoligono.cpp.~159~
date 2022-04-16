@@ -52,6 +52,9 @@ void Poligono::lineTo(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) {
 		xVp = pontos[i].xW2Vp(mundo, vp);
 		yVp = pontos[i].yW2Vp(mundo, vp);
 
+        canvas->Pen->Color = clBlue;
+		canvas->Pen->Width = 1;
+
 		if (i == 0) {
 				canvas->MoveTo(xVp, yVp);
 		}
@@ -84,9 +87,9 @@ void Poligono::DDA(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) {
 
 		x = x1 + 0.5 + SIGN(deltax);
 		y = y1 + 0.5 + SIGN(deltay);
-		canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlack;
+		canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlue;
 		for (int i = 0; i < length; i++) {
-			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlack;
+			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlue;
 			x += deltax;
 			y += deltay;
 		}
@@ -128,7 +131,7 @@ void Poligono::bresenham(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) 
 		erro = 2 * deltay - deltax;
 
 		for (int i = 0; i < deltax; i++) {
-			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlack;
+			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlue;
 			while (erro >= 0.0) {
 				if (interchange)
 					x += signalx;
@@ -207,7 +210,7 @@ void Poligono::ComHomo(float dx, float dy,float sx, float sy,double angulo,int t
 	}
 
 
-	for(int x=0; x<pontos.size(); x++ ){
+	for(int x=0; x < pontos.size(); x++){
 
 		px=pontos[x].x;
 		py=pontos[x].y;

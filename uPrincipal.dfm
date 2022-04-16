@@ -318,7 +318,7 @@ object edtHomogenea: TedtHomogenea
     OnClick = rgTipoRetaClick
   end
   object btRotacionar: TButton
-    Left = 729
+    Left = 737
     Top = 198
     Width = 66
     Height = 21
@@ -367,8 +367,8 @@ object edtHomogenea: TedtHomogenea
     Text = '0'
   end
   object btTransladar: TButton
-    Left = 729
-    Top = 146
+    Left = 737
+    Top = 144
     Width = 66
     Height = 23
     Margins.Left = 2
@@ -380,7 +380,7 @@ object edtHomogenea: TedtHomogenea
     OnClick = btTransladarClick
   end
   object btEscalonar: TButton
-    Left = 729
+    Left = 737
     Top = 171
     Width = 66
     Height = 23
@@ -555,8 +555,8 @@ object edtHomogenea: TedtHomogenea
     OnClick = btnRefleteHClick
   end
   object btnRotacionarHomo: TButton
-    Left = 800
-    Top = 198
+    Left = 808
+    Top = 199
     Width = 66
     Height = 21
     Caption = 'Rot Homo'
@@ -590,8 +590,8 @@ object edtHomogenea: TedtHomogenea
     OnClick = btnCriarCurvasClick
   end
   object btnTransladarHomo: TButton
-    Left = 800
-    Top = 147
+    Left = 808
+    Top = 145
     Width = 66
     Height = 21
     Caption = 'Trans Homo'
@@ -599,7 +599,7 @@ object edtHomogenea: TedtHomogenea
     OnClick = btnTransladarHomoClick
   end
   object btnEscalonarHomo: TButton
-    Left = 800
+    Left = 808
     Top = 172
     Width = 66
     Height = 21

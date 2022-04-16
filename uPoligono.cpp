@@ -172,8 +172,7 @@ void Poligono::reflexao(double dx, double dy) {
 		}
 }
 
-void Poligono::ComHomo(float dx, float dy,float sx, float sy,double angulo,int tipo)
-{
+void Poligono::ComHomo(float dx, float dy,float sx, float sy,double angulo,int tipo){
 	float matrix[3][3]={0,0,0,0,0,0,0,0,0};
     float aux[1][3] = {0,0,0};
 	float px,py;
@@ -210,7 +209,7 @@ void Poligono::ComHomo(float dx, float dy,float sx, float sy,double angulo,int t
 	}
 
 
-	for(int x=0; x<pontos.size(); x++ ){
+	for(int x = 0; x < pontos.size(); x++){
 
 		px=pontos[x].x;
 		py=pontos[x].y;
@@ -218,7 +217,7 @@ void Poligono::ComHomo(float dx, float dy,float sx, float sy,double angulo,int t
 		poli[0][1] = py;
 
 		for(int i = 0 ; i < 1 ; i++){
-			for(int j=0; j<3 ; j++){
+			for(int j = 0; j < 3 ; j++){
 
 				aux[i][j] = 0;
 
@@ -339,14 +338,14 @@ Poligono Poligono::Clip(Janela clipping, Poligono pol)
 void Poligono::casteljau(Poligono *pol) {
 	pol->pontos.push_back(this->pontos[0]);
 	if (this->pontos.size() == 3)
-		pol->casteljau3p(this->pontos[0], this->pontos[1], this->pontos[2]);
+		pol->pontosCasteljau(this->pontos[0], this->pontos[1], this->pontos[2]);
 	else if (this->pontos.size() == 4)
-		pol->casteljau3p(this->pontos[0],
+		pol->pontosCasteljau(this->pontos[0],
 		Ponto((this->pontos[1].x +this->pontos[2].x) / 2,
 		(this->pontos[1].y +this->pontos[2].y) / 2), this->pontos[3]);
 }
 
-void Poligono::casteljau3p(Ponto p0, Ponto p1, Ponto p2) {
+void Poligono::pontosCasteljau(Ponto p0, Ponto p1, Ponto p2) {
 	if (calculaDistancia(p0.x, p0.y, p1.x, p1.y) < 0.1) {
 		this->pontos.push_back(p1);
 		this->pontos.push_back(p2);
@@ -356,8 +355,8 @@ void Poligono::casteljau3p(Ponto p0, Ponto p1, Ponto p2) {
 		p01 = Ponto((p0.x + p1.x) / 2, (p0.y + p1.y) / 2);
 		p12 = Ponto((p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
 		p012 = Ponto((p01.x + p12.x) / 2, (p01.y + p12.y) / 2);
-		this->casteljau3p(p0, p01, p012);
-		this->casteljau3p(p012, p12, p2);
+		this->pontosCasteljau(p0, p01, p012);
+		this->pontosCasteljau(p012, p12, p2);
 	}
 }
 
