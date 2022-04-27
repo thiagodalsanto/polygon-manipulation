@@ -17,6 +17,7 @@ TedtHomogenea*edtHomogenea;
 Poligono pol, clip1, clip2;
 DisplayFile display;
 
+int ToInt;
 Ponto aux;
 Janela vp(0, 0, 500, 500);
 Janela mundo(-250, -250, 250, 250);
@@ -75,7 +76,10 @@ __fastcall TedtHomogenea::TedtHomogenea(TComponent*Owner)
 
 // ---------------------------------------------------------------------------
 void __fastcall TedtHomogenea::btnCreatePolygonClick(TObject*Sender){
-	incluir = true;
+
+	Circulo->Enabled = true;
+	btnCreatePolygon->Enabled = false;
+
 }
 
 // ---------------------------------------------------------------------------
@@ -99,32 +103,50 @@ void __fastcall TedtHomogenea::Image1MouseDown(TObject*Sender, TMouseButton Butt
 	TShiftState Shift,
 	int X, int Y){
 
-	if (Button == mbLeft) {
-			if (incluir) {
-					double xw, yw;
-					xw = xVp2W(X, mundo, vp);
-					yw = yVp2W(Y, mundo, vp);
-					aux = Ponto(xw, yw);
-					pol.pontos.push_back(aux);
-					pol.toString(lbPontos);
-					pol.desenha(Image1->Canvas, mundo, vp,
-						rgTipoReta->ItemIndex);
-				}
-			else
-				ShowMessage(
-				"Clique no botao para incluir pontos e um poligono.");
-		}
-	else
-		if (Button == mbRight) {
-			incluir = false;
-			if (pol.pontos.size() > 0) {
+	if(!btnCreatePolygon->Enabled){
+
+		if((rgTipoReta->ItemIndex) >= 0) {
+
+			if (Button == mbLeft) {
+
+				UnicodeString a;
+
+				aux.x = xVp2W(X, mundo, vp);
+				aux.y = yVp2W(Y, mundo, vp);
+
+
+				pol.pontos.push_back(aux);
+				pol.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
+
+			} else {
+
+				if (Button == mbRight) {
 					pol.id = contaId++;
-					pol.tipo = 'N';
+					pol.tipo = 'P';
+
 					display.poligonos.push_back(pol);
-					display.toString(lbPoligonos);
 					pol.pontos.clear();
+
+					display.toString(lbPoligonos);
+
 				}
+			}
 		}
+	} else {
+
+		pol.id = contaId++;
+		pol.tipo = 'O';
+
+		pol.Circunferencia(xVp2W(X, mundo, vp), yVp2W(Y, mundo, vp),
+								StrToFloat(edRaio->Text), &pol);
+		display.poligonos.push_back(pol);
+		pol.pontos.clear();
+
+		display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
+		display.toString(lbPoligonos);
+		pol.tipo = 'E';
+
+	}
 
 }
 // ---------------------------------------------------------------------------
@@ -383,7 +405,8 @@ void __fastcall TedtHomogenea::btnClippingClick(TObject *Sender)
 
 		if (clip2.pontos.size() > 0) {
 				clip2.id = contaId++;
-				clip2.tipo = 'R';
+				clip2.tipo = (display.poligonos[lbPoligonos->ItemIndex].tipo == 'O')?
+						 'r' : 'R';
 				display.poligonos.push_back(clip2);
 				display.toString(lbPoligonos);
 				clip2.pontos.clear();
@@ -393,6 +416,15 @@ void __fastcall TedtHomogenea::btnClippingClick(TObject *Sender)
 			}
 
 	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TedtHomogenea::CirculoClick(TObject *Sender)
+{
+
+	btnCreatePolygon->Enabled = true;
+	Circulo->Enabled = false ;
+
 }
 //---------------------------------------------------------------------------
 

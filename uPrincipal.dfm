@@ -1,7 +1,7 @@
 object edtHomogenea: TedtHomogenea
   Left = 0
   Top = 0
-  Caption = 'Projeto CG'
+  Caption = 'Polygon Manipulation'
   ClientHeight = 582
   ClientWidth = 902
   Color = clHighlight
@@ -123,7 +123,7 @@ object edtHomogenea: TedtHomogenea
     TabOrder = 31
   end
   object GroupBox5: TGroupBox
-    Left = 494
+    Left = 493
     Top = 25
     Width = 395
     Height = 101
@@ -148,7 +148,7 @@ object edtHomogenea: TedtHomogenea
       Caption = 'Pontos'
     end
     object Poligonos: TLabel
-      Left = 143
+      Left = 105
       Top = 12
       Width = 45
       Height = 13
@@ -159,13 +159,30 @@ object edtHomogenea: TedtHomogenea
       Caption = 'Poligonos'
     end
     object btnClipping: TButton
-      Left = 298
+      Left = 196
       Top = 62
       Width = 82
       Height = 24
       Caption = 'Clipping'
       TabOrder = 0
       OnClick = btnClippingClick
+    end
+    object Circulo: TButton
+      Left = 296
+      Top = 32
+      Width = 75
+      Height = 25
+      Caption = 'Circulo'
+      TabOrder = 1
+      OnClick = CirculoClick
+    end
+    object edRaio: TEdit
+      Left = 296
+      Top = 63
+      Width = 73
+      Height = 21
+      TabOrder = 2
+      Text = '0'
     end
   end
   object GroupBox4: TGroupBox
@@ -184,7 +201,7 @@ object edtHomogenea: TedtHomogenea
     TabOrder = 27
   end
   object btnCreatePolygon: TButton
-    Left = 793
+    Left = 688
     Top = 58
     Width = 80
     Height = 24
@@ -192,7 +209,7 @@ object edtHomogenea: TedtHomogenea
     Margins.Top = 2
     Margins.Right = 2
     Margins.Bottom = 2
-    Caption = 'Novo Poligono'
+    Caption = 'Poligono'
     TabOrder = 0
     OnClick = btnCreatePolygonClick
   end
@@ -225,7 +242,7 @@ object edtHomogenea: TedtHomogenea
   object lbPontos: TListBox
     Left = 503
     Top = 50
-    Width = 130
+    Width = 88
     Height = 65
     Margins.Left = 2
     Margins.Top = 2
@@ -235,9 +252,9 @@ object edtHomogenea: TedtHomogenea
     TabOrder = 2
   end
   object lbPoligonos: TListBox
-    Left = 637
+    Left = 596
     Top = 50
-    Width = 134
+    Width = 88
     Height = 65
     Margins.Left = 2
     Margins.Top = 2

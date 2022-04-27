@@ -1,7 +1,12 @@
 // ---------------------------------------------------------------------------
 #pragma hdrstop
 
+#define SIGN(x) ((x) < 0 ? (-1): (1))
+#define ABS(x) ((x) < 0 ? (-x) : (x))
+#define FLOOR(x) ((x) < 0 ? ( (x) - (double)(x) != 0 ? ((double)(x) - 1) : ((int)(x))) : (double)(x))
+
 #include "uPoligono.h"
+#include "uJanela.h"
 #include <math.h>
 // ---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -31,121 +36,149 @@ UnicodeString Poligono::toString() {
 void Poligono::desenha(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) {
 	int xVp, yVp;
 
+    if(tipo == 'O' || tipo ==  'r'){
+
+		for(int x = 0; x < pontos.size() - 1; x++) {
+			canvas->Pixels[pontos[x].xW2Vp(mundo, vp)][pontos[x].yW2Vp(mundo, vp)]
+           = (tipo == 'O')? clWebOrangeRed : clWebLimeGreen;
+		}
+
+	} else
+
 	switch (tipoReta) {
 		case 0:
 			lineTo(canvas, mundo, vp, tipoReta);
 			break;
+
 		case 1:
-			DDA(canvas, mundo, vp, tipoReta);
+			for(float x = 0; x < pontos.size() - 1; x++) {
+				DDA(pontos[x], pontos[x+1], canvas, mundo, vp, tipo);
+			}
 			break;
+
 		case 2:
-			bresenham(canvas, mundo, vp, tipoReta);
+			for(int x = 0; x < pontos.size() - 1; x++) {
+				Bresenham(pontos[x], pontos[x+1], canvas, mundo, vp);
+			}
 			break;
-		}
+    }
 }
 
 
 void Poligono::lineTo(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) {
+
 	int xVp, yVp;
 
 	for (int i = 0; i < pontos.size(); i++) {
-		xVp = pontos[i].xW2Vp(mundo, vp);
-		yVp = pontos[i].yW2Vp(mundo, vp);
 
-        canvas->Pen->Color = clBlue;
-		canvas->Pen->Width = 1;
-
-		if (i == 0) {
-				canvas->MoveTo(xVp, yVp);
+        if (i == 0) {
+			canvas->MoveTo(pontos[i].xW2Vp(mundo, vp),
+						 pontos[i].yW2Vp(mundo, vp));
 		}
 
 		else {
-				canvas->LineTo(xVp, yVp);
+			if (tipo == 'R')
+				canvas->Pen->Color = clTeal;
+			else
+				canvas->Pen->Color = clRed;
+				canvas->LineTo(pontos[i].xW2Vp(mundo, vp),
+							pontos[i].yW2Vp(mundo, vp));
 		}
 	}
 }
 
+void Poligono::DDA(Ponto P1, Ponto P2, TCanvas *canvas, Janela mundo, Janela vp, char tipo) {
 
+	double x, x1, x2, y, y1, y2, lenght, deltax, deltay;
+	x1 = P1.xW2Vp(mundo,vp);
+	x2 = P2.xW2Vp(mundo,vp);
+	y1 = P1.yW2Vp(mundo,vp);
+	y2 = P2.yW2Vp(mundo,vp);
 
-
-void Poligono::DDA(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) {
-	double length, deltax, deltay, x, y, k, x1, x2, y1, y2;
-
-	for (int k = 0; k < pontos.size() - 1; k++) {
-		x1 = (pontos[k].xW2Vp(mundo, vp));
-		x2 = (pontos[k + 1].xW2Vp(mundo, vp));
-		y1 = (pontos[k].yW2Vp(mundo, vp));
-		y2 = (pontos[k + 1].yW2Vp(mundo, vp));
-
-		if (ABS((x2 - x1)) >= ABS((y2 - y1)))
-			length = ABS((x2 - x1));
-		else
-			length = ABS((y2 - y1));
-
-		deltax = (float)(x2 - x1) / (float) length;
-		deltay = (float)(y2 - y1) / (float) length;
-
-		x = x1 + 0.5 + SIGN(deltax);
-		y = y1 + 0.5 + SIGN(deltay);
-		canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlue;
-		for (int i = 0; i < length; i++) {
-			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlue;
-			x += deltax;
-			y += deltay;
-		}
+	if(ABS((x2 - x1)) >= ABS((y2 - y1))) {
+		lenght = ABS((x2 - x1));
 	}
+	else {
+		lenght = ABS((y2 - y1));
+	}
+
+	deltax = (x2-x1 != 0 )? (x2 -x1) / lenght : 0 ;
+	deltay = (y2-y1 != 0 )? (y2 - y1) / lenght: 0 ;
+	x = x1 + 0.5 * SIGN(deltax);
+	y = y1 + 0.5 * SIGN(deltay);
+
+	for (int i = 0; i < lenght; i++) {
+		if(tipo == 'R') {
+			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clTeal;
+		} else {
+			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlack;
+        }
+		x = x + deltax;
+		y = y + deltay;
+    }
+
 }
 
-void Poligono::bresenham(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) {
-	float x, y, y1, y2, x1, x2, deltax, deltay, erro, signalx, signaly, tmp;
+void Poligono:: Bresenham(Ponto P1, Ponto P2, TCanvas *canvas, Janela mundo, Janela vp){
+
+	float x, x1, x2, y, y1, y2, tmp, erro;
+	double deltax, deltay, signalx, signaly;
 	int interchange;
 
-	for (int k = 0; k < pontos.size() - 1; k++) {
-		x1 = (pontos[k].xW2Vp(mundo, vp));
-		x2 = (pontos[k + 1].xW2Vp(mundo, vp));
-		y1 = (pontos[k].yW2Vp(mundo, vp));
-		y2 = (pontos[k + 1].yW2Vp(mundo, vp));
+	x1 = P1.xW2Vp(mundo,vp);
+	x2 = P2.xW2Vp(mundo,vp);
+	y1 = P1.yW2Vp(mundo,vp);
+	y2 = P2.yW2Vp(mundo,vp);
 
-		x = (int) x1;
-		y = (int) y1;
+	deltax = ABS((x2 - x1));
+	deltay = ABS((y2 - y1));
+	signalx = SIGN((x2 - x1));
+	signaly = SIGN((y2 - y1));
+	x = x1;
+	y = y1;
 
-		deltax = ABS((x2 - x1));
-		deltay = ABS((y2 - y1));
-		signalx = SIGN((x2 - x1));
-		signaly = SIGN((y2 - y1));
-
-		if (signalx < 0)
-			x -= 1;
-		if (signaly < 0)
-			y -= 1;
-
-		interchange = FALSE;
-
-		if (deltay > deltax) {
-			tmp = deltax;
-			deltax = deltay;
-			deltay = tmp;
-			interchange = TRUE;
-		}
-
-		erro = 2 * deltay - deltax;
-
-		for (int i = 0; i < deltax; i++) {
-			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlue;
-			while (erro >= 0.0) {
-				if (interchange)
-					x += signalx;
-				else
-					y += signaly;
-				erro = erro - 2 * deltax;
-			}
-			if (interchange)
-				y += signaly;
-			else
-				x += signalx;
-			erro = erro + 2 * deltay;
-		}
+	if (signalx < 0) {
+		x = x - 1;
 	}
+	if(signaly < 0) {
+		y = y - 1;
+	}
+
+	interchange = false;
+	if (deltay > deltax) {
+		tmp = deltax;
+		deltax = deltay;
+		deltay = tmp;
+		interchange = true;
+	}
+
+	erro = 2 * deltay - deltax;
+
+	for(int i = 0; i < deltax; i++) {
+        if(tipo == 'R')
+			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clTeal;
+		else
+			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clFuchsia;
+		while (erro >= 0) {
+			if (interchange) {
+				x = x + signalx;
+			}
+			else  {
+				y = y + signaly;
+			}
+
+			erro = erro - 2 * deltax;
+		}
+		if(interchange) {
+			y = y + signaly;
+		}
+		else  {
+			x = x + signalx;
+        }
+
+		erro = erro + 2 * deltay;
+	}
+
 }
 
 void Poligono::transladar(float dx, float dy) {
@@ -236,6 +269,44 @@ void Poligono::ComHomo(float dx, float dy,float sx, float sy,double angulo,int t
 	}
 
 
+}
+
+void Poligono::Circunferencia( double xc, double yc, double r, Poligono *aux) {
+	double x, y, p;
+	x  = 0;
+	y = r;
+
+	DesenhaCircunferencia(xc, yc, x, y, aux);
+	p = 1 - r;
+
+	while(x < y) {
+		if(p < 0) {
+			x++;
+		}
+		else {
+			x++;
+			y--;
+		}
+		if(p < 0) {
+			p = p + 2 * x + 1;
+		}
+		else {
+			p = p + 2 * (x - y) + 1;
+		}
+		DesenhaCircunferencia(xc, yc, x, y, aux);
+	}
+}
+
+void Poligono::DesenhaCircunferencia(double xc, double yc, double x, double y, Poligono *aux) {
+
+	aux->pontos.push_back(Ponto(xc + x, yc + y));
+	aux->pontos.push_back(Ponto(xc - x, yc + y));
+	aux->pontos.push_back(Ponto(xc - y ,yc + x));
+	aux->pontos.push_back(Ponto(xc - y, yc - x));
+	aux->pontos.push_back(Ponto(xc - x, yc - y));
+	aux->pontos.push_back(Ponto(xc + x, yc - y));
+	aux->pontos.push_back(Ponto(xc + y, yc - x));
+	aux->pontos.push_back(Ponto(xc + y, yc + x));
 }
 
 int Poligono::Cohen(Janela clipping, double x, double y) {
