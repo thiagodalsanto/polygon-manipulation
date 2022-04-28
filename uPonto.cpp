@@ -41,8 +41,8 @@ void Ponto::escalonar(double dx, double dy) {
 void Ponto::rotacao(double angulo) {
 	double coseno = cos(angulo * 3.14 / 180);
 	double seno = sin(angulo * 3.14 / 180);
-	double nx = x * coseno - y * seno;
-	double ny = x * seno + y * coseno;
+	double nx = x * coseno - y * seno; //Calcula novo X
+	double ny = x * seno + y * coseno; //Calcula novo Y
 	x = nx;
 	y = ny;
 }

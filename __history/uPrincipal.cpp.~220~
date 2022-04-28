@@ -159,16 +159,23 @@ void __fastcall TedtHomogenea::lbPoligonosMouseDown(TObject*Sender, TMouseButton
 // ---------------------------------------------------------------------------
 
 void __fastcall TedtHomogenea::btnUpdateClick(TObject*Sender){
+
 	mundo.xmin = StrToFloat(edXWMin->Text);
 	mundo.ymin = StrToFloat(edYWMin->Text);
 	mundo.xmax = StrToFloat(edXWMax->Text);
 	mundo.ymax = StrToFloat(edYWMax->Text);
 
 	AtualizaMundo();
+
 }
 // ---------------------------------------------------------------------------
 
 void TedtHomogenea::AtualizaMundo() {
+	edXWMin->Text = FloatToStr(mundo.xmin);
+	edXWMax->Text = FloatToStr(mundo.xmax);
+
+	edYWMin->Text = FloatToStr(mundo.ymin);
+	edYWMax->Text = FloatToStr(mundo.ymax);
 
 	display.poligonos[0].pontos[0].y = mundo.ymax;
 	display.poligonos[0].pontos[1].y = mundo.ymin;
@@ -177,6 +184,7 @@ void TedtHomogenea::AtualizaMundo() {
 	display.poligonos[1].pontos[1].x = mundo.xmax;
 
 	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
+
 }
 
 // ---------------------------------------------------------------------------
@@ -232,8 +240,7 @@ void __fastcall TedtHomogenea::rgTipoRetaClick(TObject*Sender){
 // ---------------------------------------------------------------------------
 
 void __fastcall TedtHomogenea::btRotacionarClick(TObject*Sender){
-	display.poligonos[lbPoligonos->ItemIndex].rotacao
-		((double)(StrToFloat(edtAngulo->Text)));
+	display.poligonos[lbPoligonos->ItemIndex].rotacao((double)(StrToFloat(edtAngulo->Text)));
 	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
 }
 // ---------------------------------------------------------------------------
@@ -308,7 +315,7 @@ void __fastcall TedtHomogenea::btnCriarCurvasClick(TObject *Sender)
 			break;
 
 		case 3:
-			display.poligonos[lbPoligonos->ItemIndex].Bspline(&pol);
+			display.poligonos[lbPoligonos->ItemIndex].bspline(&pol);
 			pol.id = contaId++;
 			pol.tipo = 'P';
 
@@ -422,6 +429,7 @@ void __fastcall TedtHomogenea::CirculoClick(TObject *Sender)
 
 }
 //---------------------------------------------------------------------------
+
 
 
 

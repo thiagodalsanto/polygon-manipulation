@@ -23,8 +23,8 @@ class Poligono {
 		void DDA(Ponto P1, Ponto P2, TCanvas *canvas, Janela mundo, Janela vp, char tipo);
 		void Bresenham(Ponto P1, Ponto P2, TCanvas *canvas, Janela mundo, Janela vp);
 
-		void Circunferencia(double xc, double yc, double r, Poligono *aux);
-	  	void DesenhaCircunferencia(double xc, double yc, double x, double y, Poligono *aux);
+		void Circunferencia(double xCentral, double yCentral, double raio, Poligono *aux);
+		void DesenhaCircunferencia(double xCentral, double yCentral, double x, double y, Poligono *aux);
 
 		void transladar(float dx, float dy);
 		void escalonar(double dx, double dy);
@@ -38,9 +38,10 @@ class Poligono {
 		void casteljau(Poligono *pol);
 		void pontosMediosCasteljau(Ponto p0, Ponto p1, Ponto p2);
 		double calcDistEuclidiana(double x1, double y1, double x2, double y2);
+
 		void hermite(Poligono *pol);
 		void bezier(Poligono *pol);
-		void Bspline(Poligono *pol);
+		void bspline(Poligono *pol);
 		void forward(Poligono *pol);
 };
 

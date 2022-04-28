@@ -171,6 +171,11 @@ void __fastcall TedtHomogenea::btnUpdateClick(TObject*Sender){
 // ---------------------------------------------------------------------------
 
 void TedtHomogenea::AtualizaMundo() {
+	edXWMin->Text = FloatToStr(mundo.xmin);
+	edXWMax->Text = FloatToStr(mundo.xmax);
+
+	edYWMin->Text = FloatToStr(mundo.ymin);
+	edYWMax->Text = FloatToStr(mundo.ymax);
 
 	display.poligonos[0].pontos[0].y = mundo.ymax;
 	display.poligonos[0].pontos[1].y = mundo.ymin;
@@ -235,8 +240,7 @@ void __fastcall TedtHomogenea::rgTipoRetaClick(TObject*Sender){
 // ---------------------------------------------------------------------------
 
 void __fastcall TedtHomogenea::btRotacionarClick(TObject*Sender){
-	display.poligonos[lbPoligonos->ItemIndex].rotacao
-		((double)(StrToFloat(edtAngulo->Text)));
+	display.poligonos[lbPoligonos->ItemIndex].rotacao((double)(StrToFloat(edtAngulo->Text)));
 	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
 }
 // ---------------------------------------------------------------------------

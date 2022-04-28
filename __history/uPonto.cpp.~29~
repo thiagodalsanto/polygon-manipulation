@@ -27,6 +27,7 @@ int Ponto::yW2Vp(Janela mundo, Janela vp) {
 	return (1 - (y - mundo.ymin) / (mundo.ymax - mundo.ymin)) * (vp.ymax - vp.ymin);
 }
 
+
 void Ponto::transladar(float dx, float dy) {
 	x += dx;
 	y += dy;
@@ -47,12 +48,13 @@ void Ponto::rotacao(double angulo) {
 }
 
 void Ponto::reflexao(double dx, double dy) {
-		if (dx < 0)
-			x *= dx;
-		if (dy < 0)
-			y *= dy;
-		if (dx < 0 && dy < 0) {
-				x *= dx;
-				y *= dy;
-			}
+	if (dx < 0)
+		x *= dx;
+	if (dy < 0)
+		y *= dy;
+	if (dx < 0 && dy < 0) {
+		x *= dx;
+		y *= dy;
 	}
+}
+

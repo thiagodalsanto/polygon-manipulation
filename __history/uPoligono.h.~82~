@@ -6,13 +6,6 @@
 #include <vector>
 #include <Vcl.StdCtrls.hpp>
 #include "uPonto.h"
-#include "uJanela.h"
-
-#define SIGN(x)   ((x) < 0 ? (-1) : (1))
-#define ABS(x)    ((x) < 0 ? (-x) : (x))
-#define FLOOR(x)  ((x) < 0 ? ( (x) - (int)(x) != 0 ? ((int)(x) - 1) : ((int)(x))) : (int)(x))
-#define FALSE 0
-#define TRUE 1
 
 // ---------------------------------------------------------------------------
 class Poligono {
@@ -27,11 +20,11 @@ class Poligono {
 		void desenha(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta);
 
 		void lineTo(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta);
-		void DDA(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta);
-		void bresenham(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta);
+		void DDA(Ponto P1, Ponto P2, TCanvas *canvas, Janela mundo, Janela vp, char tipo);
+		void Bresenham(Ponto P1, Ponto P2, TCanvas *canvas, Janela mundo, Janela vp);
 
-        void Circunferencia(double xc, double yc, double r, Poligono *aux);
-	  	void DesenhaCircunferencia(double xc, double yc, double x, double y, Poligono *aux);
+		void Circunferencia(double xc, double yc, double r, Poligono *aux);
+		void DesenhaCircunferencia(double xc, double yc, double x, double y, Poligono *aux);
 
 		void transladar(float dx, float dy);
 		void escalonar(double dx, double dy);
@@ -43,11 +36,12 @@ class Poligono {
 	  	Poligono Clip(Janela clipping, Poligono pol);
 
 		void casteljau(Poligono *pol);
-		void pontosCasteljau(Ponto p0, Ponto p1, Ponto p2);
-		double calculaDistancia(double x1, double y1, double x2, double y2);
+		void pontosMediosCasteljau(Ponto p0, Ponto p1, Ponto p2);
+		double calcDistEuclidiana(double x1, double y1, double x2, double y2);
+
 		void hermite(Poligono *pol);
 		void bezier(Poligono *pol);
-		void Bspline(Poligono *pol);
+		void bspline(Poligono *pol);
 		void forward(Poligono *pol);
 };
 

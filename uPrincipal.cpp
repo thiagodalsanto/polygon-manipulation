@@ -315,7 +315,7 @@ void __fastcall TedtHomogenea::btnCriarCurvasClick(TObject *Sender)
 			break;
 
 		case 3:
-			display.poligonos[lbPoligonos->ItemIndex].Bspline(&pol);
+			display.poligonos[lbPoligonos->ItemIndex].bspline(&pol);
 			pol.id = contaId++;
 			pol.tipo = 'P';
 
@@ -401,13 +401,15 @@ void __fastcall TedtHomogenea::btnRotacionarHomoClick(TObject *Sender)
 
 void __fastcall TedtHomogenea::btnClippingClick(TObject *Sender)
 {
-    if (lbPoligonos->ItemIndex > 1) {
+	if (lbPoligonos->ItemIndex > 1) {
+
 		clip1 = display.poligonos[lbPoligonos->ItemIndex];
 		clip2 = display.poligonos[lbPoligonos->ItemIndex].Clip(clipping, clip1);
 
 		if (clip2.pontos.size() > 0) {
+
 				clip2.id = contaId++;
-				clip2.tipo = (display.poligonos[lbPoligonos->ItemIndex].tipo == 'O')?
+				clip2.tipo = (display.poligonos[lbPoligonos->ItemIndex].tipo == 'O') ?
 						 'W' : 'R';
 				display.poligonos.push_back(clip2);
 				display.toString(lbPoligonos);
@@ -429,6 +431,7 @@ void __fastcall TedtHomogenea::CirculoClick(TObject *Sender)
 
 }
 //---------------------------------------------------------------------------
+
 
 
 

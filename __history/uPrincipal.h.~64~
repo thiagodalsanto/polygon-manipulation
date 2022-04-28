@@ -62,6 +62,8 @@ __published:	// IDE-managed Components
 	TLabel *Max;
 	TLabel *Min;
 	TButton *btnClipping;
+	TButton *Circulo;
+	TEdit *edRaio;
 	void __fastcall btnCreatePolygonClick(TObject *Sender);
 	void __fastcall Image1MouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
 	void __fastcall Image1MouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
@@ -85,6 +87,8 @@ __published:	// IDE-managed Components
 	void __fastcall btnTransladarHomoClick(TObject *Sender);
 	void __fastcall btnEscalonarHomoClick(TObject *Sender);
 	void __fastcall btnRotacionarHomoClick(TObject *Sender);
+	void __fastcall btnClippingClick(TObject *Sender);
+	void __fastcall CirculoClick(TObject *Sender);
 
 
 private:	// User declarations

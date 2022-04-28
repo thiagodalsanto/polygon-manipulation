@@ -171,6 +171,11 @@ void __fastcall TedtHomogenea::btnUpdateClick(TObject*Sender){
 // ---------------------------------------------------------------------------
 
 void TedtHomogenea::AtualizaMundo() {
+	edXWMin->Text = FloatToStr(mundo.xmin);
+	edXWMax->Text = FloatToStr(mundo.xmax);
+
+	edYWMin->Text = FloatToStr(mundo.ymin);
+	edYWMax->Text = FloatToStr(mundo.ymax);
 
 	display.poligonos[0].pontos[0].y = mundo.ymax;
 	display.poligonos[0].pontos[1].y = mundo.ymin;
@@ -179,6 +184,7 @@ void TedtHomogenea::AtualizaMundo() {
 	display.poligonos[1].pontos[1].x = mundo.xmax;
 
 	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
+
 }
 
 // ---------------------------------------------------------------------------
@@ -234,8 +240,7 @@ void __fastcall TedtHomogenea::rgTipoRetaClick(TObject*Sender){
 // ---------------------------------------------------------------------------
 
 void __fastcall TedtHomogenea::btRotacionarClick(TObject*Sender){
-	display.poligonos[lbPoligonos->ItemIndex].rotacao
-		((double)(StrToFloat(edtAngulo->Text)));
+	display.poligonos[lbPoligonos->ItemIndex].rotacao((double)(StrToFloat(edtAngulo->Text)));
 	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
 }
 // ---------------------------------------------------------------------------
@@ -279,7 +284,7 @@ void __fastcall TedtHomogenea::btnCriarCurvasClick(TObject *Sender)
 		case 0:
 			display.poligonos[lbPoligonos->ItemIndex].casteljau(&pol);
 			pol.id = contaId++;
-			pol.tipo = 'P';
+			pol.tipo = 'L';
 
 			display.poligonos.push_back(pol);
 			pol.pontos.clear();
@@ -290,7 +295,7 @@ void __fastcall TedtHomogenea::btnCriarCurvasClick(TObject *Sender)
 		case 1:
 			display.poligonos[lbPoligonos->ItemIndex].bezier(&pol);
 			pol.id = contaId++;
-			pol.tipo = 'P';
+			pol.tipo = 'L';
 
 			display.poligonos.push_back(pol);
 			pol.pontos.clear();
@@ -301,7 +306,7 @@ void __fastcall TedtHomogenea::btnCriarCurvasClick(TObject *Sender)
 		case 2:
 			display.poligonos[lbPoligonos->ItemIndex].hermite(&pol);
 			pol.id = contaId++;
-			pol.tipo = 'P';
+			pol.tipo = 'L';
 
 			display.poligonos.push_back(pol);
 			pol.pontos.clear();
@@ -310,9 +315,9 @@ void __fastcall TedtHomogenea::btnCriarCurvasClick(TObject *Sender)
 			break;
 
 		case 3:
-			display.poligonos[lbPoligonos->ItemIndex].Bspline(&pol);
+			display.poligonos[lbPoligonos->ItemIndex].bspline(&pol);
 			pol.id = contaId++;
-			pol.tipo = 'P';
+			pol.tipo = 'L';
 
 			display.poligonos.push_back(pol);
 			pol.pontos.clear();
@@ -323,7 +328,7 @@ void __fastcall TedtHomogenea::btnCriarCurvasClick(TObject *Sender)
 		case 4:
 			display.poligonos[lbPoligonos->ItemIndex].forward(&pol);
 			pol.id = contaId++;
-			pol.tipo = 'P';
+			pol.tipo = 'L';
 
 			display.poligonos.push_back(pol);
 			pol.pontos.clear();
@@ -424,6 +429,7 @@ void __fastcall TedtHomogenea::CirculoClick(TObject *Sender)
 
 }
 //---------------------------------------------------------------------------
+
 
 
 
