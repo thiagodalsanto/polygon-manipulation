@@ -36,11 +36,11 @@ UnicodeString Poligono::toString() {
 void Poligono::desenha(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) {
 	int xVp, yVp;
 
-    if(tipo == 'O' || tipo ==  'r'){
+    if(tipo == 'O' || tipo ==  'W'){
 
 		for(int x = 0; x < pontos.size() - 1; x++) {
 			canvas->Pixels[pontos[x].xW2Vp(mundo, vp)][pontos[x].yW2Vp(mundo, vp)]
-           = (tipo == 'O')? clWebOrangeRed : clWebLimeGreen;
+           = (tipo == 'O')? clMaroon : clWhite;
 		}
 
 	} else
@@ -111,7 +111,7 @@ void Poligono::DDA(Ponto P1, Ponto P2, TCanvas *canvas, Janela mundo, Janela vp,
 		if(tipo == 'R') {
 			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clTeal;
 		} else {
-			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlack;
+			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clYellow;
         }
 		x = x + deltax;
 		y = y + deltay;
@@ -408,153 +408,207 @@ Poligono Poligono::Clip(Janela clipping, Poligono pol)
 
 void Poligono::casteljau(Poligono *pol) {
 	pol->pontos.push_back(this->pontos[0]);
-	if (this->pontos.size() == 3)
-		pol->pontosCasteljau(this->pontos[0], this->pontos[1], this->pontos[2]);
-	else if (this->pontos.size() == 4)
-		pol->pontosCasteljau(this->pontos[0],
-		Ponto((this->pontos[1].x +this->pontos[2].x) / 2,
-		(this->pontos[1].y +this->pontos[2].y) / 2), this->pontos[3]);
+
+	if (this->pontos.size() == 3) {
+		pol->pontosMediosCasteljau(this->pontos[0], this->pontos[1], this->pontos[2]);
+    }
+
+	if (this->pontos.size() == 4) {
+		pol->pontosMediosCasteljau(this->pontos[0],
+			Ponto((this->pontos[1].x +this->pontos[2].x) / 2,
+			(this->pontos[1].y + this->pontos[2].y) / 2), this->pontos[3]);
+    }
 }
 
-void Poligono::pontosCasteljau(Ponto p0, Ponto p1, Ponto p2) {
-	if (calculaDistancia(p0.x, p0.y, p1.x, p1.y) < 0.1) {
-		this->pontos.push_back(p1);
+void Poligono::pontosMediosCasteljau(Ponto p0, Ponto p1, Ponto p2) {
+
+    //Maior que 5 perde muita curvatura
+	if (calcDistEuclidiana(p0.x, p0.y, p1.x, p1.y) < 5) {
+
 		this->pontos.push_back(p2);
+
 	}
+
 	else {
-		Ponto p01, p012, p12;
-		p01 = Ponto((p0.x + p1.x) / 2, (p0.y + p1.y) / 2);
-		p12 = Ponto((p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
-		p012 = Ponto((p01.x + p12.x) / 2, (p01.y + p12.y) / 2);
-		this->pontosCasteljau(p0, p01, p012);
-		this->pontosCasteljau(p012, p12, p2);
+
+		Ponto pMedio01, pMedio12, pMedio01_12;
+
+		pMedio01 = Ponto( (p0.x + p1.x) / 2, (p0.y + p1.y) / 2 );
+		pMedio12 = Ponto( (p1.x + p2.x) / 2, (p1.y + p2.y) / 2 );
+		pMedio01_12 = Ponto( (pMedio01.x + pMedio12.x) / 2, (pMedio01.y + pMedio12.y) / 2 );
+
+		this->pontosMediosCasteljau(p0, pMedio01, pMedio01_12); //Lado Esquerdo
+		this->pontosMediosCasteljau(pMedio01_12, pMedio12, p2); //Lado Direito
+
 	}
 }
 
-double Poligono::calculaDistancia(double x1, double y1, double x2, double y2) {
+double Poligono::calcDistEuclidiana(double x1, double y1, double x2, double y2) {
 	return sqrt(pow((x2 - x1), 2) + pow((y2 - y1), 2)) / 2;
 }
 
 void Poligono::hermite(Poligono *pol) {
-	double Gx[4], Gy[4];
-	int M[4][4] = {2, -2, 1, 1, -3, 3, -2, -1, 0, 0, 1, 0, 1, 0, 0, 0};
+	double ghX[4], ghY[4];
+	int mH[4][4] = {2, -2, 1, 1, -3, 3, -2, -1, 0, 0, 1, 0, 1, 0, 0, 0};
 
-	Gx[0] = pontos[0].x;
-	Gx[1] = pontos[3].x;
-	Gx[2] = pontos[1].x - pontos[0].x;
-	Gx[3] = pontos[3].x - pontos[2].x;
+	ghX[0] = pontos[0].x; //P1
+	ghX[1] = pontos[3].x; //P4
+	ghX[2] = pontos[1].x - pontos[0].x; //R1
+	ghX[3] = pontos[3].x - pontos[2].x; //R4
 
-	Gy[0] = pontos[0].y;
-	Gy[1] = pontos[3].y;
-	Gy[2] = pontos[1].y - pontos[0].y;
-	Gy[3] = pontos[3].y - pontos[2].y;
+	ghY[0] = pontos[0].y;
+	ghY[1] = pontos[3].y;
+	ghY[2] = pontos[1].y - pontos[0].y;
+	ghY[3] = pontos[3].y - pontos[2].y;
 
-	double Cx[4] = {
-		Gx[0] * M[0][0] + Gx[1] * M[0][1] + Gx[2] * M[0][2] + Gx[3] * M[0][3],
-		Gx[0] * M[1][0] + Gx[1] * M[1][1] + Gx[2] * M[1][2] + Gx[3] * M[1][3],
-		Gx[0] * M[2][0] + Gx[1] * M[2][1] + Gx[2] * M[2][2] + Gx[3] * M[2][3],
-		Gx[0] * M[3][0] + Gx[1] * M[3][1] + Gx[2] * M[3][2] + Gx[3] * M[3][3]};
+	double coefHermiteX[4] =
+		{
+		ghX[0] * mH[0][0] + ghX[1] * mH[0][1] + ghX[2] * mH[0][2] + ghX[3] * mH[0][3],
+		ghX[0] * mH[1][0] + ghX[1] * mH[1][1] + ghX[2] * mH[1][2] + ghX[3] * mH[1][3],
+		ghX[0] * mH[2][0] + ghX[1] * mH[2][1] + ghX[2] * mH[2][2] + ghX[3] * mH[2][3],
+		ghX[0] * mH[3][0] + ghX[1] * mH[3][1] + ghX[2] * mH[3][2] + ghX[3] * mH[3][3]
+		};
 
-	double Cy[4] = {
-		Gy[0] * M[0][0] + Gy[1] * M[0][1] + Gy[2] * M[0][2] + Gy[3] * M[0][3],
-		Gy[0] * M[1][0] + Gy[1] * M[1][1] + Gy[2] * M[1][2] + Gy[3] * M[1][3],
-		Gy[0] * M[2][0] + Gy[1] * M[2][1] + Gy[2] * M[2][2] + Gy[3] * M[2][3],
-		Gy[0] * M[3][0] + Gy[1] * M[3][1] + Gy[2] * M[3][2] + Gy[3] * M[3][3]};
+	double coefHermiteY[4] =
+		{
+		ghY[0] * mH[0][0] + ghY[1] * mH[0][1] + ghY[2] * mH[0][2] + ghY[3] * mH[0][3],
+		ghY[0] * mH[1][0] + ghY[1] * mH[1][1] + ghY[2] * mH[1][2] + ghY[3] * mH[1][3],
+		ghY[0] * mH[2][0] + ghY[1] * mH[2][1] + ghY[2] * mH[2][2] + ghY[3] * mH[2][3],
+		ghY[0] * mH[3][0] + ghY[1] * mH[3][1] + ghY[2] * mH[3][2] + ghY[3] * mH[3][3]
+		};
 
-	for (float t = 0; t <= 1; t += 0.001) {
-		pol->pontos.push_back(Ponto((pow(t, 3)*Cx[0]) + (pow(t, 2)*Cx[1]) +
-			(t*Cx[2]) + Cx[3], (pow(t, 3)*Cy[0]) + (pow(t, 2)*Cy[1]) +
-			(t*Cy[2]) + Cy[3]));
+	//tempo, coefHermiteX && tempo, coefHermiteY
+	for (float tempo = 0; tempo <= 1; tempo += 0.01) {
+		pol->pontos.push_back(Ponto(
+			(pow(tempo, 3) * coefHermiteX[0])
+			+ (pow(tempo, 2) * coefHermiteX[1])
+			+ (tempo * coefHermiteX[2]) + coefHermiteX[3],
+			(pow(tempo, 3) * coefHermiteY[0])
+			+ (pow(tempo, 2) * coefHermiteY[1])
+			+ (tempo * coefHermiteY[2]) + coefHermiteY[3])
+		);
 	}
 }
 
 void Poligono::bezier(Poligono *pol) {
-	double Gx[4], Gy[4];
-	int M[4][4] = {2, -2, 1, 1, -3, 3, -2, -1, 0, 0, 1, 0, 1, 0, 0, 0};
+	double gbX[4], gbY[4];
+	//Matriz Hermite
+	int mH[4][4] = {2, -2, 1, 1, -3, 3, -2, -1, 0, 0, 1, 0, 1, 0, 0, 0};
 
-	Gx[0] = pontos[0].x;
-	Gx[1] = pontos[3].x;
-	Gx[2] = 3 * (pontos[1].x - pontos[0].x);
-	Gx[3] = 3 * (pontos[3].x - pontos[2].x);
+	gbX[0] = pontos[0].x; //P1
+	gbX[1] = pontos[3].x; //P4
+	gbX[2] = 3 * (pontos[1].x - pontos[0].x); //R1
+	gbX[3] = 3 * (pontos[3].x - pontos[2].x); //R4
 
-	Gy[0] = pontos[0].y;
-	Gy[1] = pontos[3].y;
-	Gy[2] = 3 * (pontos[1].y - pontos[0].y);
-	Gy[3] = 3 * (pontos[3].y - pontos[2].y);
+	gbY[0] = pontos[0].y;
+	gbY[1] = pontos[3].y;
+	gbY[2] = 3 * (pontos[1].y - pontos[0].y);
+	gbY[3] = 3 * (pontos[3].y - pontos[2].y);
 
-	double Cx[4] = {
-		Gx[0] * M[0][0] + Gx[1] * M[0][1] + Gx[2] * M[0][2] + Gx[3] * M[0][3],
-		Gx[0] * M[1][0] + Gx[1] * M[1][1] + Gx[2] * M[1][2] + Gx[3] * M[1][3],
-		Gx[0] * M[2][0] + Gx[1] * M[2][1] + Gx[2] * M[2][2] + Gx[3] * M[2][3],
-		Gx[0] * M[3][0] + Gx[1] * M[3][1] + Gx[2] * M[3][2] + Gx[3] * M[3][3]};
+	double coefBezierX[4] =
+		{
+		gbX[0] * mH[0][0] + gbX[1] * mH[0][1] + gbX[2] * mH[0][2] + gbX[3] * mH[0][3],
+		gbX[0] * mH[1][0] + gbX[1] * mH[1][1] + gbX[2] * mH[1][2] + gbX[3] * mH[1][3],
+		gbX[0] * mH[2][0] + gbX[1] * mH[2][1] + gbX[2] * mH[2][2] + gbX[3] * mH[2][3],
+		gbX[0] * mH[3][0] + gbX[1] * mH[3][1] + gbX[2] * mH[3][2] + gbX[3] * mH[3][3]
+		};
 
-	double Cy[4] = {
-		Gy[0] * M[0][0] + Gy[1] * M[0][1] + Gy[2] * M[0][2] + Gy[3] * M[0][3],
-		Gy[0] * M[1][0] + Gy[1] * M[1][1] + Gy[2] * M[1][2] + Gy[3] * M[1][3],
-		Gy[0] * M[2][0] + Gy[1] * M[2][1] + Gy[2] * M[2][2] + Gy[3] * M[2][3],
-		Gy[0] * M[3][0] + Gy[1] * M[3][1] + Gy[2] * M[3][2] + Gy[3] * M[3][3]};
+	double coefBezierY[4] =
+		{
+		gbY[0] * mH[0][0] + gbY[1] * mH[0][1] + gbY[2] * mH[0][2] + gbY[3] * mH[0][3],
+		gbY[0] * mH[1][0] + gbY[1] * mH[1][1] + gbY[2] * mH[1][2] + gbY[3] * mH[1][3],
+		gbY[0] * mH[2][0] + gbY[1] * mH[2][1] + gbY[2] * mH[2][2] + gbY[3] * mH[2][3],
+		gbY[0] * mH[3][0] + gbY[1] * mH[3][1] + gbY[2] * mH[3][2] + gbY[3] * mH[3][3]
+		};
 
-	for (float t = 0; t <= 1; t += 0.001) {
-		pol->pontos.push_back(Ponto((pow(t, 3)*Cx[0]) + (pow(t, 2)*Cx[1]) +
-			(t*Cx[2]) + Cx[3], (pow(t, 3)*Cy[0]) + (pow(t, 2)*Cy[1]) +
-			(t*Cy[2]) + Cy[3]));
+	//tempo, coefBezierX && tempo, coefBezierY
+	for (float tempo = 0; tempo <= 1; tempo += 0.01) {
+		pol->pontos.push_back(Ponto(
+			(pow(tempo, 3)*coefBezierX[0])
+			+ (pow(tempo, 2)*coefBezierX[1])
+			+ (tempo*coefBezierX[2]) + coefBezierX[3],
+			(pow(tempo, 3)*coefBezierY[0])
+			+ (pow(tempo, 2)*coefBezierY[1])
+			+ (tempo*coefBezierY[2]) + coefBezierY[3])
+			);
 	}
 }
 
 void Poligono::Bspline(Poligono *pol) {
 	double xt, yt;
-	for (int i = 3; i < pontos.size(); i++)
-		for (double t = 0; t <= 1; t += 0.01) {
-			xt = (pontos[i - 3].x * pow((1 - t), 3)) / 6 +
-				(pontos[i - 2].x * (3 * pow(t, 3) - 6 * pow(t, 2) + 4)) / 6 +
-				(pontos[i - 1].x * (3 * (-1 * pow(t, 3) + pow(t, 2) + t) + 1))
-				/ 6 + (pontos[i].x * pow(t, 3)) / 6;
-			yt = (pontos[i - 3].y * pow((1 - t), 3)) / 6 +
-				(pontos[i - 2].y * (3 * pow(t, 3) - 6 * pow(t, 2) + 4)) / 6 +
-				(pontos[i - 1].y * (3 * (-1 * pow(t, 3) + pow(t, 2) + t) + 1))
-				/ 6 + (pontos[i].y * pow(t, 3)) / 6;
+
+	//Começar no ponto 3
+	for (int i = 3; i < pontos.size(); i++) {
+
+		for (double tempo = 0; tempo <= 1; tempo += 0.01) {
+
+			//calcula x da interpolação
+			xt = (pontos[i - 3].x * pow((1 - tempo), 3)) / 6 +
+				(pontos[i - 2].x * (3 * pow(tempo, 3) - 6 * pow(tempo, 2) + 4)) / 6 +
+				(pontos[i - 1].x * (3 * (-1 * pow(tempo, 3) + pow(tempo, 2) + tempo) + 1))
+				/ 6 + (pontos[i].x * pow(tempo, 3)) / 6;
+
+			//calcula y da interpolação
+			yt = (pontos[i - 3].y * pow((1 - tempo), 3)) / 6
+				+ (pontos[i - 2].y * (3 * pow(tempo, 3) - 6 * pow(tempo, 2) + 4)) / 6
+				+ (pontos[i - 1].y * (3 * (-1 * pow(tempo, 3) + pow(tempo, 2) + tempo) + 1))
+				/ 6 + (pontos[i].y * pow(tempo, 3)) / 6;
+
 			pol->pontos.push_back(Ponto(xt, yt));
+
 		}
+	}
 }
 
 void Poligono::forward(Poligono *pol) {
 	double xt, yt;
-	float ax, ay, bx, by, cx, cy;
+	float pontoAx, pontoAy, pontoBx, pontoBy, pontoCx, pontoCy;
 
-	cx = 3 * (pontos[1].x - pontos[0].x);
-	cy = 3 * (pontos[1].y - pontos[0].y);
+    //calcula pontos a, b, c
+	pontoCx = 3 * (pontos[1].x - pontos[0].x);
+	pontoCy = 3 * (pontos[1].y - pontos[0].y);
 
-	bx = 3 * (pontos[2].x - pontos[1].x) - cx;
-	by = 3 * (pontos[2].y - pontos[1].y) - cy;
+	pontoBx = 3 * (pontos[2].x - pontos[1].x) - pontoCx;
+	pontoBy = 3 * (pontos[2].y - pontos[1].y) - pontoCy;
 
-	ax = pontos[3].x - pontos[0].x - cx - bx;
-	ay = pontos[3].y - pontos[0].y - cy - by;
+	pontoAx = pontos[3].x - pontos[0].x - pontoCx - pontoBx;
+	pontoAy = pontos[3].y - pontos[0].y - pontoCy - pontoBy;
 
-	float h = 1.0f / 1000, hh = h * h, hhh = hh * h;
-	float d1x, d1y, d2x, d2y, d3x, d3y;
+    //Delta, Delta ao Quadrado, Delta ao Cubo e Delta's F0
+	float delta = 1.0f / 1000, deltaQuadrado = delta * delta, deltaCubo = deltaQuadrado * delta;
+	float deltaf0X, deltaf0Y, deltaF0XQuad, deltaF0YQuad, deltaF0XCubo, deltaF0YCubo;
 
-	d1x = ax * hhh + bx * hh + cx * h;
-	d1y = ay * hhh + by * hh + cy * h;
+	//DeltaF0
+	deltaf0X = pontoAx * deltaCubo + pontoBx * deltaQuadrado + pontoCx * delta;
+	deltaf0Y = pontoAy * deltaCubo + pontoBy * deltaQuadrado + pontoCy * delta;
 
-	d2x = 6 * ax * hhh + 2 * bx * hh;
-	d2y = 6 * ay * hhh + 2 * by * hh;
+	//DeltaF0 ao Quadrado
+	deltaF0XQuad = 6 * pontoAx * deltaCubo + 2 * pontoBx * deltaQuadrado;
+	deltaF0YQuad = 6 * pontoAy * deltaCubo + 2 * pontoBy * deltaQuadrado;
 
-	d3x = 6 * ax * hhh;
-	d3y = 6 * ay * hhh;
+    //DeltaF0 ao Cubo
+	deltaF0XCubo = 6 * pontoAx * deltaCubo;
+	deltaF0YCubo = 6 * pontoAy * deltaCubo;
 
-	float currentX = pontos[0].x, currentY = pontos[0].y;
+    //X e Y Atual
+	float xAtual = pontos[0].x, yAtual = pontos[0].y;
 
+    //Printar os Pontos
 	for (int i = 1; i < 1000; i++) {
-		currentX += d1x;
-		currentY += d1y;
 
-		d1x += d2x;
-		d1y += d2y;
-		d2x += d3x;
-		d2y += d3y;
+		xAtual += deltaf0X;
+		yAtual += deltaf0Y;
 
-		pol->pontos.push_back(Ponto(currentX, currentY));
+		deltaf0X += deltaF0XQuad;
+		deltaf0Y += deltaF0YQuad;
+
+		deltaF0XQuad += deltaF0XCubo;
+		deltaF0YQuad += deltaF0YCubo;
+
+		pol->pontos.push_back(Ponto(xAtual, yAtual));
+
 	}
 
 	pol->pontos.push_back(pontos[3]);
+
 }

@@ -4,7 +4,7 @@ object edtHomogenea: TedtHomogenea
   Caption = 'Polygon Manipulation'
   ClientHeight = 582
   ClientWidth = 902
-  Color = clHighlight
+  Color = clNavy
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -67,7 +67,7 @@ object edtHomogenea: TedtHomogenea
       Width = 58
       Height = 114
       Caption = 'Eixo X'
-      Color = clHighlight
+      Color = clHotLight
       ParentBackground = False
       ParentColor = False
       TabOrder = 0
@@ -93,6 +93,9 @@ object edtHomogenea: TedtHomogenea
     Width = 58
     Height = 114
     Caption = 'Eixo Y'
+    Color = clHotLight
+    ParentBackground = False
+    ParentColor = False
     TabOrder = 37
     object Label4: TLabel
       Left = 20
@@ -373,7 +376,7 @@ object edtHomogenea: TedtHomogenea
   end
   object edTransladarY: TEdit
     Left = 681
-    Top = 148
+    Top = 149
     Width = 44
     Height = 21
     Margins.Left = 2

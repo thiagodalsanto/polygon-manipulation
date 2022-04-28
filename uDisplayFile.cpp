@@ -9,7 +9,7 @@
 void DisplayFile::desenha(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta)
 {
 
-	canvas->Brush->Color = clWhite;
+	canvas->Brush->Color = clSkyBlue;
 	canvas->FillRect(Rect(0, 0, 500, 500));
 
 	for (int x = 0; x < poligonos.size(); x++)

@@ -159,18 +159,20 @@ void __fastcall TedtHomogenea::lbPoligonosMouseDown(TObject*Sender, TMouseButton
 // ---------------------------------------------------------------------------
 
 void __fastcall TedtHomogenea::btnUpdateClick(TObject*Sender){
+
 	mundo.xmin = StrToFloat(edXWMin->Text);
 	mundo.ymin = StrToFloat(edYWMin->Text);
 	mundo.xmax = StrToFloat(edXWMax->Text);
 	mundo.ymax = StrToFloat(edYWMax->Text);
 
 	AtualizaMundo();
+
 }
 // ---------------------------------------------------------------------------
 
 void TedtHomogenea::AtualizaMundo() {
-	edXWMin->Text = FloatToStr(mundo.ymin);
-	edXWMax->Text = FloatToStr(mundo.ymax);
+	edXWMin->Text = FloatToStr(mundo.xmin);
+	edXWMax->Text = FloatToStr(mundo.xmax);
 
 	edYWMin->Text = FloatToStr(mundo.ymin);
 	edYWMax->Text = FloatToStr(mundo.ymax);
@@ -182,6 +184,7 @@ void TedtHomogenea::AtualizaMundo() {
 	display.poligonos[1].pontos[1].x = mundo.xmax;
 
 	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
+
 }
 
 // ---------------------------------------------------------------------------
@@ -237,8 +240,7 @@ void __fastcall TedtHomogenea::rgTipoRetaClick(TObject*Sender){
 // ---------------------------------------------------------------------------
 
 void __fastcall TedtHomogenea::btRotacionarClick(TObject*Sender){
-	display.poligonos[lbPoligonos->ItemIndex].rotacao
-		((double)(StrToFloat(edtAngulo->Text)));
+	display.poligonos[lbPoligonos->ItemIndex].rotacao((double)(StrToFloat(edtAngulo->Text)));
 	display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
 }
 // ---------------------------------------------------------------------------
@@ -406,7 +408,7 @@ void __fastcall TedtHomogenea::btnClippingClick(TObject *Sender)
 		if (clip2.pontos.size() > 0) {
 				clip2.id = contaId++;
 				clip2.tipo = (display.poligonos[lbPoligonos->ItemIndex].tipo == 'O')?
-						 'r' : 'R';
+						 'W' : 'R';
 				display.poligonos.push_back(clip2);
 				display.toString(lbPoligonos);
 				clip2.pontos.clear();
@@ -427,4 +429,6 @@ void __fastcall TedtHomogenea::CirculoClick(TObject *Sender)
 
 }
 //---------------------------------------------------------------------------
+
+
 
