@@ -2,7 +2,7 @@
 
 ## Descrição
 <p align="justify">
-Um programa feito para manipulação e transformação de poligonos construidos através do próprio programa.
+Projeto para manipulação de poligonos com uma interface construída do zero em C++, para matéria de Computação Gráfica na UTFPR/MD.
 <p/>
  
 ## Funcionalidades
@@ -16,12 +16,14 @@ A programa conta com:
 - Reflexão Vertical e Horizontal 
 - Curvas de Casteujal, Hermite, Bezier, B-Spline e Forward
 - Clipping
+- Abertura de Poligonos 3D por arquivos .txt
+- Rotação, Translação e Escalonamento Apenas em um Eixo
 
 ## Técnologias Utilizadas
 O projeto será baseado em C++ puro e utilização da plataforma de desenvolvimento do [C++ Builder 10.4](https://www.embarcadero.com/br/products/cbuilder) desenvolvido pela [Embarcadero](https://www.embarcadero.com/br/).
 
 ## Status do Projeto
-:construction: O projeto encontra-se em desenvolvimento com previsão para conclusão em Abril de 2022.
+:construction: O projeto foi concluído em 24/04/2022.
 
 ## Licença
 O Projeto segue a licença `MIT`
