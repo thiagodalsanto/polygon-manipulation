@@ -1,48 +1,62 @@
-// ---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 
 #ifndef uPoligonoH
 #define uPoligonoH
-
 #include <vector>
-#include <Vcl.StdCtrls.hpp>
 #include "uPonto.h"
+#include "Cordenadas3D.h"
 
-// ---------------------------------------------------------------------------
-class Poligono {
+#include <Vcl.ExtCtrls.hpp>
+//---------------------------------------------------------------------------
+//using namespace std;
+
+class Poligono{
 	public:
-		std::vector<Ponto>pontos;
-		int id;
-		char tipo;
+	  int id;
+	  char tipo;
+	  std::vector <Cordenadas3D> cordenadas3d;
 
-		void toString(TListBox*local);
-		UnicodeString toString();
+	  void desenha(TCanvas *canvas, Janela mundo, Janela vp, int tipoReta);
+	  void desenhaPonto(Ponto ponto, TCanvas*canvas, Janela mundo, Janela vp, int tipoReta);
+	  UnicodeString toString();
 
-		void desenha(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta);
+      void moveTo(TCanvas *canvas, Janela mundo, Janela vp);
+	  void DDA(Ponto P1, Ponto P2, TCanvas *canvas, Janela mundo, Janela vp, char tipo);
+	  void Bresenham(Ponto P1, Ponto P2, TCanvas *canvas, Janela mundo, Janela vp);
 
-		void lineTo(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta);
-		void DDA(Ponto P1, Ponto P2, TCanvas *canvas, Janela mundo, Janela vp, char tipo);
-		void Bresenham(Ponto P1, Ponto P2, TCanvas *canvas, Janela mundo, Janela vp);
+	  void mostra(TListBox *lb);
 
-		void Circunferencia(double xCentral, double yCentral, double raio, Poligono *aux);
-		void DesenhaCircunferencia(double xCentral, double yCentral, double x, double y, Poligono *aux);
+	  Ponto pontoMedio();
+	  Cordenadas3D pontoMedioZ();
+	  void ComHomogenea(float dx, float dy,float sx, float sy,double angulo,int tipo);
+      void ComHomogenea(float dx, float dy,float dz,float sx, float sy,float sz, double angulo,int tipo);
 
-		void transladar(float dx, float dy);
-		void escalonar(double dx, double dy);
-		void rotacao(double angulo);
-		void reflexao(double dx, double dy);
-        void ComHomo(float dx, float dy,float sx, float sy,double angulo,int tipo);
 
-        int Cohen(Janela clipping, double x, double y);
-	  	Poligono Clip(Janela clipping, Poligono pol);
+      void Circunferencia(double xCentral, double yCentral, double raio, Poligono *aux);
+	  void DesenhaCircunferencia(double xc, double yc, double x, double y, Poligono *aux);
 
-		void casteljau(Poligono *pol);
-		void pontosMediosCasteljau(Ponto p0, Ponto p1, Ponto p2);
-		double calcDistEuclidiana(double x1, double y1, double x2, double y2);
+      void transladar(float dx, float dy);
+	  void escalonar(double dx, double dy);
+	  void rotacao(double angulo);
+	  void reflexao(double dx, double dy);
 
-		void hermite(Poligono *pol);
-		void bezier(Poligono *pol);
-		void bspline(Poligono *pol);
-		void forward(Poligono *pol);
+
+	  int Cohen(Janela clipping, double x, double y);
+	  Poligono Clip(Janela clipping, Poligono pol);
+
+	  Poligono casteljau(Poligono *pol);
+	  void desenhaCasteljauRec(Poligono*curva, Poligono aux);
+	  double distanciaPontos(Ponto p1, Ponto p2);
+	  Cordenadas3D pontoMedio(Ponto p1, Ponto p2);
+	  void subdividirCurva(Poligono aux, Poligono*curvaEsquerda,Poligono*curvaDireita);
+
+
+	  void hermite(Poligono *pol);
+	  void bezier(Poligono *pol);
+	  void Bspline(Poligono *pol);
+	  void forward(Poligono *pol);
+
+
 };
 
 #endif

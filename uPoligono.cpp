@@ -1,89 +1,63 @@
-// ---------------------------------------------------------------------------
-#pragma hdrstop
+ï»¿//---------------------------------------------------------------------------
 
+#pragma hdrstop
 #define SIGN(x) ((x) < 0 ? (-1): (1))
 #define ABS(x) ((x) < 0 ? (-x) : (x))
 #define FLOOR(x) ((x) < 0 ? ( (x) - (double)(x) != 0 ? ((double)(x) - 1) : ((int)(x))) : (double)(x))
-
+#include <math.h>
 #include "uPoligono.h"
 #include "uJanela.h"
-#include <math.h>
-// ---------------------------------------------------------------------------
+#include "Cordenadas3D.h"
+
+
+//---------------------------------------------------------------------------
 #pragma package(smart_init)
 
-double xVp2W(int x, Janela mundo, Janela vp) {
-	return ((x - vp.xmin) / (vp.xmax - vp.xmin)) *
-		(mundo.xmax - mundo.xmin) + mundo.xmin;
-}
+void Poligono::desenha(TCanvas *canvas, Janela mundo, Janela vp, int tipoReta) {
 
-double yVp2W(int y, Janela mundo, Janela vp) {
-	return (1 - (y - vp.ymin) / (vp.ymax - vp.ymin)) *
-		(mundo.ymax - mundo.ymin) + mundo.ymin;
-}
-
-void Poligono::toString(TListBox*local) {
-	local->Items->Clear();
-	for (int x = 0; x < pontos.size(); x++) {
-			local->Items->Add(pontos[x].toString());
+	if(tipo == 'O' || tipo == 'W'){
+	   for(int x = 0; x < cordenadas3d.size() - 1; x++) {
+		   canvas->Pixels[cordenadas3d[x].xW2Vp(mundo, vp)][cordenadas3d[x].yW2Vp(mundo, vp)]
+		   = (tipo == 'O')? clMaroon : clWhite;
 		}
-}
-
-UnicodeString Poligono::toString() {
-	return IntToStr(id) + " - " + tipo + " - " +
-		IntToStr((int)pontos.size()) + " Pontos";
-}
-
-void Poligono::desenha(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) {
-	int xVp, yVp;
-
-	if(tipo == 'O' || tipo ==  'W'){
-
-		for(int x = 0; x < pontos.size() - 1; x++) {
-			canvas->Pixels[pontos[x].xW2Vp(mundo, vp)][pontos[x].yW2Vp(mundo, vp)]
-		   = (tipo == 'O') ? clMaroon : clWhite;
-		}
-
 	} else
+	{
+		switch (tipoReta){
 
-	switch (tipoReta) {
-		case 0:
-			lineTo(canvas, mundo, vp, tipoReta);
+			case 0:moveTo(canvas,mundo,vp);
 			break;
 
-		case 1:
-			for(float x = 0; x < pontos.size() - 1; x++) {
-				DDA(pontos[x], pontos[x+1], canvas, mundo, vp, tipo);
+			case 1:
+			for(float x = 0; x < cordenadas3d.size() - 1; x++) {
+				DDA(cordenadas3d[x], cordenadas3d[x+1], canvas, mundo, vp, tipo);
 			}
 			break;
 
-		case 2:
-			for(int x = 0; x < pontos.size() - 1; x++) {
-				Bresenham(pontos[x], pontos[x+1], canvas, mundo, vp);
+			case 2:
+			for(int x = 0; x < cordenadas3d.size() - 1; x++) {
+				Bresenham(cordenadas3d[x], cordenadas3d[x+1], canvas, mundo, vp);
 			}
 			break;
-    }
-}
-
-
-void Poligono::lineTo(TCanvas*canvas, Janela mundo, Janela vp, int tipoReta) {
-
-	int xVp, yVp;
-
-	for (int i = 0; i < pontos.size(); i++) {
-
-        if (i == 0) {
-			canvas->MoveTo(pontos[i].xW2Vp(mundo, vp),
-						 pontos[i].yW2Vp(mundo, vp));
 		}
 
-		else {
-			if (tipo == 'R')
+	}
+
+}
+
+void Poligono::moveTo(TCanvas *canvas, Janela mundo, Janela vp){
+
+	for (int x = 0; x < cordenadas3d.size(); x++){
+		if (x==0)
+		  canvas->MoveTo(cordenadas3d[x].xW2Vp(mundo, vp),
+						 cordenadas3d[x].yW2Vp(mundo, vp));
+		 else{
+
+			if(tipo == 'R')
 				canvas->Pen->Color = clTeal;
 			else
 				canvas->Pen->Color = clRed;
-				canvas->LineTo(pontos[i].xW2Vp(mundo, vp),
-							pontos[i].yW2Vp(mundo, vp));
-		}
+			canvas->LineTo(cordenadas3d[x].xW2Vp(mundo, vp),cordenadas3d[x].yW2Vp(mundo, vp));
+		 }
 	}
 }
 
@@ -107,15 +81,14 @@ void Poligono::DDA(Ponto P1, Ponto P2, TCanvas *canvas, Janela mundo, Janela vp,
 	x = x1 + 0.5 * SIGN(deltax);
 	y = y1 + 0.5 * SIGN(deltay);
 
-	for (int i = 0; i < lenght; i++) {
-		if(tipo == 'R') {
+	for ( int i = 0; i < lenght; i++) {
+		if(tipo == 'R')
 			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clTeal;
-		} else {
-			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clYellow;
-        }
+		else
+			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clBlack;
 		x = x + deltax;
 		y = y + deltay;
-    }
+	}
 
 }
 
@@ -155,7 +128,7 @@ void Poligono:: Bresenham(Ponto P1, Ponto P2, TCanvas *canvas, Janela mundo, Jan
 	erro = 2 * deltay - deltax;
 
 	for(int i = 0; i < deltax; i++) {
-        if(tipo == 'R')
+		if(tipo == 'R')
 			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clTeal;
 		else
 			canvas->Pixels[FLOOR(x)][FLOOR(y)] = clFuchsia;
@@ -174,96 +147,171 @@ void Poligono:: Bresenham(Ponto P1, Ponto P2, TCanvas *canvas, Janela mundo, Jan
 		}
 		else  {
 			x = x + signalx;
-        }
+		}
 
 		erro = erro + 2 * deltay;
 	}
 
 }
 
-void Poligono::transladar(float dx, float dy) {
-	for (int x = 0; x < pontos.size(); x++) {
-		pontos[x].transladar(dx, dy);
+UnicodeString Poligono::toString(){
+  return IntToStr(id) + " - " + tipo + " - " + IntToStr((int)cordenadas3d.size()) + " Pontos";
+}
+
+void Poligono::mostra(TListBox *lb) {
+
+	lb->Items->Clear();
+
+	for (int x = 0; x < cordenadas3d.size(); x++)
+	{
+		lb->Items->Add(cordenadas3d[x].toString());
 	}
+}
+
+void Poligono::transladar(float dx, float dy) {
+
+	for (int x = 0; x < cordenadas3d.size(); x++) {
+		cordenadas3d[x].transladar(dx, dy);
+	}
+
 }
 
 void Poligono::escalonar(double dx, double dy) {
-	for (int x = 0; x < pontos.size(); x++) {
-		pontos[x].escalonar(dx, dy);
+
+	for (int x = 0; x < cordenadas3d.size(); x++) {
+		cordenadas3d[x].escalonar(dx, dy);
 	}
+
 }
 
 void Poligono::rotacao(double angulo) {
-	for (int x = 0; x < pontos.size(); x++) {
-		pontos[x].rotacao(angulo);
+
+	for (int x = 0; x < cordenadas3d.size(); x++) {
+		cordenadas3d[x].rotacao(angulo);
 	}
+
 }
 
 void Poligono::reflexao(double dx, double dy) {
-		for (int x = 0; x < pontos.size(); x++) {
-			pontos[x].transladar(dx, dy);
-		}
+
+	for (int x = 0; x < cordenadas3d.size(); x++) {
+		cordenadas3d[x].transladar(dx, dy);
+	}
+
 }
 
-void Poligono::ComHomo(float dx, float dy,float sx, float sy, double angulo, int tipo){
-	float matrix[3][3]={0,0,0,0,0,0,0,0,0};
-    float aux[1][3] = {0,0,0};
-	float px,py;
-	float poli[1][3] = {1, 1, 1};
+Ponto Poligono::pontoMedio(){
 
-	switch (tipo){
+	double somaX = 0;
+	double somaY = 0;
 
-		case 0:
-			matrix[0][0] = 1;
-			matrix[1][1] = 1;
-			matrix[2][2] = 1;
-			matrix[2][0] = dx;
-			matrix[2][1] = dy;
-			break;
+	for (int i = 0; i < cordenadas3d.size(); i++) {
 
-		case 1:
-			matrix[0][0] = sx;
-			matrix[1][1] = sy;
-			matrix[2][2] = 1;
-			break;
-
-		case 2:
-			matrix[0][0] = (cos(angulo));
-			matrix[0][1] = (sin(angulo));
-			matrix[1][1] = (cos(angulo));
-			matrix[2][2] = 1;
-			matrix[1][0] = -sin(angulo);
-			break;
-
-		case 3:
-			matrix[0][0] = 1;
-			matrix[1][1] = -1;
-			matrix[2][2] = 1;
-			break;
-
-		case 4:
-			matrix[0][0] = -1;
-			matrix[1][1] = 1;
-			matrix[2][2] = 1;
-			break;
-		case 5:
-			matrix[0][0] = -1;
-			matrix[1][1] = -1;
-			matrix[2][2] = 1;
-			break;
+		somaX += cordenadas3d[i].x;
+		somaY += cordenadas3d[i].y;
 
 	}
 
+	somaX = somaX / cordenadas3d.size();
+	somaY = somaY / cordenadas3d.size();
 
-	for(int x = 0; x < pontos.size(); x++){
+	return Cordenadas3D(somaX, somaY, 0);
 
-		px=pontos[x].x;
-		py=pontos[x].y;
+}
+
+Cordenadas3D Poligono::pontoMedioZ(){
+
+	double somaX = 0;
+	double somaY = 0;
+	double somaZ = 0;
+
+	for (int i = 0; i < cordenadas3d.size(); i++) {
+
+		somaX += cordenadas3d[i].x;
+		somaY += cordenadas3d[i].y;
+		somaZ += cordenadas3d[i].z;
+
+	}
+
+	somaX = somaX / cordenadas3d.size();
+	somaY = somaY / cordenadas3d.size();
+	somaZ = somaZ / cordenadas3d.size();
+
+	return Cordenadas3D(somaX, somaY, somaZ);
+
+}
+
+//Homogenea para 2D
+void Poligono::ComHomogenea(float dx, float dy,float sx, float sy,double angulo,int tipo){
+
+	float matrix[3][3]={0,0,0,0,0,0,0,0,0};
+	float aux[1][3] = {0,0,0};
+	float px,py;
+	float poli[1][3] = {1,1 , 1};
+	Ponto centro;
+	double grau;
+
+	grau = (angulo * 3.14) / 180;
+
+	switch (tipo){
+
+	//Se Transladar
+	case 0:
+		matrix[0][0] = 1;
+		matrix[1][1] = 1;
+		matrix[2][2] = 1;
+		matrix[2][0]=dx;
+		matrix[2][1]=dy;
+		break;
+
+	//Se Escalonar
+	case 1:
+		matrix[0][0] = sx;
+		matrix[1][1] = sy;
+		matrix[2][2] = 1;
+		break;
+
+	//Se Rotacionar
+	case 2:
+		centro = pontoMedio();
+		ComHomogenea(-centro.x,-centro.y, 0,0,0,0);
+		matrix[0][0] = (cos(grau));
+		matrix[0][1] = (sin(grau));
+		matrix[1][1] = (cos(grau));
+		matrix[2][2] = 1;
+		matrix[1][0] = -sin(grau);
+		break;
+
+    //ReflexÃµes Horizontal, Vertical e Diagonal
+	case 3:
+		matrix[0][0] = 1;
+		matrix[1][1] = -1;
+		matrix[2][2] = 1;
+		break;
+
+	case 4:
+		matrix[0][0] = -1;
+		matrix[1][1] = 1;
+		matrix[2][2] = 1;
+		break;
+	case 5:
+		matrix[0][0] = -1;
+		matrix[1][1] = -1;
+		matrix[2][2] = 1;
+		break;
+
+	}
+
+    //Muda o Poligono
+	for(int x = 0; x < cordenadas3d.size(); x++ ){
+
+		px=cordenadas3d[x].x;
+		py=cordenadas3d[x].y;
 		poli[0][0] = px;
 		poli[0][1] = py;
 
 		for(int i = 0 ; i < 1 ; i++){
-			for(int j = 0; j < 3 ; j++){
+			for(int j=0; j<3 ; j++){
 
 				aux[i][j] = 0;
 
@@ -277,50 +325,156 @@ void Poligono::ComHomo(float dx, float dy,float sx, float sy, double angulo, int
 
 		}
 
-		 pontos[x].x = aux[0][0];
-		 pontos[x].y = aux[0][1];
+		 cordenadas3d[x].x = aux[0][0];
+		 cordenadas3d[x].y = aux[0][1];
+	}
+
+
+	if(tipo == 2){
+		ComHomogenea(centro.x,centro.y, 0,0,0,0);
 	}
 
 
 }
 
+//Homogenea para 3D
+void Poligono::ComHomogenea(float dx, float dy, float dz,float sx, float sy,float sz,double angulo,int tipo){
+
+	float matrix[4][4]={0,0,0,0,0,0,0,0,0,0,0,0,0};
+	float aux[1][4] = {0,0,0,0};
+	float px,py,pz;
+	float poli[1][4] = {1,1,1,1};
+	Cordenadas3D centro;
+	double grau;
+
+    grau = (angulo * 3.14) / 180;
+
+	switch (tipo){
+
+		//Se Transladar
+		case 0:
+			matrix[0][0] = 1;
+			matrix[1][1] = 1;
+			matrix[2][2] = 1;
+			matrix[3][3] = 1;
+			matrix[3][0]=dx;
+			matrix[3][1]=dy;
+			matrix[3][2]=dz;
+			break;
+
+		//Se Escalonar
+		case 1:
+			matrix[0][0] = sx;
+			matrix[1][1] = sy;
+			matrix[2][2] = sz;
+			matrix[3][3] = sz;
+			matrix[4][4] = 1;
+			break;
+
+		//Se Rotacionar
+		case 2:
+			centro = pontoMedioZ();
+			ComHomogenea(-centro.x,-centro.y,-centro.z,0,0,0,0,0);
+
+			matrix[2][2] = (cos(grau));
+			matrix[1][2] = (sin(grau));
+			matrix[0][0] = 1;
+			matrix[1][1] = (cos(grau));
+			matrix[3][3] = 1; matrix[2][1] = (-sin(grau));
+			break;
+
+        //Se Rotacionar tbm
+		case 3:
+			centro = pontoMedioZ();
+			ComHomogenea(-centro.x,-centro.y,-centro.z,0,0,0,0,0);
+
+			matrix[0][0] = (cos(grau));
+			matrix[2][0] = (sin(grau));
+			matrix[3][3] = 1;
+			matrix[2][2] = (cos(grau));
+			matrix[1][1] = 1;
+			matrix[0][2] = (-sin(grau));
+			break;
+
+
+	}
+
+	//Muda o Poligono
+	for(int x=0; x < cordenadas3d.size(); x++ ){
+
+		px=cordenadas3d[x].x;
+		py=cordenadas3d[x].y;
+		pz=cordenadas3d[x].z;
+		poli[0][0] = px;
+		poli[0][1] = py;
+		poli[0][2] = pz;
+
+		for(int i = 0 ; i < 1 ; i++){
+			for(int j=0; j<4 ; j++){
+
+				aux[i][j] = 0;
+
+				for(int k = 0; k<4 ; k++){
+
+					aux[i][j] = aux[i][j] + poli[i][k] * matrix[k][j] ;
+
+				}
+
+			}
+
+		}
+
+		 cordenadas3d[x].x = aux[0][0];
+		 cordenadas3d[x].y = aux[0][1];
+		 cordenadas3d[x].z = aux[0][2];
+	}
+
+
+	if(tipo == 2 || tipo == 3){
+		ComHomogenea(centro.x,centro.y,centro.z,0,0,0,0,0);
+	}
+
+}
+
 void Poligono::Circunferencia( double xCentral, double yCentral, double raio, Poligono *aux) {
 	double x, y, p;
-	x = 0;
+	x  = 0;
 	y = raio;
 
 	DesenhaCircunferencia(xCentral, yCentral, x, y, aux);
 	p = 1 - raio;
 
 	while(x < y) {
-		//Calcula X e Y
+        //Calcula X e Y
 		x++;
 		if(p >= 0) {
-			y--;
+            y--;
 		}
-        //Decide se é cima ou baixo
+
+		//Decide se Ã© cima ou baixo
 		if(p < 0) {
 			p = p + 2 * x + 1;
 		}
+
 		else {
 			p = p + 2 * (x - y) + 1;
 		}
-
 		DesenhaCircunferencia(xCentral, yCentral, x, y, aux);
 	}
+
 }
 
 void Poligono::DesenhaCircunferencia(double xCentral, double yCentral, double x, double y, Poligono *aux) {
 
-	//Octantes
-	aux->pontos.push_back(Ponto(xCentral + x, yCentral + y));
-	aux->pontos.push_back(Ponto(xCentral - x, yCentral + y));
-	aux->pontos.push_back(Ponto(xCentral - y ,yCentral + x));
-	aux->pontos.push_back(Ponto(xCentral - y, yCentral - x));
-	aux->pontos.push_back(Ponto(xCentral - x, yCentral - y));
-	aux->pontos.push_back(Ponto(xCentral + x, yCentral - y));
-	aux->pontos.push_back(Ponto(xCentral + y, yCentral - x));
-	aux->pontos.push_back(Ponto(xCentral + y, yCentral + x));
+	aux->cordenadas3d.push_back(Cordenadas3D(xCentral + x, yCentral + y,0));
+	aux->cordenadas3d.push_back(Cordenadas3D(xCentral - x, yCentral + y,0));
+	aux->cordenadas3d.push_back(Cordenadas3D(xCentral - y ,yCentral + x,0));
+	aux->cordenadas3d.push_back(Cordenadas3D(xCentral - y, yCentral - x,0));
+	aux->cordenadas3d.push_back(Cordenadas3D(xCentral - x, yCentral - y,0));
+	aux->cordenadas3d.push_back(Cordenadas3D(xCentral + x, yCentral - y,0));
+	aux->cordenadas3d.push_back(Cordenadas3D(xCentral + y, yCentral - x,0));
+	aux->cordenadas3d.push_back(Cordenadas3D(xCentral + y, yCentral + x,0));
+
 }
 
 int Poligono::Cohen(Janela clipping, double x, double y) {
@@ -340,24 +494,26 @@ int Poligono::Cohen(Janela clipping, double x, double y) {
 			retorno += 8;
 
 	return retorno;
+
 }
 
-Poligono Poligono::Clip(Janela clipping, Poligono pol) {
+Poligono Poligono::Clip(Janela clipping, Poligono pol){
+
 	Poligono aux;
-	Ponto p1, p2;
+	Cordenadas3D p1, p2;
 	int codClippingUm, codClippingDois;
 
-	for (int i = 0; i < pol.pontos.size() - 1; i++) {
-		p1 = pol.pontos[i];
-		p2 = pol.pontos[i + 1];
+	for (int i = 0; i < pol.cordenadas3d.size() - 1; i++) {
+		p1 = pol.cordenadas3d[i];
+		p2 = pol.cordenadas3d[i + 1];
 
-        //Clipping de P1 e P2
+		//Clipping de P1 e P2
 		codClippingUm = Cohen(clipping, p1.x, p1.y);
 		codClippingDois = Cohen(clipping, p2.x, p2.y);
 
 		bool temCondicoes = false;
 
-        //Condicoes
+		//Condicoes
 		while (temCondicoes == false) {
 			if ((codClippingUm == 0) && (codClippingDois == 0)) { //Tudo dentro
 				temCondicoes = true;
@@ -415,8 +571,8 @@ Poligono Poligono::Clip(Janela clipping, Poligono pol) {
 		}
 
 		if(temCondicoes){
-			aux.pontos.push_back(p1);
-			aux.pontos.push_back(p2);
+			aux.cordenadas3d.push_back(p1);
+			aux.cordenadas3d.push_back(p2);
 		}
 
 
@@ -425,60 +581,88 @@ Poligono Poligono::Clip(Janela clipping, Poligono pol) {
 
 }
 
-void Poligono::casteljau(Poligono *pol) {
-	pol->pontos.push_back(this->pontos[0]);
+//Faz Casteljau
+Poligono Poligono::casteljau(Poligono *pol){
 
-	if (this->pontos.size() == 3) {
-		pol->pontosMediosCasteljau(this->pontos[0], this->pontos[1], this->pontos[2]);
-    }
+		Poligono curva;
+		Poligono aux;
 
-	if (this->pontos.size() == 4) {
-		pol->pontosMediosCasteljau(this->pontos[0],
-			Ponto((this->pontos[1].x +this->pontos[2].x) / 2,
-			(this->pontos[1].y + this->pontos[2].y) / 2), this->pontos[3]);
-    }
+		aux.cordenadas3d.push_back(pol->cordenadas3d[0]);
+		aux.cordenadas3d.push_back(pol->cordenadas3d[1]);
+		aux.cordenadas3d.push_back(pol->cordenadas3d[2]);
+		curva.cordenadas3d.push_back(pol->cordenadas3d[0]);
+		desenhaCasteljauRec(&curva, aux);
+
+		return curva;
+
 }
 
-void Poligono::pontosMediosCasteljau(Ponto p0, Ponto p1, Ponto p2) {
+//Desenha
+void Poligono::desenhaCasteljauRec(Poligono*curva, Poligono aux) {
 
-    //Maior que 5 perde muita curvatura
-	if (calcDistEuclidiana(p0.x, p0.y, p1.x, p1.y) < 0.001) {
+	Poligono curvaEsquerda;
+	Poligono curvaDireita;
 
-		this->pontos.push_back(p2);
-
+	if (distanciaPontos(aux.cordenadas3d[0], aux.cordenadas3d[2]) < 1) {
+			curva->cordenadas3d.push_back(aux.cordenadas3d[0]);
 	}
 
 	else {
-
-		Ponto pMedio01, pMedio12, pMedio01_12;
-
-		pMedio01 = Ponto( (p0.x + p1.x) / 2, (p0.y + p1.y) / 2 );
-		pMedio12 = Ponto( (p1.x + p2.x) / 2, (p1.y + p2.y) / 2 );
-		pMedio01_12 = Ponto( (pMedio01.x + pMedio12.x) / 2, (pMedio01.y + pMedio12.y) / 2 );
-
-		this->pontosMediosCasteljau(p0, pMedio01, pMedio01_12); //Lado Esquerdo
-		this->pontosMediosCasteljau(pMedio01_12, pMedio12, p2); //Lado Direito
-
+			subdividirCurva(aux, &curvaEsquerda, &curvaDireita);
+			desenhaCasteljauRec(curva, curvaEsquerda);
+			desenhaCasteljauRec(curva, curvaDireita);
 	}
 }
 
-double Poligono::calcDistEuclidiana(double x1, double y1, double x2, double y2) {
-	return sqrt(pow((x2 - x1), 2) + pow((y2 - y1), 2)) / 2;
+//Distancia Euclidiana
+double Poligono::distanciaPontos(Ponto p1, Ponto p2) {
+
+	return sqrt(pow((p1.x - p2.x), 2) + pow((p1.y - p2.y), 2));
+
+}
+
+//Calcula Pontos Medios
+void Poligono::subdividirCurva(Poligono aux, Poligono*curvaEsquerda, Poligono*curvaDireita) {
+
+	Cordenadas3D pontoMedio1 = pontoMedio(aux.cordenadas3d[0], aux.cordenadas3d[1]);
+	Cordenadas3D pontoMedio2 = pontoMedio(aux.cordenadas3d[1], aux.cordenadas3d[2]);
+	Cordenadas3D pontoMedio3 = pontoMedio(pontoMedio1, pontoMedio2);
+
+	//Pontos medios a Esquerda
+	curvaEsquerda->cordenadas3d.push_back(aux.cordenadas3d[0]);
+	curvaEsquerda->cordenadas3d.push_back(pontoMedio1);
+	curvaEsquerda->cordenadas3d.push_back(pontoMedio3);
+
+	//Pontos medios a Direita
+	curvaDireita->cordenadas3d.push_back(pontoMedio3);
+	curvaDireita->cordenadas3d.push_back(pontoMedio2);
+	curvaDireita->cordenadas3d.push_back(aux.cordenadas3d[2]);
+}
+
+//Calculo de Ponto Medio
+Cordenadas3D Poligono::pontoMedio(Ponto p1, Ponto p2) {
+
+	Cordenadas3D medio;
+	medio.x = (p1.x + p2.x) / 2;
+	medio.y = (p1.y + p2.y) / 2;
+	return medio;
+
 }
 
 void Poligono::hermite(Poligono *pol) {
+
 	double ghX[4], ghY[4];
 	int mH[4][4] = {2, -2, 1, 1, -3, 3, -2, -1, 0, 0, 1, 0, 1, 0, 0, 0};
 
-	ghX[0] = pontos[0].x; //P1
-	ghX[1] = pontos[3].x; //P4
-	ghX[2] = pontos[1].x - pontos[0].x; //R1
-	ghX[3] = pontos[3].x - pontos[2].x; //R4
+	ghX[0] = cordenadas3d[0].x; //P1
+	ghX[1] = cordenadas3d[3].x; //P4
+	ghX[2] = cordenadas3d[1].x - cordenadas3d[0].x; //R1
+	ghX[3] = cordenadas3d[3].x - cordenadas3d[2].x; //R4
 
-	ghY[0] = pontos[0].y;
-	ghY[1] = pontos[3].y;
-	ghY[2] = pontos[1].y - pontos[0].y;
-	ghY[3] = pontos[3].y - pontos[2].y;
+	ghY[0] = cordenadas3d[0].y; //P1
+	ghY[1] = cordenadas3d[3].y; //P4
+	ghY[2] = cordenadas3d[1].y - cordenadas3d[0].y; //R1
+	ghY[3] = cordenadas3d[3].y - cordenadas3d[2].y; //R4
 
 	double coefHermiteX[4] =
 		{
@@ -498,33 +682,34 @@ void Poligono::hermite(Poligono *pol) {
 
 	//tempo, coefHermiteX && tempo, coefHermiteY
 	for (float tempo = 0; tempo <= 1; tempo += 0.001) {
-		pol->pontos.push_back(Ponto(
-			(pow(tempo, 3) * coefHermiteX[0])
-			+ (pow(tempo, 2) * coefHermiteX[1])
-			+ (tempo * coefHermiteX[2]) + coefHermiteX[3],
-			(pow(tempo, 3) * coefHermiteY[0])
-			+ (pow(tempo, 2) * coefHermiteY[1])
-			+ (tempo * coefHermiteY[2]) + coefHermiteY[3])
-		);
+
+		pol->cordenadas3d.push_back(Cordenadas3D((pow(tempo, 3)*coefHermiteX[0])
+		+ (pow(tempo, 2)*coefHermiteX[1])
+		+ (tempo*coefHermiteX[2]) + coefHermiteX[3], (pow(tempo, 3)*coefHermiteY[0])
+		+ (pow(tempo, 2)*coefHermiteY[1])
+		+ (tempo*coefHermiteY[2]) + coefHermiteY[3],0));
+
 	}
+
 }
 
 void Poligono::bezier(Poligono *pol) {
+
 	double gbX[4], gbY[4];
 	//Matriz Hermite
 	int mH[4][4] = {2, -2, 1, 1, -3, 3, -2, -1, 0, 0, 1, 0, 1, 0, 0, 0};
 
-	gbX[0] = pontos[0].x; //P1
-	gbX[1] = pontos[3].x; //P4
-	gbX[2] = 3 * (pontos[1].x - pontos[0].x); //R1
-	gbX[3] = 3 * (pontos[3].x - pontos[2].x); //R4
+	gbX[0] = cordenadas3d[0].x; //P1
+	gbX[1] = cordenadas3d[3].x; //P4
+	gbX[2] = 3 * (cordenadas3d[1].x - cordenadas3d[0].x); //R1
+	gbX[3] = 3 * (cordenadas3d[3].x - cordenadas3d[2].x); //R4
 
-	gbY[0] = pontos[0].y;
-	gbY[1] = pontos[3].y;
-	gbY[2] = 3 * (pontos[1].y - pontos[0].y);
-	gbY[3] = 3 * (pontos[3].y - pontos[2].y);
+	gbY[0] = cordenadas3d[0].y;
+	gbY[1] = cordenadas3d[3].y;
+	gbY[2] = 3 * (cordenadas3d[1].y - cordenadas3d[0].y);
+	gbY[3] = 3 * (cordenadas3d[3].y - cordenadas3d[2].y);
 
-	double coefBezierX[4] =
+	double coefHermiteX[4] =
 		{
 		gbX[0] * mH[0][0] + gbX[1] * mH[0][1] + gbX[2] * mH[0][2] + gbX[3] * mH[0][3],
 		gbX[0] * mH[1][0] + gbX[1] * mH[1][1] + gbX[2] * mH[1][2] + gbX[3] * mH[1][3],
@@ -532,7 +717,7 @@ void Poligono::bezier(Poligono *pol) {
 		gbX[0] * mH[3][0] + gbX[1] * mH[3][1] + gbX[2] * mH[3][2] + gbX[3] * mH[3][3]
 		};
 
-	double coefBezierY[4] =
+	double coefHermiteY[4] =
 		{
 		gbY[0] * mH[0][0] + gbY[1] * mH[0][1] + gbY[2] * mH[0][2] + gbY[3] * mH[0][3],
 		gbY[0] * mH[1][0] + gbY[1] * mH[1][1] + gbY[2] * mH[1][2] + gbY[3] * mH[1][3],
@@ -542,58 +727,56 @@ void Poligono::bezier(Poligono *pol) {
 
 	//tempo, coefBezierX && tempo, coefBezierY
 	for (float tempo = 0; tempo <= 1; tempo += 0.001) {
-		pol->pontos.push_back(Ponto(
-			(pow(tempo, 3)*coefBezierX[0])
-			+ (pow(tempo, 2)*coefBezierX[1])
-			+ (tempo*coefBezierX[2]) + coefBezierX[3],
-			(pow(tempo, 3)*coefBezierY[0])
-			+ (pow(tempo, 2)*coefBezierY[1])
-			+ (tempo*coefBezierY[2]) + coefBezierY[3])
-			);
+
+		pol->cordenadas3d.push_back(Cordenadas3D((pow(tempo, 3)*coefHermiteX[0])
+		+ (pow(tempo, 2)*coefHermiteX[1])
+		+ (tempo*coefHermiteX[2]) + coefHermiteX[3], (pow(tempo, 3)*coefHermiteY[0])
+		+ (pow(tempo, 2)*coefHermiteY[1])
+		+ (tempo*coefHermiteY[2]) + coefHermiteY[3],0));
+
 	}
 }
 
-void Poligono::bspline(Poligono *pol) {
+void Poligono::Bspline(Poligono *pol) {
+
 	double xt, yt;
 
-	//Começar no ponto 3
-	for (int i = 3; i < pontos.size(); i++) {
+	//ComeÃ§a no ponto 3
+	for (int i = 3; i < cordenadas3d.size(); i++)
+		for (double t = 0; t <= 1; t += 0.01) {
 
-		for (double tempo = 0; tempo <= 1; tempo += 0.001) {
+			//Calcula x da interpolacao
+			xt = (cordenadas3d[i - 3].x * pow((1 - t), 3)) / 6 +
+				(cordenadas3d[i - 2].x * (3 * pow(t, 3) - 6 * pow(t, 2) + 4)) / 6 +
+				(cordenadas3d[i - 1].x * (3 * (-1 * pow(t, 3) + pow(t, 2) + t) + 1))
+				/ 6 + (cordenadas3d[i].x * pow(t, 3)) / 6;
 
-			//calcula x da interpolação
-			xt = (pontos[i - 3].x * pow((1 - tempo), 3)) / 6 +
-				(pontos[i - 2].x * (3 * pow(tempo, 3) - 6 * pow(tempo, 2) + 4)) / 6 +
-				(pontos[i - 1].x * (3 * (-1 * pow(tempo, 3) + pow(tempo, 2) + tempo) + 1))
-				/ 6 + (pontos[i].x * pow(tempo, 3)) / 6;
-
-			//calcula y da interpolação
-			yt = (pontos[i - 3].y * pow((1 - tempo), 3)) / 6
-				+ (pontos[i - 2].y * (3 * pow(tempo, 3) - 6 * pow(tempo, 2) + 4)) / 6
-				+ (pontos[i - 1].y * (3 * (-1 * pow(tempo, 3) + pow(tempo, 2) + tempo) + 1))
-				/ 6 + (pontos[i].y * pow(tempo, 3)) / 6;
-
-			pol->pontos.push_back(Ponto(xt, yt));
+			//Calcula y da interpolacao
+			yt = (cordenadas3d[i - 3].y * pow((1 - t), 3)) / 6 +
+				(cordenadas3d[i - 2].y * (3 * pow(t, 3) - 6 * pow(t, 2) + 4)) / 6 +
+				(cordenadas3d[i - 1].y * (3 * (-1 * pow(t, 3) + pow(t, 2) + t) + 1))
+				/ 6 + (cordenadas3d[i].y * pow(t, 3)) / 6;
+			pol->cordenadas3d.push_back(Cordenadas3D(xt, yt,0));
 
 		}
-	}
 }
 
 void Poligono::forward(Poligono *pol) {
+
 	double xt, yt;
 	float pontoAx, pontoAy, pontoBx, pontoBy, pontoCx, pontoCy;
 
-    //calcula pontos a, b, c
-	pontoCx = 3 * (pontos[1].x - pontos[0].x);
-	pontoCy = 3 * (pontos[1].y - pontos[0].y);
+	//calcula cordenadas3d a, b, c
+	pontoCx = 3 * (cordenadas3d[1].x - cordenadas3d[0].x);
+	pontoCy = 3 * (cordenadas3d[1].y - cordenadas3d[0].y);
 
-	pontoBx = 3 * (pontos[2].x - pontos[1].x) - pontoCx;
-	pontoBy = 3 * (pontos[2].y - pontos[1].y) - pontoCy;
+	pontoBx = 3 * (cordenadas3d[2].x - cordenadas3d[1].x) - pontoCx;
+	pontoBy = 3 * (cordenadas3d[2].y - cordenadas3d[1].y) - pontoCy;
 
-	pontoAx = pontos[3].x - pontos[0].x - pontoCx - pontoBx;
-	pontoAy = pontos[3].y - pontos[0].y - pontoCy - pontoBy;
+	pontoAx = cordenadas3d[3].x - cordenadas3d[0].x - pontoCx - pontoBx;
+	pontoAy = cordenadas3d[3].y - cordenadas3d[0].y - pontoCy - pontoBy;
 
-    //Delta, Delta ao Quadrado, Delta ao Cubo e Delta's F0
+	//Delta, Delta ao Quadrado, Delta ao Cubo e Delta's F0
 	float delta = 1.0f / 1000, deltaQuadrado = delta * delta, deltaCubo = deltaQuadrado * delta;
 	float deltaf0X, deltaf0Y, deltaF0XQuad, deltaF0YQuad, deltaF0XCubo, deltaF0YCubo;
 
@@ -605,14 +788,14 @@ void Poligono::forward(Poligono *pol) {
 	deltaF0XQuad = 6 * pontoAx * deltaCubo + 2 * pontoBx * deltaQuadrado;
 	deltaF0YQuad = 6 * pontoAy * deltaCubo + 2 * pontoBy * deltaQuadrado;
 
-    //DeltaF0 ao Cubo
+	//DeltaF0 ao Cubo
 	deltaF0XCubo = 6 * pontoAx * deltaCubo;
 	deltaF0YCubo = 6 * pontoAy * deltaCubo;
 
-    //X e Y Atual
-	float xAtual = pontos[0].x, yAtual = pontos[0].y;
+	//X e Y Atual
+	float xAtual = cordenadas3d[0].x, yAtual = cordenadas3d[0].y;
 
-    //Printar os Pontos
+	//Printar os cordenadas3d
 	for (int i = 1; i < 1000; i++) {
 
 		xAtual += deltaf0X;
@@ -624,10 +807,10 @@ void Poligono::forward(Poligono *pol) {
 		deltaF0XQuad += deltaF0XCubo;
 		deltaF0YQuad += deltaF0YCubo;
 
-		pol->pontos.push_back(Ponto(xAtual, yAtual));
+		pol->cordenadas3d.push_back(Cordenadas3D(xAtual, yAtual, 0));
 
 	}
 
-	pol->pontos.push_back(pontos[3]);
+	pol->cordenadas3d.push_back(cordenadas3d[3]);
 
 }

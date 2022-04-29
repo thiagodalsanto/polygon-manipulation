@@ -2,19 +2,18 @@
 
 #ifndef uDisplayFileH
 #define uDisplayFileH
-
 #include <vector>
 #include "uPoligono.h"
-#include "uJanela.h"
-#include <Vcl.StdCtrls.hpp>
+#include <Vcl.ExtCtrls.hpp>
+#include "ujanela.h"
+#include "Cordenadas3D.h"
 //---------------------------------------------------------------------------
 class DisplayFile{
 	public:
-	std::vector<Poligono> poligonos;
+		std::vector <Poligono> poligonos;
 
-	void toString(TListBox *local);
-	void desenha(TCanvas *canvas, Janela mundo, Janela vp, int tipoReta);
+		void desenha(TCanvas *canvas, Janela mundo, Janela vp, int tipoReta);
 
+		void mostra(TListBox *lb);
 };
-
 #endif

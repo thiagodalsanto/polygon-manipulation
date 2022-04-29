@@ -1,0 +1,100 @@
+//---------------------------------------------------------------------------
+
+#pragma hdrstop
+#include "uPonto.h"
+#include "Cord3D.h"
+#include "uJanela.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+
+
+Cord3D::Cord3D(double nx, double ny, double nz){
+
+  z = nz;
+}
+Cord3D::Cord3D(){
+
+  z = 1;
+}
+void Cord3D::CHomo(float dx, float dy, float dz,float sx, float sy,float sz,double angulo,int tipo)
+{
+
+
+	float matrix[4][4]={0,0,0,0,0,0,0,0,0,0,0,0,0};
+	float aux[1][3] = {0,0,0};
+	float px,py,pz;
+	float poli[1][4] = {1,1,1,1};
+	Ponto centro;
+	double grau;
+
+	switch (tipo){
+
+
+	case 0:
+		matrix[0][0] = 1; matrix[1][1] = 1; matrix[2][2] = 1;matrix[3][3] = 1;
+		matrix[3][0]=dx;matrix[3][1]=dy;matrix[3][2]=dz;
+		break;
+
+	case 1:
+		matrix[0][0] = sx; matrix[1][1] = sy; matrix[2][2] = sz;
+		matrix[3][3] = 1;
+		break;
+
+	case 2:
+//		centro = pontoMedio();
+//		//CHomo(-centro.x,-centro.y, 0,0,0,0);
+//		matrix[0][0] = (cos(grau));matrix[0][1] = (sin(grau));
+//		matrix[1][1] = (cos(grau));matrix[2][2] = 1;matrix[1][0] = -sin(grau);
+//		break;
+
+	case 3:
+
+		break;
+
+	case 4:
+
+		break;
+	case 5:
+
+		break;
+
+	}
+
+
+
+
+	for(int x=0; x<pontos.size(); x++ ){
+
+		px=pontos[x].x;
+		py=pontos[x].y;
+		pz=pontos[x].z;
+		poli[0][0] = px;
+		poli[0][1] = py;
+		poli[0][2] = pz;
+
+		for(int i = 0 ; i < 1 ; i++){
+			for(int j=0; j<4 ; j++){
+
+				aux[i][j] = 0;
+
+				for(int k = 0; k<4 ; k++){
+
+					aux[i][j] = aux[i][j] + poli[i][k] * matrix[k][j] ;
+
+				}
+
+			}
+
+		}
+
+		 pontos[x].x = aux[0][0];
+		 pontos[x].y = aux[0][1];
+		 pontos[x].z = aux[0][2];
+	}
+
+
+   //	if(tipo == 2){CHomo(centro.x,centro.y, 0,0,0,0);}
+
+
+}
+

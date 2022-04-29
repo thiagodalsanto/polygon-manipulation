@@ -1,27 +1,30 @@
-// ---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 
 #ifndef uPontoH
 #define uPontoH
-#include <Vcl.StdCtrls.hpp>
-#include "uJanela.h"
-// ---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include "ujanela.h"
 
+//---------------------------------------------------------------------------
 class Ponto {
 	public:
-		double x;
-		double y;
+	  double x;
+	  double y;
 
-		Ponto();
-		Ponto(double, double);
 
-		UnicodeString toString();
-		int xW2Vp(Janela mundo, Janela vp);
-		int yW2Vp(Janela mundo, Janela vp);
 
-        void reflexao(double dx, double dy);
-		void escalonar(double dx, double dy);
-		void transladar(float dx, float dy);
-		void rotacao(double angulo);
-	};
+	  Ponto();
+	  Ponto(double nx, double ny);
+
+	  //UnicodeString toString();
+	  int xW2Vp(Janela mundo, Janela vp);
+	  int yW2Vp(Janela mundo, Janela vp);
+
+	  void escalonar(double dx, double dy);
+	  void transladar(float dx, float dy);
+	  void rotacao(double angulo);
+
+};
+
 
 #endif

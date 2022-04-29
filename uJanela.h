@@ -1,15 +1,17 @@
 //---------------------------------------------------------------------------
 
-#ifndef uJanelaH
-#define uJanelaH
+#ifndef ujanelaH
+#define ujanelaH
 //---------------------------------------------------------------------------
-class Janela{
+class Janela {
 	public:
-	double xmin;
-	double ymin;
-	double xmax;
-	double ymax;
+	  double xmin;
+	  double xmax;
+	  double ymin;
+	  double ymax;
 
-    Janela(double, double, double, double);
+	  Janela (double, double, double, double);
+      Janela AtMundo(Janela mundo, float, float, float , float );
 };
+
 #endif

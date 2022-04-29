@@ -1,0 +1,29 @@
+//---------------------------------------------------------------------------
+
+#ifndef Cord3DH
+#define Cord3DH
+#include <vector>
+#include "uPonto.h"
+
+
+//---------------------------------------------------------------------------
+
+
+class Cord3D : public Ponto{
+	public:
+		std::vector <Cord3D> pontos;
+
+		double z;
+
+		Cord3D();
+		Cord3D(double nx, double ny, double nz);
+
+
+		void CHomo(float dx, float dy,float dz,float sx, float sy,float sz,
+					double angulo,int tipo);
+
+
+
+
+};
+#endif

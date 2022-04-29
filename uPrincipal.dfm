@@ -1,10 +1,10 @@
-object edtHomogenea: TedtHomogenea
+object Form1: TForm1
   Left = 0
   Top = 0
-  Caption = 'Polygon Manipulation'
-  ClientHeight = 582
-  ClientWidth = 902
-  Color = clNavy
+  Caption = 'UOF7'
+  ClientHeight = 567
+  ClientWidth = 975
+  Color = clHotLight
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -12,229 +12,101 @@ object edtHomogenea: TedtHomogenea
   Font.Style = []
   OldCreateOrder = False
   Position = poDesigned
-  Scaled = False
+  PrintScale = poNone
   PixelsPerInch = 96
   TextHeight = 13
-  object lbVp: TLabel
-    Left = 445
-    Top = 510
-    Width = 24
-    Height = 13
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = '(0,0)'
-  end
-  object lbMundo: TLabel
-    Left = 7
-    Top = 509
-    Width = 24
-    Height = 13
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = '(0,0)'
-  end
-  object Label3: TLabel
-    Left = 496
-    Top = 283
-    Width = 3
-    Height = 13
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-  end
-  object GroupBox3: TGroupBox
-    Left = 493
-    Top = 234
-    Width = 139
-    Height = 173
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = 'Coordenadas'
-    Color = clMenuHighlight
-    ParentBackground = False
-    ParentColor = False
-    TabOrder = 26
-    object GroupBox8: TGroupBox
-      Left = 73
-      Top = 20
-      Width = 58
-      Height = 114
-      Caption = 'Eixo X'
-      Color = clHotLight
-      ParentBackground = False
-      ParentColor = False
-      TabOrder = 0
-      object Max: TLabel
-        Left = 16
-        Top = 16
-        Width = 20
-        Height = 13
-        Caption = 'Max'
-      end
-      object Min: TLabel
-        Left = 16
-        Top = 68
-        Width = 16
-        Height = 13
-        Caption = 'Min'
-      end
-    end
-  end
-  object GroupBox7: TGroupBox
-    Left = 502
-    Top = 254
-    Width = 58
-    Height = 114
-    Caption = 'Eixo Y'
+  object Footer: TPanel
+    Left = 0
+    Top = 518
+    Width = 975
+    Height = 49
+    Align = alBottom
+    BorderWidth = 20
     Color = clHotLight
     ParentBackground = False
-    ParentColor = False
-    TabOrder = 37
-    object Label4: TLabel
-      Left = 20
-      Top = 16
+    TabOrder = 0
+    object lbMundo: TLabel
+      Left = 468
+      Top = 20
+      Width = 40
+      Height = 13
+      Caption = 'lbMundo'
+    end
+    object lbVp: TLabel
+      Left = 41
+      Top = 20
       Width = 20
       Height = 13
-      Caption = 'Max'
+      Caption = 'lbVp'
     end
     object Label5: TLabel
-      Left = 20
-      Top = 68
-      Width = 16
+      Left = 220
+      Top = 27
+      Width = 26
       Height = 13
-      BiDiMode = bdRightToLeft
-      Caption = 'Min'
-      ParentBiDiMode = False
+      Caption = 'yMax'
     end
-  end
-  object GroupBox6: TGroupBox
-    Left = 801
-    Top = 235
-    Width = 88
-    Height = 104
-    Caption = 'Reflex'#227'o'
-    Color = clMenuHighlight
-    ParentBackground = False
-    ParentColor = False
-    TabOrder = 31
-  end
-  object GroupBox5: TGroupBox
-    Left = 493
-    Top = 25
-    Width = 395
-    Height = 101
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = 'Criar Poligono'
-    Color = clMenuHighlight
-    ParentBackground = False
-    ParentColor = False
-    TabOrder = 28
-    object Pontos: TLabel
-      Left = 12
-      Top = 12
-      Width = 33
+    object Label7: TLabel
+      Left = 220
+      Top = 8
+      Width = 26
       Height = 13
-      Margins.Left = 2
-      Margins.Top = 2
-      Margins.Right = 2
-      Margins.Bottom = 2
-      Caption = 'Pontos'
+      Caption = 'xMax'
     end
-    object Poligonos: TLabel
-      Left = 105
-      Top = 12
-      Width = 45
-      Height = 13
-      Margins.Left = 2
-      Margins.Top = 2
-      Margins.Right = 2
-      Margins.Bottom = 2
-      Caption = 'Poligonos'
-    end
-    object btnClipping: TButton
-      Left = 196
-      Top = 62
-      Width = 82
-      Height = 24
-      Caption = 'Clipping'
-      TabOrder = 0
-      OnClick = btnClippingClick
-    end
-    object Circulo: TButton
+    object Label8: TLabel
       Left = 296
-      Top = 32
-      Width = 75
-      Height = 25
-      Caption = 'Circulo'
-      TabOrder = 1
-      OnClick = CirculoClick
+      Top = 8
+      Width = 22
+      Height = 13
+      Caption = 'xMin'
     end
-    object edRaio: TEdit
+    object Label9: TLabel
       Left = 296
-      Top = 63
-      Width = 73
-      Height = 21
-      TabOrder = 2
-      Text = '0'
+      Top = 27
+      Width = 22
+      Height = 13
+      Caption = 'yMin'
+    end
+    object xMax: TLabel
+      Left = 252
+      Top = 8
+      Width = 26
+      Height = 13
+      Caption = 'xMax'
+    end
+    object xMin: TLabel
+      Left = 324
+      Top = 9
+      Width = 22
+      Height = 13
+      Caption = 'xMin'
+    end
+    object yMax: TLabel
+      Left = 252
+      Top = 27
+      Width = 26
+      Height = 13
+      Caption = 'yMax'
+    end
+    object yMin: TLabel
+      Left = 324
+      Top = 27
+      Width = 22
+      Height = 13
+      Caption = 'yMin'
     end
   end
-  object GroupBox4: TGroupBox
-    Left = 620
-    Top = 130
-    Width = 269
-    Height = 100
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = 'Transformar'
-    Color = clMenuHighlight
-    ParentBackground = False
-    ParentColor = False
-    TabOrder = 27
-  end
-  object btnCreatePolygon: TButton
-    Left = 688
-    Top = 58
-    Width = 80
-    Height = 24
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = 'Poligono'
-    TabOrder = 0
-    OnClick = btnCreatePolygonClick
-  end
-  object Panel1: TPanel
-    Left = 7
-    Top = 23
-    Width = 483
-    Height = 482
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    TabOrder = 1
+  object Canvas: TPanel
+    Left = 22
+    Top = 8
+    Width = 502
+    Height = 502
+    TabOrder = 2
     object Image1: TImage
       Left = 1
       Top = 1
-      Width = 481
-      Height = 480
-      Margins.Left = 2
-      Margins.Top = 2
-      Margins.Right = 2
-      Margins.Bottom = 2
+      Width = 500
+      Height = 500
       Align = alClient
       OnMouseDown = Image1MouseDown
       OnMouseMove = Image1MouseMove
@@ -242,389 +114,581 @@ object edtHomogenea: TedtHomogenea
       ExplicitTop = 2
     end
   end
-  object lbPontos: TListBox
-    Left = 503
-    Top = 50
-    Width = 88
-    Height = 65
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    ItemHeight = 13
-    TabOrder = 2
-  end
-  object lbPoligonos: TListBox
-    Left = 596
-    Top = 50
-    Width = 88
-    Height = 65
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    ItemHeight = 13
-    TabOrder = 3
-    OnMouseDown = lbPoligonosMouseDown
-  end
-  object edXWMin: TEdit
-    Left = 576
-    Top = 334
-    Width = 34
-    Height = 21
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    TabOrder = 4
-    Text = '-250'
-  end
-  object edXWMax: TEdit
-    Left = 576
-    Top = 286
-    Width = 34
-    Height = 21
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    TabOrder = 6
-    Text = '250'
-  end
-  object edYWMax: TEdit
-    Left = 513
-    Top = 286
-    Width = 34
-    Height = 21
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    TabOrder = 7
-    Text = '250'
-  end
-  object btnUpdate: TButton
-    Left = 513
-    Top = 373
-    Width = 85
-    Height = 24
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = 'Atualizar Mundo'
-    TabOrder = 8
-    OnClick = btnUpdateClick
-  end
-  object rgTipoReta: TRadioGroup
-    Left = 493
-    Top = 130
-    Width = 123
-    Height = 100
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = 'Tipos de Reta'
-    Color = clMenuHighlight
-    ItemIndex = 0
-    Items.Strings = (
-      'Move To/ Line To'
-      'DDA'
-      'Bresenham')
+  object Control: TPanel
+    Left = 534
+    Top = 0
+    Width = 441
+    Height = 518
+    Align = alRight
+    BevelWidth = 2
+    Color = clHotLight
     ParentBackground = False
-    ParentColor = False
-    TabOrder = 15
-    OnClick = rgTipoRetaClick
-  end
-  object btRotacionar: TButton
-    Left = 737
-    Top = 198
-    Width = 66
-    Height = 21
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = 'Rotacionar'
-    TabOrder = 16
-    OnClick = btRotacionarClick
-  end
-  object edtAngulo: TEdit
-    Left = 629
-    Top = 199
-    Width = 96
-    Height = 21
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    TabOrder = 17
-    Text = '0'
-  end
-  object edTransladarX: TEdit
-    Left = 631
-    Top = 148
-    Width = 46
-    Height = 21
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    TabOrder = 18
-    Text = '0'
-  end
-  object edTransladarY: TEdit
-    Left = 681
-    Top = 149
-    Width = 44
-    Height = 21
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    TabOrder = 19
-    Text = '0'
-  end
-  object btTransladar: TButton
-    Left = 737
-    Top = 144
-    Width = 66
-    Height = 23
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = 'Transladar'
-    TabOrder = 20
-    OnClick = btTransladarClick
-  end
-  object btEscalonar: TButton
-    Left = 737
-    Top = 171
-    Width = 66
-    Height = 23
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = 'Escalonar'
-    TabOrder = 21
-    OnClick = btEscalonarClick
-  end
-  object edEscalonarY: TEdit
-    Left = 681
-    Top = 174
-    Width = 44
-    Height = 21
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    TabOrder = 22
-    Text = '1'
-  end
-  object edEscalonarX: TEdit
-    Left = 631
-    Top = 173
-    Width = 46
-    Height = 21
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    TabOrder = 23
-    Text = '1'
-  end
-  object GroupBox1: TGroupBox
-    Left = 636
-    Top = 344
-    Width = 135
-    Height = 80
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = 'Mover Mapa'
-    Color = clMenuHighlight
-    ParentBackground = False
-    ParentColor = False
-    TabOrder = 24
-  end
-  object btnLeft: TButton
-    Left = 644
-    Top = 375
-    Width = 40
-    Height = 25
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = #9668
-    TabOrder = 10
-    OnClick = btnLeftClick
-  end
-  object btnUp: TButton
-    Left = 683
-    Top = 366
-    Width = 40
-    Height = 25
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = #9650
-    TabOrder = 9
-    OnClick = btnUpClick
-  end
-  object btnDown: TButton
-    Left = 683
-    Top = 388
-    Width = 40
-    Height = 25
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = #9660
-    TabOrder = 12
-    OnClick = btnDownClick
-  end
-  object btnRigth: TButton
-    Left = 723
-    Top = 375
-    Width = 40
-    Height = 25
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = #9658
-    TabOrder = 11
-    OnClick = btnRigthClick
-  end
-  object GroupBox2: TGroupBox
-    Left = 775
-    Top = 344
-    Width = 61
-    Height = 80
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = 'Zoom'
-    Color = clMenuHighlight
-    ParentBackground = False
-    ParentColor = False
-    TabOrder = 25
-  end
-  object btnZoomMais: TButton
-    Left = 784
-    Top = 360
-    Width = 43
-    Height = 25
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = '+'
-    TabOrder = 13
-    OnClick = btnZoomMaisClick
-  end
-  object btnZoomMenos: TButton
-    Left = 784
-    Top = 389
-    Width = 43
-    Height = 25
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    Caption = '-'
-    TabOrder = 14
-    OnClick = btnZoomMenosClick
-  end
-  object edYWMin: TEdit
-    Left = 513
-    Top = 334
-    Width = 34
-    Height = 21
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
-    TabOrder = 5
-    Text = '-250'
-  end
-  object btnRefleteV: TButton
-    Left = 814
-    Top = 255
-    Width = 59
-    Height = 34
-    Caption = #8616
-    TabOrder = 29
-    OnClick = btnRefleteVClick
-  end
-  object btnRefleteH: TButton
-    Left = 814
-    Top = 295
-    Width = 59
-    Height = 32
-    Caption = #8596
-    TabOrder = 30
-    OnClick = btnRefleteHClick
-  end
-  object btnRotacionarHomo: TButton
-    Left = 808
-    Top = 199
-    Width = 66
-    Height = 21
-    Caption = 'Rot Homo'
-    TabOrder = 32
-    OnClick = btnRotacionarHomoClick
-  end
-  object rgCurvas: TRadioGroup
-    Left = 637
-    Top = 235
-    Width = 158
-    Height = 104
-    Caption = 'Curvas'
-    Color = clMenuHighlight
-    Items.Strings = (
-      'Castejau'
-      'Bezier'
-      'Hermite'
-      'B-Spline'
-      'Forward')
-    ParentBackground = False
-    ParentColor = False
-    TabOrder = 33
-  end
-  object btnCriarCurvas: TButton
-    Left = 713
-    Top = 278
-    Width = 75
-    Height = 25
-    Caption = 'Criar Curvas'
-    TabOrder = 34
-    OnClick = btnCriarCurvasClick
-  end
-  object btnTransladarHomo: TButton
-    Left = 808
-    Top = 145
-    Width = 66
-    Height = 21
-    Caption = 'Trans Homo'
-    TabOrder = 35
-    OnClick = btnTransladarHomoClick
-  end
-  object btnEscalonarHomo: TButton
-    Left = 808
-    Top = 172
-    Width = 66
-    Height = 21
-    Caption = 'Escal Homo'
-    TabOrder = 36
-    OnClick = btnEscalonarHomoClick
+    TabOrder = 1
+    object Label1: TLabel
+      Left = 9
+      Top = 9
+      Width = 33
+      Height = 13
+      Caption = 'Pontos'
+    end
+    object Label2: TLabel
+      Left = 127
+      Top = 9
+      Width = 45
+      Height = 13
+      Caption = 'Poligonos'
+    end
+    object lbPoligonos: TListBox
+      Left = 127
+      Top = 28
+      Width = 113
+      Height = 97
+      Color = clTeal
+      ItemHeight = 13
+      TabOrder = 0
+      OnClick = lbPoligonosClick
+    end
+    object lbPontos: TListBox
+      Left = 8
+      Top = 28
+      Width = 113
+      Height = 97
+      Color = clTeal
+      ItemHeight = 13
+      TabOrder = 1
+    end
+    object Move: TPanel
+      Left = 97
+      Top = 278
+      Width = 104
+      Height = 164
+      Align = alCustom
+      Color = clMenuHighlight
+      ParentBackground = False
+      TabOrder = 2
+      object Direita: TButton
+        Left = 49
+        Top = 82
+        Width = 34
+        Height = 28
+        Caption = #9654
+        TabOrder = 0
+        OnClick = DireitaClick
+      end
+      object Subir: TButton
+        Left = 8
+        Top = 16
+        Width = 81
+        Height = 28
+        Caption = #9650
+        TabOrder = 1
+        OnClick = SubirClick
+      end
+      object Descer: TButton
+        Left = 8
+        Top = 50
+        Width = 79
+        Height = 26
+        Caption = #9660
+        TabOrder = 2
+        OnClick = DescerClick
+      end
+      object Esquerda: TButton
+        Left = 8
+        Top = 82
+        Width = 35
+        Height = 28
+        Caption = #9664
+        TabOrder = 3
+        OnClick = EsquerdaClick
+      end
+      object Zoom: TButton
+        Left = 10
+        Top = 116
+        Width = 33
+        Height = 33
+        Caption = '+'
+        TabOrder = 4
+        OnClick = ZoomClick
+      end
+      object ZoomOut: TButton
+        Left = 49
+        Top = 116
+        Width = 33
+        Height = 33
+        Caption = '-'
+        TabOrder = 5
+        OnClick = ZoomOutClick
+      end
+    end
+    object rgTipoReta: TRadioGroup
+      Left = 246
+      Top = 28
+      Width = 113
+      Height = 97
+      Caption = 'Tipo de reta'
+      Color = clMenuHighlight
+      ItemIndex = 0
+      Items.Strings = (
+        'Move To'
+        'DDA'
+        'Bresenham')
+      ParentBackground = False
+      ParentColor = False
+      TabOrder = 3
+      OnClick = rgTipoRetaClick
+    end
+    object AttMundo: TPanel
+      Left = 311
+      Top = 278
+      Width = 120
+      Height = 164
+      Color = clMenuHighlight
+      ParentBackground = False
+      TabOrder = 4
+      object Label3: TLabel
+        Left = 72
+        Top = 57
+        Width = 26
+        Height = 13
+        Caption = 'yMax'
+      end
+      object Label4: TLabel
+        Left = 71
+        Top = 11
+        Width = 26
+        Height = 13
+        Caption = 'xMax'
+      end
+      object label49: TLabel
+        Left = 19
+        Top = 12
+        Width = 22
+        Height = 13
+        Caption = 'xMin'
+      end
+      object Label6: TLabel
+        Left = 20
+        Top = 58
+        Width = 22
+        Height = 13
+        Caption = 'yMin'
+      end
+      object Button1: TButton
+        Left = 23
+        Top = 112
+        Width = 66
+        Height = 25
+        Caption = 'Atualizar'
+        TabOrder = 0
+        OnClick = Button1Click
+      end
+      object edxMax: TEdit
+        Left = 63
+        Top = 30
+        Width = 50
+        Height = 21
+        TabOrder = 1
+        Text = '250'
+      end
+      object edxMin: TEdit
+        Left = 7
+        Top = 31
+        Width = 50
+        Height = 21
+        TabOrder = 2
+        Text = '-250'
+      end
+      object edyMax: TEdit
+        Left = 63
+        Top = 77
+        Width = 50
+        Height = 21
+        TabOrder = 3
+        Text = '250'
+      end
+      object edyMin: TEdit
+        Left = 7
+        Top = 77
+        Width = 50
+        Height = 21
+        TabOrder = 4
+        Text = '-250'
+      end
+    end
+    object TPanel
+      Left = 207
+      Top = 278
+      Width = 98
+      Height = 165
+      Color = clMenuHighlight
+      ParentBackground = False
+      TabOrder = 5
+      object Reflexcima: TButton
+        Left = 16
+        Top = 64
+        Width = 57
+        Height = 34
+        Caption = #8616
+        TabOrder = 0
+        OnClick = ReflexcimaClick
+      end
+      object ReflexLado: TButton
+        Left = 16
+        Top = 104
+        Width = 57
+        Height = 34
+        Caption = #8596
+        TabOrder = 1
+        OnClick = ReflexLadoClick
+      end
+      object ReflexDiagonal: TButton
+        Left = 16
+        Top = 25
+        Width = 57
+        Height = 33
+        Caption = 'Diagonal'
+        TabOrder = 2
+        OnClick = ReflexDiagonalClick
+      end
+    end
+    object Panel1: TPanel
+      Left = 9
+      Top = 278
+      Width = 82
+      Height = 164
+      Color = clMenuHighlight
+      ParentBackground = False
+      TabOrder = 6
+      object Button3: TButton
+        Left = 5
+        Top = 7
+        Width = 70
+        Height = 25
+        Caption = 'Casteljau'
+        TabOrder = 0
+        OnClick = Button3Click
+      end
+      object Button4: TButton
+        Left = 5
+        Top = 38
+        Width = 70
+        Height = 25
+        Caption = 'Bezier'
+        TabOrder = 1
+        OnClick = Button4Click
+      end
+      object Button5: TButton
+        Left = 5
+        Top = 69
+        Width = 70
+        Height = 25
+        Caption = 'Hermite'
+        TabOrder = 2
+        OnClick = Button5Click
+      end
+      object Button6: TButton
+        Left = 5
+        Top = 100
+        Width = 70
+        Height = 25
+        Caption = 'B-Spline'
+        TabOrder = 3
+        OnClick = Button6Click
+      end
+      object Button7: TButton
+        Left = 5
+        Top = 131
+        Width = 70
+        Height = 25
+        Caption = 'Forward'
+        TabOrder = 4
+        OnClick = Button7Click
+      end
+    end
+    object Tipo: TPanel
+      Left = 312
+      Top = 199
+      Width = 121
+      Height = 73
+      Color = clMenuHighlight
+      ParentBackground = False
+      TabOrder = 7
+      object Linha: TButton
+        Left = 8
+        Top = 11
+        Width = 49
+        Height = 25
+        Caption = 'Linha'
+        Enabled = False
+        TabOrder = 0
+        OnClick = LinhaClick
+      end
+      object Circulo: TButton
+        Left = 8
+        Top = 37
+        Width = 49
+        Height = 25
+        Caption = 'Circulo '
+        TabOrder = 1
+        OnClick = CirculoClick
+      end
+      object edRaio: TEdit
+        Left = 63
+        Top = 42
+        Width = 49
+        Height = 21
+        TabOrder = 2
+        Text = '0'
+      end
+    end
+    object Files: TPanel
+      Left = 312
+      Top = 131
+      Width = 113
+      Height = 62
+      Color = clMenuHighlight
+      ParentBackground = False
+      TabOrder = 8
+      object edText: TEdit
+        Left = 18
+        Top = 8
+        Width = 73
+        Height = 21
+        TabOrder = 0
+        Text = 'Nome'
+      end
+      object btnOpen: TButton
+        Left = 18
+        Top = 32
+        Width = 75
+        Height = 25
+        Caption = 'Arquivo'
+        TabOrder = 1
+        OnClick = btnOpenClick
+      end
+    end
+    object Ed: TPanel
+      Left = 9
+      Top = 131
+      Width = 297
+      Height = 141
+      Color = clMenuHighlight
+      ParentBackground = False
+      TabOrder = 9
+      object Label10: TLabel
+        Left = 24
+        Top = 7
+        Width = 6
+        Height = 13
+        Caption = 'X'
+      end
+      object Label11: TLabel
+        Left = 72
+        Top = 7
+        Width = 6
+        Height = 13
+        Caption = 'Y'
+      end
+      object Label15: TLabel
+        Left = 168
+        Top = 8
+        Width = 7
+        Height = 13
+        Caption = 'H'
+      end
+      object Label16: TLabel
+        Left = 213
+        Top = 7
+        Width = 7
+        Height = 13
+        Caption = 'N'
+      end
+      object Label17: TLabel
+        Left = 120
+        Top = 7
+        Width = 6
+        Height = 13
+        Caption = 'Z'
+      end
+      object Label21: TLabel
+        Left = 256
+        Top = 6
+        Width = 13
+        Height = 13
+        Caption = '3D'
+      end
+      object edTransladarX: TEdit
+        Left = 8
+        Top = 26
+        Width = 42
+        Height = 21
+        TabOrder = 0
+        Text = '0'
+      end
+      object edTransladarY: TEdit
+        Left = 56
+        Top = 26
+        Width = 42
+        Height = 21
+        TabOrder = 1
+        Text = '0'
+      end
+      object Translacao: TButton
+        Left = 150
+        Top = 26
+        Width = 41
+        Height = 21
+        Caption = 'Tran'
+        TabOrder = 2
+        OnClick = TranslacaoClick
+      end
+      object edScalarY: TEdit
+        Left = 56
+        Top = 53
+        Width = 42
+        Height = 21
+        TabOrder = 3
+        Text = '1'
+      end
+      object edScalarX: TEdit
+        Left = 8
+        Top = 53
+        Width = 42
+        Height = 21
+        TabOrder = 4
+        Text = '1'
+      end
+      object Escalonamento: TButton
+        Left = 150
+        Top = 53
+        Width = 41
+        Height = 21
+        Caption = 'Esca'
+        TabOrder = 5
+        OnClick = EscalonamentoClick
+      end
+      object edAnguloZ: TEdit
+        Left = 104
+        Top = 80
+        Width = 42
+        Height = 21
+        TabOrder = 6
+        Text = '0'
+      end
+      object Rotacao: TButton
+        Left = 104
+        Top = 107
+        Width = 41
+        Height = 21
+        Caption = 'Rot Z'
+        TabOrder = 7
+        OnClick = RotacaoClick
+      end
+      object Button2: TButton
+        Left = 197
+        Top = 80
+        Width = 92
+        Height = 21
+        Caption = 'Clipping'
+        TabOrder = 8
+        OnClick = Button2Click
+      end
+      object Button8: TButton
+        Left = 197
+        Top = 26
+        Width = 41
+        Height = 21
+        Caption = 'Tran'
+        TabOrder = 9
+        OnClick = Button8Click
+      end
+      object Button9: TButton
+        Left = 197
+        Top = 53
+        Width = 41
+        Height = 21
+        Caption = 'Esca'
+        TabOrder = 10
+        OnClick = Button9Click
+      end
+      object Button10: TButton
+        Left = 150
+        Top = 80
+        Width = 41
+        Height = 21
+        Caption = 'Rot'
+        TabOrder = 11
+        OnClick = Button10Click
+      end
+      object Button11: TButton
+        Left = 244
+        Top = 25
+        Width = 39
+        Height = 21
+        Caption = 'Tran'
+        TabOrder = 12
+        OnClick = Button11Click
+      end
+      object Button12: TButton
+        Left = 244
+        Top = 53
+        Width = 42
+        Height = 21
+        Caption = 'Esca'
+        TabOrder = 13
+        OnClick = Button12Click
+      end
+      object edTransladarZ: TEdit
+        Left = 104
+        Top = 26
+        Width = 42
+        Height = 21
+        TabOrder = 14
+        Text = '0'
+      end
+      object edAnguloX: TEdit
+        Left = 8
+        Top = 80
+        Width = 42
+        Height = 21
+        TabOrder = 15
+        Text = '0'
+      end
+      object edAnguloY: TEdit
+        Left = 56
+        Top = 80
+        Width = 42
+        Height = 21
+        TabOrder = 16
+        Text = '0'
+      end
+      object Button13: TButton
+        Left = 9
+        Top = 107
+        Width = 41
+        Height = 22
+        Caption = 'Rot X'
+        TabOrder = 17
+        OnClick = Button13Click
+      end
+      object Button14: TButton
+        Left = 55
+        Top = 107
+        Width = 43
+        Height = 22
+        Caption = 'Rot Y'
+        TabOrder = 18
+        OnClick = Button14Click
+      end
+      object edScalarZ: TEdit
+        Left = 104
+        Top = 53
+        Width = 42
+        Height = 21
+        TabOrder = 19
+        Text = '1'
+      end
+    end
   end
 end
