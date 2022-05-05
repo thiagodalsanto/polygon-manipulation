@@ -538,7 +538,7 @@ void __fastcall TForm1::Button11Click(TObject *Sender)
 
 void __fastcall TForm1::Button12Click(TObject *Sender)
 {
-    if( lbPoligonos->ItemIndex > 2){
+    if( lbPoligonos->ItemIndex > 2) {
 
 		display.poligonos[lbPoligonos->ItemIndex].ComHomogenea(0,0,0,
 		StrToFloat(edScalarX->Text),StrToFloat(edScalarY->Text),StrToFloat(edScalarZ->Text),0,1);
@@ -550,7 +550,7 @@ void __fastcall TForm1::Button12Click(TObject *Sender)
 
 void __fastcall TForm1::Button13Click(TObject *Sender)
 {
-	if( lbPoligonos->ItemIndex > 2){
+	if( lbPoligonos->ItemIndex > 2) {
 		display.poligonos[lbPoligonos->ItemIndex].ComHomogenea(0, 0, 0, 0, 0, 0,
 											StrToFloat(edAnguloX->Text),2);
 		display.desenha(Image1->Canvas, mundo, vp, rgTipoReta->ItemIndex);
