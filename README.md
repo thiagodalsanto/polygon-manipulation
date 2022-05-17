@@ -1,29 +1,24 @@
 # Poligon Manipulation
 
-## Descrição
+## Description
 <p align="justify">
-Projeto para manipulação de poligonos com uma interface construída do zero em C++, para matéria de Computação Gráfica na UTFPR/MD.
+Polygon manipulation project with an interface built from scratch in C++, for Computer Graphics subject at UTFPR/MD.
 <p/>
  
-## Funcionalidades
-A programa conta com:
-- Sistemas de Retas Convencionais, DDA e Bresenham
-- Zoom In e Zoom Out
-- Controles de direção do plano cartesiano
-- Atualização do tamanho do plano cartesiano
-- Transformações de Escalonamento, Translação e Rotação
-- Duas formas de Rotação: No Mesmo Eixo e No Eixo do Plano Cartesiano
-- Reflexão Vertical e Horizontal 
-- Curvas de Casteujal, Hermite, Bezier, B-Spline e Forward
+## Functionalities
+- Conventional Line Systems, DDA and Bresenham
+- Zoom and Direction Control and Change of the Cartesian Plane
+- Scaling, Translation, Rotation Transformations, on the Same Axis and Relative to the Middle
+- Vertical and Horizontal Reflection
+- Casteujal, Hermite, Bezier, B-Spline and Forward curves
 - Clipping
-- Abertura de Poligonos 3D por arquivos .txt
-- Rotação, Translação e Escalonamento Apenas em um Eixo
+- Opening 3D Polygons by .txt files
 
-## Técnologias Utilizadas
-O projeto será baseado em C++ puro e utilização da plataforma de desenvolvimento do [C++ Builder 10.4](https://www.embarcadero.com/br/products/cbuilder) desenvolvido pela [Embarcadero](https://www.embarcadero.com/br/).
+## Technologies
+The project is based on pure C++ and using the [C++ Builder 10.4](https://www.embarcadero.com/br/products/cbuilder) development platform developed by [Embarcadero](https://www.embarcadero. com/br/).
 
-## Status do Projeto
-:construction: O projeto foi concluído em 24/04/2022.
+## Project Status
+:construction: Project ended in 04/24/2022.
 
-## Licença
-O Projeto segue a licença `MIT`
+## License
+The Project follows the `MIT` license
