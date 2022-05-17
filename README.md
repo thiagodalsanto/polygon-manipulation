@@ -15,7 +15,7 @@ Polygon manipulation project with an interface built from scratch in C++, for Co
 - Opening 3D Polygons by .txt files
 
 ## Technologies
-The project is based on pure C++ and using the [C++ Builder 10.4](https://www.embarcadero.com/br/products/cbuilder) development platform developed by [Embarcadero](https://www.embarcadero. com/br/).
+The project is based on pure C++ and using the [C++ Builder 10.4](https://www.embarcadero.com/br/products/cbuilder) development platform developed by [Embarcadero](https://www.embarcadero.com/br/) .
 
 ## Project Status
 :construction: Project ended in 04/24/2022.
