@@ -1,11 +1,9 @@
 # Poligon Manipulation
 
 ## Description
-<p align="justify">
- Projeto: Manipulação de poligonos com inteface feita em C++. 
- Disciplina: Computação Gráfica - 5º Período - UTFPR/MD.
- Docente: Pedro Luiz de Paula Filho
-<p/>
+ - Projeto: Manipulação de poligonos com inteface feita em C++. 
+ - Disciplina: Computação Gráfica - 5º Período - UTFPR/MD.
+ - Docente: Pedro Luiz de Paula Filho
  
 ## Functionalities
 - Sistemas de Linha Convencionais, DDA e Bresenham
